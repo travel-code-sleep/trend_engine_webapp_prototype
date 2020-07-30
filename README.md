@@ -2,9 +2,9 @@
 repo for trend engine web application.
 work in progress
 
-## All the required data files are in dash_data folder. fhe file formate is feather. you will need pandas.read_feather method to read the data files.
+## All the required data files are in dash_data folder. fhe file format is feather. You will need pandas.read_feather method to read the data files.
 
-Run `pip install requirements.txt` in the desired virtual environment before executing python file.
+Run `pip install --upgrade -r requirements.txt` in the desired virtual environment before executing python file.
 
 ## Before running the application make sure you set correct path in the code file at line number: 34.
 

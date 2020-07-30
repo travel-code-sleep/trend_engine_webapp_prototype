@@ -45,7 +45,7 @@ default_end_date[-1] = '01'
 default_end_date = ('-').join(default_end_date)
 
 # Create Dash Application
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.UNITED])
 auth = dash_auth.BasicAuth(app, USERNAME_PASSWORD_PAIRS)
 
 # create tab and sidebar css style sheets
@@ -196,7 +196,7 @@ def create_category_review_trend_figure(data: pd.DataFrame, source: str = 'us',
         # keep the original annotations and add a list of new annotations:
         annotations=list(fig.layout.annotations) +
         [go.layout.Annotation(
-            x=-0.05,
+            x=-0.04,
             y=0.5,
             font=dict(
                 size=20,
@@ -263,7 +263,7 @@ def create_product_type_review_trend_figure(data: pd.DataFrame, source: str = 'u
         # keep the original annotations and add a list of new annotations:
         annotations=list(fig.layout.annotations) +
         [go.layout.Annotation(
-            x=-0.05,
+            x=-0.04,
             y=0.5,
             font=dict(
                 size=20,
