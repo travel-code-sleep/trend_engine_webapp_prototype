@@ -1,0 +1,33 @@
+
+.tabs_styles  {
+    height: 44px
+}
+.tab_style {
+    border-bottom: 1px solid #d6d6d6;
+    padding: 6px;
+    font-weight: bold;
+}
+
+.tab_selected_style {
+    border-top: 1px solid #d6d6d6;
+    border-bottom: 1px solid #d6d6d6;
+    background-color: #119DFF;
+    color: white;
+    padding: 6px;
+}
+
+.SIDEBAR_STYLE {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 16rem;
+    padding: 2rem 1rem;
+    background-color: #f8f9fa;
+}
+
+.CONTENT_STYLE {
+    margin-left: 18rem;
+    margin-right: 2rem;
+    padding: 2rem 1rem;
+}
