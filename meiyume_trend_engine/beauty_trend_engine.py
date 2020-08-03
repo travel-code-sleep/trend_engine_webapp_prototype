@@ -1,6 +1,4 @@
-"""
-This app creates a sidebar layout using inline style arguments and the
-dbc.Nav component for Beauty Trend Engine.
+""" This app creates a sidebar layout using inline style arguments and the dbc.Nav component for Beauty Trend Engine.
 
 dcc.Location is used to track the current location. There are two callbacks,
 one uses the current location to render the appropriate page content, the other
@@ -389,6 +387,10 @@ def market_trend_page_layout():
     )
 
 
+def category_product_performance_page_layout():
+    return None
+
+
 @app.callback(Output('category_trend', 'figure'),
               inputs=[Input('source', 'value'),
                       Input('category', 'value'),
@@ -426,6 +428,7 @@ def update_category_review_trend_figure(source: str, category: list, start_date:
     fig = create_category_review_trend_figure(
         review_trend_category_df, source=source, category=category,
         start_date=start_date_string, end_date=end_date_string)
+
     return fig
 
 
