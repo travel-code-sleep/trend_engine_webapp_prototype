@@ -37,7 +37,7 @@ logo = 'assets/bte_logo.png'
 logo_base64 = base64.b64encode(open(logo, 'rb').read()).decode('ascii')
 
 # Create Dash Application
-external_stylesheets = [dbc.themes.UNITED,
+external_stylesheets = [dbc.themes.LUX,
                         'https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(
@@ -295,7 +295,7 @@ def market_trend_page_layout():
             html.H1('Market Trends by Categories and Product Launches',
                     style={'color': 'black',
                            'border': '0.5px grey dotted',
-                           'width': '60%',
+                           'width': 'auto',
                            }
                     ),
             html.Div(
@@ -312,7 +312,8 @@ def market_trend_page_layout():
                                          value='us',
                                          style={'fontSize': 14,
                                                 'width': '50%'},
-                                         placeholder='Select Geography'),
+                                         placeholder='Select Geography',
+                                         clearable=False),
                         ],
                         style={'display': 'inline-block',
                                'verticalAlign': 'top',
@@ -351,7 +352,8 @@ def market_trend_page_layout():
                                          value=review_trend_category_df.category.unique().tolist(),
                                          style={'fontSize': 14,
                                                 'width': '100%'},
-                                         placeholder='Select Category')
+                                         placeholder='Select Category',
+                                         clearable=False)
                         ],
                         style={'display': 'inline-block',
                                'verticalAlign': 'top',
@@ -377,7 +379,8 @@ def market_trend_page_layout():
                                             [
                                                 dcc.Graph(id='category_trend',
                                                           figure=category_trend_figure),
-                                            ]
+                                            ],
+                                            className="pretty_container"
                                         ),
                                         html.Div(
                                             [
@@ -392,7 +395,8 @@ def market_trend_page_layout():
                                                 html.Hr(),
                                                 dcc.Graph(id='subcategory_trend',
                                                           figure=subcategory_trend_figure)
-                                            ]
+                                            ],
+                                            className="pretty_container"
                                         )
                                     ]
                                 )
@@ -414,7 +418,8 @@ def market_trend_page_layout():
                                             [
                                                 dcc.Graph(id='influenced_category_trend',
                                                           figure=influenced_category_trend_figure),
-                                            ]
+                                            ],
+                                            className="pretty_container"
                                         ),
                                         html.Div(
                                             [
@@ -429,7 +434,8 @@ def market_trend_page_layout():
                                                 html.Hr(),
                                                 dcc.Graph(id='influenced_subcategory_trend',
                                                           figure=influenced_subcategory_trend_figure)
-                                            ]
+                                            ],
+                                            className="pretty_container"
                                         )
                                     ]
                                 )
@@ -473,7 +479,7 @@ def market_trend_page_layout():
                                                     className="six columns"
                                                 ),
                                             ],
-                                            className="row"
+                                            className="row pretty_container"
                                         ),
                                         html.Div(
                                             [
@@ -481,7 +487,7 @@ def market_trend_page_layout():
                                                           figure=product_launch_intensity_category_figure,
                                                           ),
                                             ],
-                                            className="row"
+                                            className="row pretty_container"
                                         )
 
                                     ],
@@ -538,6 +544,7 @@ def market_trend_page_layout():
                                         )
 
                                     ],
+                                    className="pretty_container"
                                 ),
                             ],
                             style=tab_style,
@@ -721,8 +728,8 @@ def update_product_type_review_trend_figure(source: str, clickData, start_date: 
         category = 'bath-body'
     # pt_df = review_trend_product_type_df[(review_trend_product_type_df.category==category)
     #                               review_trend_product_type_df.source==source]
-    product_type_count = len(review_trend_product_type_df[review_trend_product_type_df.category ==
-                                                          category].product_type.unique())
+    product_type_count = len(review_trend_product_type_df[(review_trend_product_type_df.category ==
+                                                           category) & (review_trend_product_type_df.source == source)].product_type.unique())
     if product_type_count <= 10:
         height = 600
     elif product_type_count <= 20:
@@ -779,8 +786,8 @@ def update_product_type_influenced_review_trend_figure(source: str, clickData, s
         category = 'bath-body'
     # pt_df = review_trend_product_type_df[(review_trend_product_type_df.category==category)
     #                               review_trend_product_type_df.source==source]
-    product_type_count = len(influenced_review_trend_product_type_df[influenced_review_trend_product_type_df.category ==
-                                                                     category].product_type.unique())
+    product_type_count = len(influenced_review_trend_product_type_df[(influenced_review_trend_product_type_df.category == category) &
+                                                                     (influenced_review_trend_product_type_df.source == source)].product_type.unique())
     if product_type_count <= 10:
         height = 600
     elif product_type_count <= 20:

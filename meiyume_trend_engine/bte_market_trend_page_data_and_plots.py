@@ -74,7 +74,7 @@ def create_category_review_trend_figure(data: pd.DataFrame, source: str = 'us',
     data = data[(data.month >= start_date) &
                 (data.month <= end_date)]
 
-    fig = px.area(data[(data.source == 'us') & (data.category.isin(category))],
+    fig = px.area(data[(data.source == source) & (data.category.isin(category))],
                   x='month', y='review_text', facet_col='category',
                   facet_col_wrap=3, color='category', height=500,
                   hover_data=['category'], facet_row_spacing=0.1, facet_col_spacing=0.06,
@@ -90,7 +90,7 @@ def create_category_review_trend_figure(data: pd.DataFrame, source: str = 'us',
         # keep the original annotations and add a list of new annotations:
         annotations=list(fig.layout.annotations) +
         [go.layout.Annotation(
-            x=-0.04,
+            x=-0.06,
             y=0.5,
             font=dict(
                 size=20,
@@ -157,7 +157,7 @@ def create_product_type_review_trend_figure(data: pd.DataFrame, source: str = 'u
         # keep the original annotations and add a list of new annotations:
         annotations=list(fig.layout.annotations) +
         [go.layout.Annotation(
-            x=-0.04,
+            x=-0.06,
             y=0.5,
             font=dict(
                 size=20,
@@ -208,7 +208,7 @@ def create_category_product_launch_figure(data: pd.DataFrame, source: str = 'us'
     fig = px.line(data[(data.source == source) & (data.category.isin(category))],
                   x="meta_date", y="new_product_count", color='category', hover_data=['category'],
                   hover_name="category", line_shape="spline", title='Product Launch in Categories over Month',
-                  width=650, height=600)
+                  width=600, height=600)
 
     fig.update_traces(connectgaps=True,
                       mode='markers+lines')
@@ -256,7 +256,7 @@ def create_product_type_product_launch_figure(data: pd.DataFrame, source: str = 
                   x="meta_date", y="new_product_count", color='product_type', line_group='category',
                   hover_name="category", hover_data=["category", "product_type", 'new_product_count'],
                   line_shape="spline", title='Product Launch in Subcategories over Month',
-                  width=850, height=600)
+                  width=800, height=600)
 
     fig.update_traces(connectgaps=True,
                       mode='markers+lines')
@@ -349,7 +349,7 @@ def create_category_new_ingredient_trend_figure(data: pd.DataFrame, source: str 
     fig = px.line(data[(data.source == source) & (data.category.isin(category))],
                   x="meta_date", y="new_ingredient_count", color='category', hover_data=['category'],
                   hover_name="category", line_shape="spline", title='New Ingredients in Categories over Month',
-                  width=650, height=600)
+                  width=600, height=600)
 
     fig.update_traces(connectgaps=True,
                       mode='markers+lines')
@@ -397,7 +397,7 @@ def create_product_type_new_ingredient_trend_figure(data: pd.DataFrame, source: 
                   x="meta_date", y="new_ingredient_count", color='product_type', line_group='category',
                   hover_name="category", hover_data=["category", "product_type", 'new_ingredient_count'],
                   line_shape="spline", title='New Ingredients in Subcategories over Month',
-                  width=850, height=600)
+                  width=800, height=600)
 
     fig.update_traces(connectgaps=True,
                       mode='markers+lines')
