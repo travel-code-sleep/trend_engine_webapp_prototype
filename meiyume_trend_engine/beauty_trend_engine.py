@@ -7,6 +7,7 @@ links.
 """
 import json
 import re
+import base64
 from datetime import datetime as dt
 
 import dash
@@ -18,11 +19,11 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output, State, ClientsideFunction
 from dateutil.relativedelta import relativedelta
 from path import Path
 
-from beauty_trend_engine_plots import *
+from bte_market_trend_page_data_and_plots import *
 
 # assign default values
 # px.defaults.template = "plotly_dark"
@@ -31,11 +32,21 @@ USERNAME_PASSWORD_PAIRS = [
     ['user', 'pwd123'], ['meiyume', 'pwd123']
 ]
 
+# read and encode logo image
+logo = 'assets/bte_logo.png'
+logo_base64 = base64.b64encode(open(logo, 'rb').read()).decode('ascii')
+
 # Create Dash Application
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.UNITED])
-app.css.append_css({
-    'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
-})
+external_stylesheets = [dbc.themes.UNITED,
+                        'https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+app = dash.Dash(
+    __name__, external_stylesheets=external_stylesheets,
+    # these meta_tags ensure content is scaled correctly on different devices
+    # see: https://www.w3schools.com/css/css_rwd_viewport.asp for more
+    meta_tags=[{"name": "viewport",
+                "content": "width=device-width, initial-scale=1"}],
+)
 
 auth = dash_auth.BasicAuth(app, USERNAME_PASSWORD_PAIRS)
 
@@ -53,14 +64,14 @@ tab_selected_style = {
     'color': 'white',
     'padding': '6px'}
 # the style arguments for the sidebar. We use position:fixed and a fixed width
-SIDEBAR_STYLE = {
-    "position": "fixed",
-    "top": 0,
-    "left": 0,
-    "bottom": 0,
-    "width": "16rem",
-    "padding": "2rem 1rem",
-    "background-color": "#f8f9fa", }
+SIDEBAR_STYLE = {"position": "fixed",
+                 "top": 0,
+                 "left": 0,
+                 "bottom": 0,
+                 "width": "18rem",
+                 "padding": "2rem 1rem",
+                 "background-color": "#f8f9fa"
+                 }
 
 # the styles for the main content position it to the right of the sidebar and
 # add some padding.
@@ -70,41 +81,176 @@ CONTENT_STYLE = {
     "padding": "2rem 1rem", }
 
 # create sidebar page layout and navigation
-sidebar = html.Div(
+search_bar = dbc.Row(
     [
-        html.H1("Beauty Trend Engine", className="display-4",
-                style={'fontSize': 60,
-                       'color': 'white',
-                       'backgroundColor': 'black',
-                       'fontFamily': 'Gotham',
-                       'fontWeight': 'bold',
-                       'textShadow': '#fc0 1px 0 10px'}
-                ),
-        html.Hr(),
-        html.P(
-            "Turn unstructured data to structured insights using Natural Language Processing and Deep Learning.",
-            className="lead",
-            style={'fontSize': '24', 'case': 'block'}
-        ),
-        dbc.Nav(
-            [
-                dbc.NavLink("Beauty Trend Engine Landing Page",
-                            href="/page-1", id="page-1-link"),
-                dbc.NavLink("Market Trend Page",
-                            href="/page-2", id="page-2-link"),
-                dbc.NavLink("Product Page", href="/page-3", id="page-3-link"),
-                dbc.NavLink("Review Page", href="/page-4", id="page-4-link"),
-            ],
-            vertical=True,
-            pills=True,
+        dbc.Col(dbc.Input(type="search", placeholder="Search")),
+        dbc.Col(
+            dbc.Button("Search", color="primary", className="ml-2"),
+            width="auto",
         ),
     ],
-    style=SIDEBAR_STYLE,
+    no_gutters=True,
+    className="ml-auto flex-nowrap mt-3 mt-md-0",
+    align="center",
 )
+
+navbar = dbc.Navbar(
+    [
+        dbc.Col(
+            html.Div(
+                [
+                    html.H1("Beauty Trend Engine", className="display-4",
+                            style={'fontSize': 50,
+                                   'color': 'white',
+                                   #    'backgroundColor': 'white',
+                                   'fontFamily': 'Gotham',
+                                   'fontWeight': 'bold',
+                                   'textShadow': '#fc0 1px 0 10px'}
+                            ),
+                    # dbc.NavbarBrand("Navbar", className="ml-2"),
+                ]
+            ),
+            width={'size': 5, 'offset': 2},
+        ),
+        dbc.NavbarToggler(id="navbar-toggler"),
+        dbc.Collapse(search_bar, id="navbar-collapse", navbar=True),
+        dbc.Col(
+            dbc.DropdownMenu(
+                children=[
+                    dbc.DropdownMenuItem(
+                        "More pages", header=True),
+                    dbc.DropdownMenuItem(
+                        "Market Trends", href="/page-2"),
+                    dbc.DropdownMenuItem(
+                        "Develop New Products", href="/page-3"),
+                    dbc.DropdownMenuItem(
+                        "Improve Existing Products", href="/page-4"),
+                ],
+                style={'fontSize': 24},
+                in_navbar=True,
+                label="Select Application",
+            ),
+            width={'size': 2},
+        ),
+    ],
+    color="primary",
+    dark=True,
+)
+# we use the Row and Col components to construct the sidebar header
+# it consists of a title, and a toggle, the latter is hidden on large screens
+sidebar_header = html.Div(
+    [
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        html.Img(
+                            src=f'data:image/png;base64,{logo_base64}', height='250px', width='200px'),
+                        html.Hr(),
+                        html.P(
+                            "Turn unstructured data to structured insights using Natural Language Processing and Deep Learning.",
+                            className="lead",
+                            # style={'fontSize': '14', 'case': 'block'}
+                        )
+                    ]
+                ),
+                dbc.Col(
+                    [
+                        html.Button(
+                            # use the Bootstrap navbar-toggler classes to style
+                            className="navbar-toggler",
+                            # the navbar-toggler classes don't set color,
+                            id="sidebar-toggle",
+                            style={"color": "orange",
+                                   "border-color": "rgba(0,0,0,.1)",
+                                   'background-color': 'orange',
+                                   'width': '30px', 'height': '40px'
+                                   }
+                        ),
+                    ],
+                    # the column containing the toggle will be only as wide as the
+                    # toggle, resulting in the toggle being right aligned
+                    width={'size': "auto"},
+                    # vertically align the toggle in the center
+                ),
+            ]
+        )
+    ],
+)
+
+sidebar = html.Div(
+    [
+        sidebar_header,
+        # we wrap the horizontal rule and short blurb in a div that can be
+        # hidden on a small screen
+        # use the Collapse component to animate hiding / revealing links
+        dbc.Collapse(
+            dbc.Nav(
+                [
+                    dbc.NavLink("Beauty Trend Engine Landing Page",
+                                href="/page-1", id="page-1-link"),
+                    dbc.NavLink("Market Trend Page",
+                                href="/page-2", id="page-2-link"),
+                    dbc.NavLink("Category Page", href="/page-3",
+                                id="page-3-link"),
+                    dbc.NavLink("Review Page", href="/page-4",
+                                id="page-4-link"),
+                ],
+                vertical=True,
+                pills=True,
+            ),
+            id="collapse",
+        ),
+    ],
+    id="sidebar",
+    style=SIDEBAR_STYLE
+)
+# sidebar = html.Div(
+#     [html.Img(
+#         src=f'data:image/png;base64,{logo_base64}', height='250px', width='200px'),
+#         html.Hr(),
+#         html.P(
+#             "Turn unstructured data to structured insights using Natural Language Processing and Deep Learning.",
+#             className="lead",
+#             style={'fontSize': '24', 'case': 'block'}
+#     ),
+#         dbc.Nav(
+#             [
+#                 dbc.NavLink("Beauty Trend Engine Landing Page",
+#                             href="/page-1", id="page-1-link"),
+#                 dbc.NavLink("Market Trend Page",
+#                             href="/page-2", id="page-2-link"),
+#                 dbc.NavLink("Category Page", href="/page-3", id="page-3-link"),
+#                 dbc.NavLink("Review Page", href="/page-4", id="page-4-link"),
+#             ],
+#             vertical=True,
+#             pills=True,
+#     ),
+#     ],
+#     style=SIDEBAR_STYLE,
+# )
 
 content = html.Div(id="page-content", style=CONTENT_STYLE)
 
-app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
+app.layout = html.Div(
+    [
+        dcc.Location(id="url"),
+        dbc.Row(
+            dbc.Col(
+                navbar,
+                width={'size': 12}
+            )
+        ),
+        dbc.Row(
+            dbc.Col(
+                [
+                    sidebar,
+                    content
+                ]
+            )
+        ),
+    ]
+)
 
 
 ''' create dropdown options '''
@@ -112,6 +258,28 @@ category_options = [{'label': i, 'value': i}
                     for i in review_trend_category_df.category.unique()]
 source_options = [{'label': i, 'value': i}
                   for i in review_trend_category_df.source.unique()]
+
+
+def landing_page_layout():
+    return html.Div(
+        className='row',
+        style={'verticalAlign': 'middle',
+               'textAlign': 'center',
+               'background-image': 'url(assets/landing_page_bg.jpg)',
+               'width': '100%',
+               'height': '100%',
+               'top': '0px',
+               'left': '0px'},
+        children=[
+            html.Div(
+                [
+                    html.P("Landing Page Work in Progress. Please click on Market Trend Page on the Sidebar to \
+                            experience first complete page of Beauty Trend Engine. Yay!",
+                           style={"background-color": "powderblue"})
+                ]
+            )
+        ]
+    )
 
 
 def market_trend_page_layout():
@@ -127,7 +295,8 @@ def market_trend_page_layout():
             html.H1('Market Trends by Categories and Product Launches',
                     style={'color': 'black',
                            'border': '0.5px grey dotted',
-                           'width': '60%'}
+                           'width': '60%',
+                           }
                     ),
             html.Div(
                 [
@@ -383,7 +552,8 @@ def market_trend_page_layout():
                 }
             )
         ],
-        style={'fontFamily': 'Gotham'}
+        style={'fontFamily': 'Gotham'},
+        id="output-clientside"
     )
 
 
@@ -894,8 +1064,35 @@ def update_product_type_new_ingredient_trend_figure(source: str, clickData, star
         start_date=start_date_string, end_date=end_date_string)
     return fig
 
+
 # this callback uses the current pathname to set the active state of the
 # corresponding nav link to true, allowing users to tell see page they are on
+# app.clientside_callback(
+#     ClientsideFunction(namespace="clientside", function_name="resize"),
+#     Output("output-clientside", "children"),
+#     [Input("yourGraph_ID", "figure")],
+# )
+
+@app.callback(
+    Output("navbar-collapse", "is_open"),
+    [Input("navbar-toggler", "n_clicks")],
+    [State("navbar-collapse", "is_open")],
+)
+def toggle_navbar_collapse(n, is_open):
+    if n:
+        return not is_open
+    return is_open
+
+
+@app.callback(
+    Output("sidebar", "className"),
+    [Input("sidebar-toggle", "n_clicks")],
+    [State("sidebar", "className")],
+)
+def toggle_classname(n, classname):
+    if n and classname == "":
+        return "collapsed"
+    return ""
 
 
 @app.callback(
@@ -914,9 +1111,8 @@ def toggle_active_links(pathname):
 def render_page_content(pathname):
     if pathname in ["/", "/page-1"]:
         # html.P("This is the content of page 1!")
-        return html.P("Landing Page Work in Progress. Please click on Market Trend Page on the Sidebar to \
-            experience first complete page of Beauty Trend Engine. Yay!")
-    elif pathname in ["/page-2"]:
+        return landing_page_layout()
+    elif pathname == "/page-2":
         return market_trend_page_layout()
     elif pathname == "/page-3":
         return html.P("This is the content of page 3. Yay!")
