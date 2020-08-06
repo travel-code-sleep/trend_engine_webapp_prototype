@@ -9,12 +9,14 @@ import json
 import re
 import base64
 from datetime import datetime as dt
+from typing import Tuple, Union, Optional
 
 import dash
 import dash_auth
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_table
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -23,7 +25,9 @@ from dash.dependencies import Input, Output, State, ClientsideFunction
 from dateutil.relativedelta import relativedelta
 from path import Path
 
+# from bte_utils import set_default_start_and_end_dates
 from bte_market_trend_page_data_and_plots import *
+from bte_category_page_data_and_plots import *
 
 # assign default values
 # px.defaults.template = "plotly_dark"
@@ -100,7 +104,7 @@ navbar = dbc.Navbar(
             html.Div(
                 [
                     html.H1("Beauty Trend Engine", className="display-4",
-                            style={'fontSize': 50,
+                            style={'fontSize': 40,
                                    'color': 'white',
                                    #    'backgroundColor': 'white',
                                    'fontFamily': 'Gotham',
@@ -205,36 +209,39 @@ sidebar = html.Div(
     id="sidebar",
     style=SIDEBAR_STYLE
 )
-# sidebar = html.Div(
-#     [html.Img(
-#         src=f'data:image/png;base64,{logo_base64}', height='250px', width='200px'),
-#         html.Hr(),
-#         html.P(
-#             "Turn unstructured data to structured insights using Natural Language Processing and Deep Learning.",
-#             className="lead",
-#             style={'fontSize': '24', 'case': 'block'}
-#     ),
-#         dbc.Nav(
-#             [
-#                 dbc.NavLink("Beauty Trend Engine Landing Page",
-#                             href="/page-1", id="page-1-link"),
-#                 dbc.NavLink("Market Trend Page",
-#                             href="/page-2", id="page-2-link"),
-#                 dbc.NavLink("Category Page", href="/page-3", id="page-3-link"),
-#                 dbc.NavLink("Review Page", href="/page-4", id="page-4-link"),
-#             ],
-#             vertical=True,
-#             pills=True,
-#     ),
-#     ],
-#     style=SIDEBAR_STYLE,
-# )
+'''
+sidebar = html.Div(
+    [html.Img(
+        src=f'data:image/png;base64,{logo_base64}', height='250px', width='200px'),
+        html.Hr(),
+        html.P(
+            "Turn unstructured data to structured insights using Natural Language Processing and Deep Learning.",
+            className="lead",
+            style={'fontSize': '24', 'case': 'block'}
+    ),
+        dbc.Nav(
+            [
+                dbc.NavLink("Beauty Trend Engine Landing Page",
+                            href="/page-1", id="page-1-link"),
+                dbc.NavLink("Market Trend Page",
+                            href="/page-2", id="page-2-link"),
+                dbc.NavLink("Category Page", href="/page-3", id="page-3-link"),
+                dbc.NavLink("Review Page", href="/page-4", id="page-4-link"),
+            ],
+            vertical=True,
+            pills=True,
+    ),
+    ],
+    style=SIDEBAR_STYLE,
+)
+'''
 
 content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div(
     [
         dcc.Location(id="url"),
+        html.Div(id="output-clientside"),
         dbc.Row(
             dbc.Col(
                 navbar,
@@ -251,13 +258,6 @@ app.layout = html.Div(
         ),
     ]
 )
-
-
-''' create dropdown options '''
-category_options = [{'label': i, 'value': i}
-                    for i in review_trend_category_df.category.unique()]
-source_options = [{'label': i, 'value': i}
-                  for i in review_trend_category_df.source.unique()]
 
 
 def landing_page_layout():
@@ -294,9 +294,10 @@ def market_trend_page_layout():
         [
             html.H1('Market Trends by Categories and Product Launches',
                     style={'color': 'black',
-                           'border': '0.5px grey dotted',
+                           #    'border': '0.5px grey dotted',
                            'width': 'auto',
-                           }
+                           },
+                    className="row pretty_container"
                     ),
             html.Div(
                 [
@@ -307,7 +308,7 @@ def market_trend_page_layout():
                                         'paddingRight': '15px'}
                                     ),
                             dcc.Dropdown(id='source',
-                                         options=source_options,
+                                         options=market_trend_page_source_options,
                                          multi=False,
                                          value='us',
                                          style={'fontSize': 14,
@@ -347,7 +348,7 @@ def market_trend_page_layout():
                                         'paddingRight': '30px'}
                                     ),
                             dcc.Dropdown(id='category',
-                                         options=category_options,
+                                         options=market_trend_page_category_options,
                                          multi=True,
                                          value=review_trend_category_df.category.unique().tolist(),
                                          style={'fontSize': 14,
@@ -362,7 +363,8 @@ def market_trend_page_layout():
                 ],
                 style={'display': 'inline-block',
                        'verticalAlign': 'top',
-                       'width': '100%'}
+                       'width': '100%'},
+                className="row pretty_container"
             ),
             dcc.Tabs(
                 [
@@ -453,31 +455,25 @@ def market_trend_page_layout():
                                     [
                                         html.Div(
                                             [
-                                                html.Div(
-                                                    [
-                                                        dcc.Graph(id='product_launch_trend_category',
-                                                                  figure=product_launch_trend_category_figure,
-                                                                  ),
-                                                    ],
-                                                    className="six columns"
-                                                ),
-
-                                                html.Div(
-                                                    [
-                                                        html.Div(id='product_trend_category_name',
-                                                                 style={'fontSize': 24,
-                                                                        'textAlign': 'center',
-                                                                        'fontFamily': "Gotham",
-                                                                        'verticalAlign': 'top'
-                                                                        }
-                                                                 ),
-                                                        html.Div(dcc.Graph(id='product_launch_trend_subcategory',
-                                                                           figure=product_launch_trend_subcategory_figure,
-                                                                           )
-                                                                 )
-                                                    ],
-                                                    className="six columns"
-                                                ),
+                                                dcc.Graph(id='product_launch_trend_category',
+                                                          figure=product_launch_trend_category_figure,
+                                                          ),
+                                            ],
+                                            className="row pretty_container"
+                                        ),
+                                        html.Div(
+                                            [
+                                                html.Div(id='product_trend_category_name',
+                                                         style={'fontSize': 24,
+                                                                'textAlign': 'center',
+                                                                'fontFamily': "Gotham",
+                                                                'verticalAlign': 'top'
+                                                                }
+                                                         ),
+                                                html.Div(dcc.Graph(id='product_launch_trend_subcategory',
+                                                                   figure=product_launch_trend_subcategory_figure,
+                                                                   )
+                                                         )
                                             ],
                                             className="row pretty_container"
                                         ),
@@ -506,45 +502,31 @@ def market_trend_page_layout():
                                     [
                                         html.Div(
                                             [
-                                                html.Div(
-                                                    [
-                                                        dcc.Graph(id='ingredient_launch_trend_category',
-                                                                  figure=new_ingredient_trend_category_figure,
-                                                                  ),
-                                                    ],
-                                                    className="six columns"
-                                                ),
-
-                                                html.Div(
-                                                    [
-                                                        html.Div(id='ingredient_trend_category_name',
-                                                                 style={'fontSize': 24,
-                                                                        'textAlign': 'center',
-                                                                        'fontFamily': "Gotham",
-                                                                        'verticalAlign': 'top'
-                                                                        }
-                                                                 ),
-                                                        html.Div(dcc.Graph(id='ingredient_launch_trend_subcategory',
-                                                                              figure=new_ingredient_trend_product_type_figure,
-                                                                           )
-                                                                 )
-                                                    ],
-                                                    className="six columns"
-                                                ),
+                                                dcc.Graph(id='ingredient_launch_trend_category',
+                                                          figure=new_ingredient_trend_category_figure,
+                                                          ),
                                             ],
-                                            className="row"
+                                            className="row pretty_container"
                                         ),
+
                                         html.Div(
                                             [
-                                                # dcc.Graph(id='ingredient_type_distribution',
-                                                #           #   figure=product_launch_intensity_category_figure,
-                                                #           ),
+                                                html.Div(id='ingredient_trend_category_name',
+                                                         style={'fontSize': 24,
+                                                                'textAlign': 'center',
+                                                                'fontFamily': "Gotham",
+                                                                'verticalAlign': 'top'
+                                                                }
+                                                         ),
+                                                html.Div(dcc.Graph(id='ingredient_launch_trend_subcategory',
+                                                                   figure=new_ingredient_trend_product_type_figure,
+                                                                   )
+                                                         )
                                             ],
-                                            className="row"
-                                        )
+                                            className="row pretty_container"
+                                        ),
 
                                     ],
-                                    className="pretty_container"
                                 ),
                             ],
                             style=tab_style,
@@ -560,12 +542,763 @@ def market_trend_page_layout():
             )
         ],
         style={'fontFamily': 'Gotham'},
-        id="output-clientside"
     )
 
 
-def category_product_performance_page_layout():
-    return None
+def category_page_layout():
+    packaging_filtered_df = cat_page_item_package_oz_df[['item_size', 'product_count']][
+        (cat_page_item_package_oz_df.source == 'us') &
+        (cat_page_item_package_oz_df.category == 'travel-size-toiletries') &
+        (cat_page_item_package_oz_df.product_type == 'vitamins-for-hair-skin-nails')]
+
+    top_products_df = cat_page_top_products_df[['brand', 'product_name', 'adjusted_rating',
+                                                'first_review_date', 'small_size_price', 'big_size_price']][
+        (cat_page_top_products_df.source == 'us') &
+        (cat_page_top_products_df.category == 'travel-size-toiletries') &
+        (cat_page_top_products_df.product_type == 'vitamins-for-hair-skin-nails')]
+
+    new_products_detail_df = cat_page_new_products_details_df[['brand', 'product_name', 'adjusted_rating', 'first_review_date',
+                                                               'small_size_price', 'big_size_price', 'reviews']][
+        (cat_page_new_products_details_df.source == 'us') &
+        (cat_page_new_products_details_df.category == 'skincare') &
+        (cat_page_new_products_details_df.product_type ==
+         'anti-aging-skin-care')
+    ]
+
+    new_ingredients_df = cat_page_new_ingredients_df[
+        (cat_page_new_ingredients_df.source == 'us') &
+        (cat_page_new_ingredients_df.category == 'makeup-cosmetics') &
+        (cat_page_new_ingredients_df.product_type ==
+         'setting-powder-face-powder')
+    ].sort_values(by='adjusted_rating', ascending=False)[['brand', 'product_name', 'ingredient', 'ingredient_type',
+                                                          'ban_flag']].reset_index(drop=True)
+
+    return html.Div(
+        [
+            dbc.Row(
+                dbc.Col(
+                    html.H1('Market Trends by Categories and Product Launches',
+                            style={'color': 'black',
+                                   #    'border': '0.5px grey dotted',
+                                   'width': 'auto',
+                                   },
+                            className="row pretty_container"
+                            )
+                )
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.Div(
+                            [
+                                html.H3('Select Geography'),
+                                dcc.Dropdown(id='cat_page_source',
+                                             options=category_page_source_options,
+                                             multi=False,
+                                             value='us',
+                                             style={'fontSize': 14},
+                                             placeholder='Select Geography',
+                                             clearable=False),
+                            ],
+                        ),
+                        width=3
+                    ),
+                    dbc.Col(
+                        html.Div(
+                            [
+                                html.H3('Select Category',
+                                        style={
+                                            'paddingRight': '30px'}
+                                        ),
+                                dcc.Dropdown(id='cat_page_category',
+                                             options=category_page_category_options,
+                                             multi=False,
+                                             style={'fontSize': 14,
+                                                    'width': '100%'},
+                                             placeholder='Select Category',
+                                             value='skincare',
+                                             clearable=False)
+                            ],
+                        ),
+                        width=4
+                    ),
+                    dbc.Col(
+                        html.Div(
+                            [
+                                html.H3('Select Product Type',
+                                        style={
+                                            'paddingRight': '30px'}
+                                        ),
+                                dcc.Dropdown(id='cat_page_product_type',
+                                             options=category_page_product_type_options,
+                                             multi=False,
+                                             style={'fontSize': 14,
+                                                    'width': '100%'},
+                                             placeholder='Select Product Type',
+                                             clearable=False)
+                            ],
+                        ),
+                        width=5
+                    ),
+                ],
+                className="row pretty_container"
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    html.Div(
+                                        [
+                                            html.H3('Product Analysis',
+                                                    style={
+                                                        'paddingRight': '30px'}
+                                                    )
+                                        ]
+                                    ),
+                                    html.Hr(),
+                                    html.Div(
+                                        [
+                                            html.Div(
+                                                [html.H5(id="distinct_brands_text"),
+                                                 html.P("Distinct Brands")],
+                                                id="distinct_brands",
+                                                className="mini_container",
+                                            ),
+                                            html.Div(
+                                                [html.H5(id="distinct_products_text"),
+                                                 html.P("Distinct Products")],
+                                                id="distinct_products",
+                                                className="mini_container",
+                                            ),
+                                            html.Div(
+                                                [html.H5(id="product_variations_text"),
+                                                 html.P("Product Variations")],
+                                                id="product_variations",
+                                                className="mini_container",
+                                            ),
+                                            html.Div(
+                                                [html.H5(id="new_products_text"),
+                                                 html.P("New Products")],
+                                                id="new_products",
+                                                className="mini_container",
+                                            ),
+                                        ],
+                                        id="info-container",
+                                        className="container-display",
+                                    )
+                                ],
+                            )
+                        ]
+                    ),
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    html.Div(
+                                        [
+                                            html.H3('Pricing Analysis',
+                                                    style={
+                                                        'paddingRight': '30px'}
+                                                    )
+                                        ]
+                                    ),
+                                    html.Hr(),
+                                    html.Div(
+                                        [
+                                            html.Div(
+                                                [html.H5(id="min_price_text"),
+                                                 html.P("Min Price")],
+                                                id="min_price",
+                                                className="mini_container",
+                                            ),
+                                            html.Div(
+                                                [html.H5(id="max_price_text"),
+                                                 html.P("Max Price")],
+                                                id="max_price",
+                                                className="mini_container",
+                                            ),
+                                            html.Div(
+                                                [html.H5(id="avg_low_price_text"),
+                                                 html.P("Avg Low Price")],
+                                                id="avg_low_price",
+                                                className="mini_container",
+                                            ),
+                                            html.Div(
+                                                [html.H5(id="avg_high_price_text"),
+                                                 html.P("Avg High Price")],
+                                                id="avg_high_price",
+                                                className="mini_container",
+                                            ),
+                                            html.Div(
+                                                [html.H5(id="avg_item_price_text"),
+                                                 html.P("Avg Item Price")],
+                                                id="avg_item_price",
+                                                className="mini_container",
+                                            ),
+                                        ],
+                                        id="info-container",
+                                        className="container-display",
+                                    )
+                                ],
+                            )
+                        ]
+                    )
+                ],
+                className="row pretty_container"
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    html.H3('Package Analysis')
+                                ]
+                            ),
+                            html.Hr(),
+                            dash_table.DataTable(
+                                id='product_package_data_table',
+                                columns=[
+                                    {"name": i, "id": i, "deletable": False,
+                                     "selectable": True, "hideable": False}
+                                    for i in ['item_size', 'product_count']
+                                ],
+                                data=packaging_filtered_df.to_dict(
+                                    'records'),  # the contents of the table
+                                editable=False,              # allow editing of data inside all cells
+                                # allow filtering of data by user ('native') or not ('none')
+                                filter_action="native",
+                                # enables data to be sorted per-column by user or not ('none')
+                                sort_action="native",
+                                sort_mode="single",         # sort across 'multi' or 'single' columns
+                                # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
+                                # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
+                                # choose if user can delete a row (True) or not (False)
+                                row_deletable=False,
+                                selected_columns=[],        # ids of columns that user selects
+                                selected_rows=[],           # indices of rows that user selects
+                                # all data is passed to the table up-front or not ('none')
+                                page_action="native",
+                                page_current=0,             # page number that user is on
+                                page_size=10,                # number of rows visible per page
+                                style_cell={                # ensure adequate header width when text is shorter than cell's text
+                                    'minWidth': 60, 'maxWidth': 60, 'width': 60
+                                },
+                                # style_cell_conditional=[    # align text columns to left. By default they are aligned to right
+                                #     {
+                                #         'if': {'column_id': c},
+                                #         'textAlign': 'left'
+                                #     } for c in ['country', 'iso_alpha3']
+                                # ],
+                                style_data={                # overflow cells' content into multiple lines
+                                    'whiteSpace': 'normal',
+                                    'height': 'auto'
+                                }
+                            )
+                        ],
+                        width=3,
+                        className="pretty_container"
+                    ),
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    html.H3('Top Products by Adjusted Rating')
+                                ]
+                            ),
+                            html.Hr(),
+                            dash_table.DataTable(
+                                id='top_products_data_table',
+                                columns=[
+                                    {"name": i, "id": i, "deletable": False,
+                                     "selectable": True, "hideable": False}
+                                    for i in top_products_df.columns
+                                ],
+                                data=top_products_df.to_dict(
+                                    'records'),  # the contents of the table
+                                editable=False,              # allow editing of data inside all cells
+                                # allow filtering of data by user ('native') or not ('none')
+                                filter_action="native",
+                                # enables data to be sorted per-column by user or not ('none')
+                                sort_action="native",
+                                sort_mode="single",         # sort across 'multi' or 'single' columns
+                                # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
+                                # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
+                                # choose if user can delete a row (True) or not (False)
+                                row_deletable=False,
+                                selected_columns=[],        # ids of columns that user selects
+                                selected_rows=[],           # indices of rows that user selects
+                                # all data is passed to the table up-front or not ('none')
+                                page_action="native",
+                                page_current=0,             # page number that user is on
+                                page_size=8,                # number of rows visible per page
+                                style_cell={                # ensure adequate header width when text is shorter than cell's text
+                                    'minWidth': 60, 'maxWidth': 95, 'width': 60
+                                },
+                                style_cell_conditional=[    # align text columns to left. By default they are aligned to right
+                                    {
+                                        'if': {'column_id': 'product_name'},
+                                        'textAlign': 'left'
+                                    },
+                                    {
+                                        'if': {'column_id': 'brand'},
+                                        'textAlign': 'left'
+                                    },
+                                    {
+                                        'if': {'column_id': 'product_name'},
+                                        'minWidth': 120, 'maxWidth': 160, 'width': 160
+                                    },
+                                    {
+                                        'if': {'column_id': 'brand'},
+                                        'minWidth': 100, 'maxWidth': 120, 'width': 120
+                                    }
+                                ],
+                                style_data={                # overflow cells' content into multiple lines
+                                    'whiteSpace': 'normal',
+                                    'height': 'auto'
+                                }
+                            )
+                        ],
+                        width=8,
+                        className="pretty_container"
+                    )
+                ],
+                className="row flex-display pretty_container"
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    html.H3('New Products to Market')
+                                ]
+                            ),
+                            html.Hr(),
+                            dash_table.DataTable(
+                                id='new_products_data_table',
+                                columns=[
+                                    {"name": i, "id": i, "deletable": False,
+                                     "selectable": True, "hideable": False}
+                                    for i in new_products_detail_df.columns
+                                ],
+                                data=new_products_detail_df.to_dict(
+                                    'records'),  # the contents of the table
+                                editable=False,              # allow editing of data inside all cells
+                                # allow filtering of data by user ('native') or not ('none')
+                                filter_action="native",
+                                # enables data to be sorted per-column by user or not ('none')
+                                sort_action="native",
+                                sort_mode="single",         # sort across 'multi' or 'single' columns
+                                # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
+                                # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
+                                # choose if user can delete a row (True) or not (False)
+                                row_deletable=False,
+                                selected_columns=[],        # ids of columns that user selects
+                                selected_rows=[],           # indices of rows that user selects
+                                # all data is passed to the table up-front or not ('none')
+                                page_action="native",
+                                page_current=0,             # page number that user is on
+                                page_size=10,                # number of rows visible per page
+                                style_cell={                # ensure adequate header width when text is shorter than cell's text
+                                    'minWidth': 80, 'maxWidth': 80, 'width': 80
+                                },
+                                style_cell_conditional=[    # align text columns to left. By default they are aligned to right
+                                    {
+                                        'if': {'column_id': 'product_name'},
+                                        'textAlign': 'left'
+                                    },
+                                    {
+                                        'if': {'column_id': 'brand'},
+                                        'textAlign': 'left'
+                                    },
+                                    {
+                                        'if': {'column_id': 'product_name'},
+                                        'minWidth': 120, 'maxWidth': 160, 'width': 160
+                                    },
+                                    {
+                                        'if': {'column_id': 'brand'},
+                                        'minWidth': 100, 'maxWidth': 110, 'width': 110
+                                    }
+                                ],
+                                style_data={                # overflow cells' content into multiple lines
+                                    'whiteSpace': 'normal',
+                                    'height': 'auto'
+                                }
+                            )
+                        ],
+                        width=12,
+                        className="pretty_container"
+                    ),
+
+                ],
+                className="row pretty_container"
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    html.H3('New Ingredients to Market')
+                                ]
+                            ),
+                            html.Hr(),
+                            dash_table.DataTable(
+                                id='new_ingredients_data_table',
+                                columns=[
+                                    {"name": i, "id": i, "deletable": False,
+                                     "selectable": True, "hideable": False}
+                                    for i in new_ingredients_df.columns
+                                ],
+                                data=new_ingredients_df.to_dict(
+                                    'records'),  # the contents of the table
+                                editable=False,              # allow editing of data inside all cells
+                                # allow filtering of data by user ('native') or not ('none')
+                                filter_action="native",
+                                # enables data to be sorted per-column by user or not ('none')
+                                sort_action="native",
+                                sort_mode="single",         # sort across 'multi' or 'single' columns
+                                # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
+                                # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
+                                # choose if user can delete a row (True) or not (False)
+                                row_deletable=False,
+                                selected_columns=[],        # ids of columns that user selects
+                                selected_rows=[],           # indices of rows that user selects
+                                # all data is passed to the table up-front or not ('none')
+                                page_action="native",
+                                page_current=0,             # page number that user is on
+                                page_size=10,                # number of rows visible per page
+                                style_cell={                # ensure adequate header width when text is shorter than cell's text
+                                    'minWidth': 120, 'maxWidth': 120, 'width': 120, 'textAlign': 'left'
+                                },
+                                style_cell_conditional=[    # align text columns to left. By default they are aligned to right
+                                    {
+                                        'if': {'column_id': 'product_name'},
+                                        'minWidth': 160, 'maxWidth': 160, 'width': 160,
+                                    },
+                                    {
+                                        'if': {'column_id': 'ban_flag'},
+                                        'minWidth': 60, 'maxWidth': 60, 'width': 60,
+                                    },
+                                    {
+                                        'if': {'column_id': 'ingredient'},
+                                        'minWidth': 160, 'maxWidth': 160, 'width': 160,
+                                    }
+                                ],
+                                style_data={                # overflow cells' content into multiple lines
+                                    'whiteSpace': 'normal',
+                                    'height': 'auto'
+                                }
+                            )
+                        ],
+                        width=12,
+                        className="pretty_container"
+                    ),
+
+
+
+                ],
+                className="row pretty_container"
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    html.H3(
+                                        'Review Distribution by User Attributes')
+                                ]
+                            ),
+                            html.Div(
+                                [
+                                    html.H5('Select User Attribute'),
+                                    dcc.Dropdown(id='cat_page_user_attribute',
+                                                 options=category_page_user_attribute_options,
+                                                 multi=False,
+                                                 value='age',
+                                                 style={'fontSize': 14},
+                                                 placeholder='Select User Attribute',
+                                                 clearable=False,
+                                                 ),
+                                ],
+                                className="four columns",
+                                style={'width': '30%'}
+                            ),
+                            html.Hr(),
+                            dcc.Graph(id='cat_page_reviews_by_attribute',
+                                      figure=cat_page_user_attribute_figure)
+                        ]
+                    )
+                ],
+                className="row pretty_container"
+            )
+        ],
+        id="mainContainer",
+        style={'fontFamily': 'Gotham', "display": "flex",
+               "flex-direction": "column"},
+    )
+
+
+@app.callback(Output('cat_page_reviews_by_attribute', 'figure'),
+              [Input("cat_page_source", "value"),
+               Input("cat_page_category", "value"),
+               Input("cat_page_product_type", "value"),
+               Input("cat_page_user_attribute", "value")
+               ]
+              )
+def update_reviews_by_user_attribute_figure(source: str, category: str,
+                                            product_type: str,
+                                            user_attribute: str) -> go.Figure:
+    """update_reviews_by_user_attribute_figure [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+        user_attribute (str): [description]
+
+    Returns:
+        go.Figure: [description]
+    """
+    fig = create_reviews_by_user_attribute_figure(source=source, category=category,
+                                                  product_type=product_type, user_attribute=user_attribute)
+
+    return fig
+
+
+@app.callback(Output('new_ingredients_data_table', 'data'),
+              [Input("cat_page_source", "value"),
+               Input("cat_page_category", "value"),
+               Input("cat_page_product_type", "value")
+               ]
+              )
+def filter_top_products_data_table(source: str, category: str, product_type: str) -> pd.DataFrame:
+    """filter_product_packaging_data_table [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        pd.DataFrame: [description]
+    """
+    new_ingredients_df = cat_page_new_ingredients_df[
+        (cat_page_new_ingredients_df.source == source) &
+        (cat_page_new_ingredients_df.category == category) &
+        (cat_page_new_ingredients_df.product_type == product_type)
+    ].sort_values(by='adjusted_rating', ascending=False)[['brand', 'product_name', 'ingredient', 'ingredient_type',
+                                                          'ban_flag']].reset_index(drop=True)
+
+    return new_ingredients_df.to_dict('records')
+
+
+@app.callback(Output('new_products_data_table', 'data'),
+              [Input("cat_page_source", "value"),
+               Input("cat_page_category", "value"),
+               Input("cat_page_product_type", "value")
+               ]
+              )
+def filter_top_products_data_table(source: str, category: str, product_type: str) -> pd.DataFrame:
+    """filter_product_packaging_data_table [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        pd.DataFrame: [description]
+    """
+    new_products_detail_df = cat_page_new_products_details_df[['brand', 'product_name', 'adjusted_rating', 'first_review_date',
+                                                               'small_size_price', 'big_size_price', 'reviews']][
+        (cat_page_new_products_details_df.source == source) &
+        (cat_page_new_products_details_df.category == category) &
+        (cat_page_new_products_details_df.product_type == product_type)
+    ]
+
+    new_products_detail_df.sort_values(
+        by='adjusted_rating', inplace=True, ascending=False)
+
+    return new_products_detail_df.to_dict('records')
+
+
+@app.callback(Output('top_products_data_table', 'data'),
+              [Input("cat_page_source", "value"),
+               Input("cat_page_category", "value"),
+               Input("cat_page_product_type", "value")
+               ]
+              )
+def filter_top_products_data_table(source: str, category: str, product_type: str) -> pd.DataFrame:
+    """filter_product_packaging_data_table [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        pd.DataFrame: [description]
+    """
+    top_products_df = cat_page_top_products_df[['brand', 'product_name', 'adjusted_rating',
+                                                'first_review_date', 'small_size_price', 'big_size_price']][
+        (cat_page_top_products_df.source == source) &
+        (cat_page_top_products_df.category == category) &
+        (cat_page_top_products_df.product_type == product_type)]
+
+    top_products_df.sort_values(
+        by='adjusted_rating', inplace=True, ascending=False)
+
+    return top_products_df.to_dict('records')
+
+
+@app.callback(Output('product_package_data_table', 'data'),
+              [Input("cat_page_source", "value"),
+               Input("cat_page_category", "value"),
+               Input("cat_page_product_type", "value")
+               ]
+              )
+def filter_product_packaging_data_table(source: str, category: str, product_type: str) -> pd.DataFrame:
+    """filter_product_packaging_data_table [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        pd.DataFrame: [description]
+    """
+    packaging_filtered_df = cat_page_item_package_oz_df[['item_size', 'product_count']][
+        (cat_page_item_package_oz_df.source == source) &
+        (cat_page_item_package_oz_df.category == category) &
+        (cat_page_item_package_oz_df.product_type == product_type)]
+
+    packaging_filtered_df.sort_values(
+        by='product_count', inplace=True, ascending=False)
+
+    return packaging_filtered_df.to_dict('records')
+
+
+@app.callback(
+    Output('cat_page_product_type', 'options'),
+    [Input('cat_page_source', 'value'),
+     Input('cat_page_category', 'value')])
+def set_category_page_product_type_options(source: str, category: str):
+    return [{'label': i, 'value': i}
+            for i in cat_page_pricing_analytics_df.product_type[(cat_page_pricing_analytics_df.source == source) &
+                                                                (cat_page_pricing_analytics_df.category == category)].unique()]
+
+
+@app.callback(
+    Output('cat_page_product_type', 'value'),
+    [Input("cat_page_source", "value"),
+     Input("cat_page_category", "value"),
+     Input('cat_page_product_type', 'options')])
+def set_category_page_product_type_value(source, category, available_options):
+    return available_options[0]['value']
+
+
+@app.callback(
+    [
+        Output("distinct_brands_text", "children"),
+        Output("distinct_products_text", "children"),
+        Output("product_variations_text", "children"),
+        Output("new_products_text", "children"),
+    ],
+    [Input("cat_page_source", "value"),
+     Input("cat_page_category", "value"),
+     Input("cat_page_product_type", "value")],
+)
+def update_product_analysis_text(source: str, category: str, product_type: str) -> Tuple[str, str, str, str]:
+    """update_text [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        Tuple[str, str, str, str]: [description]
+    """
+    dist_list = cat_page_distinct_brands_products_df[[
+        'distinct_brands', 'distinct_products']][
+        (cat_page_distinct_brands_products_df.source == source) &
+        (cat_page_distinct_brands_products_df.category == category) &
+        (cat_page_distinct_brands_products_df.product_type == product_type)].values.tolist()[0]
+
+    new_products_list = \
+        cat_page_new_products_count_df.new_product_count[
+            (cat_page_new_products_count_df.source == source) &
+            (cat_page_new_products_count_df.category == category) &
+            (cat_page_new_products_count_df.product_type == product_type)].values.tolist()
+
+    product_variations = cat_page_item_variations_price_df.product_variations[
+        (cat_page_item_variations_price_df.source == source) &
+        (cat_page_item_variations_price_df.category == category) &
+        (cat_page_item_variations_price_df.product_type == product_type)].values.tolist()
+    if len(new_products_list) == 0:
+        new_products = 0
+    else:
+        new_products = new_products_list[0]
+
+    return dist_list[0], dist_list[1], product_variations[0], new_products
+
+
+@app.callback(
+    [
+        Output("min_price_text", "children"),
+        Output("max_price_text", "children"),
+        Output("avg_low_price_text", "children"),
+        Output("avg_high_price_text", "children"),
+        Output("avg_item_price_text", "children")
+    ],
+    [Input("cat_page_source", "value"),
+     Input("cat_page_category", "value"),
+     Input("cat_page_product_type", "value")],
+)
+def update_pricing_analysis_text(source: str, category: str, product_type: str) -> Tuple[str, str, str, str]:
+    """update_text [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        Tuple[str, str, str, str]: [description]
+    """
+    pricing_data = [f'${p}' if source == 'us' else f'£{p}'
+                    for p in cat_page_pricing_analytics_df[['min_price', 'max_price', 'avg_low_price', 'avg_high_price']]
+                    [(cat_page_pricing_analytics_df.source == source) &
+                     (cat_page_pricing_analytics_df.category == category) &
+                        (cat_page_pricing_analytics_df.product_type == product_type)].values.tolist()[0]
+                    ]
+    item_price = [f'${p}' if source == 'us' else f'£{p}'
+                  for p in cat_page_item_variations_price_df.avg_item_price[
+                      (cat_page_item_variations_price_df.source == source) &
+                      (cat_page_item_variations_price_df.category == category) &
+                      (cat_page_item_variations_price_df.product_type == product_type)].values.tolist()]
+
+    return pricing_data[0], pricing_data[1], pricing_data[2], pricing_data[3], item_price[0]
 
 
 @app.callback(Output('category_trend', 'figure'),
@@ -786,8 +1519,10 @@ def update_product_type_influenced_review_trend_figure(source: str, clickData, s
         category = 'bath-body'
     # pt_df = review_trend_product_type_df[(review_trend_product_type_df.category==category)
     #                               review_trend_product_type_df.source==source]
-    product_type_count = len(influenced_review_trend_product_type_df[(influenced_review_trend_product_type_df.category == category) &
-                                                                     (influenced_review_trend_product_type_df.source == source)].product_type.unique())
+    product_type_count = len(influenced_review_trend_product_type_df[(influenced_review_trend_product_type_df.category
+                                                                      == category) &
+                                                                     (influenced_review_trend_product_type_df.source
+                                                                      == source)].product_type.unique())
     if product_type_count <= 10:
         height = 600
     elif product_type_count <= 20:
@@ -1122,7 +1857,7 @@ def render_page_content(pathname):
     elif pathname == "/page-2":
         return market_trend_page_layout()
     elif pathname == "/page-3":
-        return html.P("This is the content of page 3. Yay!")
+        return category_page_layout()
     elif pathname == "/page-4":
         return html.P("Oh cool, this is page 4!")
     # If the user tries to reach a different page, return a 404 message
@@ -1136,4 +1871,4 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    app.run_server()
+    app.run_server(debug=True)

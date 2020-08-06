@@ -1,26 +1,18 @@
-"""this module reads all the required data for trend engine web-app, defines figure functions and create initial placeholder graphs."""
+"""this module reads all the required data for market trend page of web-app, defines figure functions and create initial placeholder graphs."""
 import json
 import re
-from datetime import datetime as dt
-from dateutil.relativedelta import relativedelta
+
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
 from path import Path
 
+from bte_utils import set_default_start_and_end_dates
+
 dash_data_path = Path(r'D:\Amit\Meiyume\meiyume_bte_dash_flask_app\dash_data')
 
-three_yrs_ago = dt.now() - relativedelta(years=3)
-default_start_date = str(pd.to_datetime(
-    three_yrs_ago.strftime('%m/%d/%Y')))[:10].split('-')
-default_start_date[-1] = '01'
-default_start_date = ('-').join(default_start_date)
-
-default_end_date = str(pd.to_datetime(
-    dt.today().strftime('%m/%d/%Y')))[:10].split('-')
-default_end_date[-1] = '01'
-default_end_date = ('-').join(default_end_date)
+default_start_date, default_end_date = set_default_start_and_end_dates()
 
 '''
 Read all the data from flat files.
@@ -50,6 +42,11 @@ new_ingredient_trend_category_df = pd.read_feather(
 new_ingredient_trend_product_type_df = pd.read_feather(
     dash_data_path/'new_ingredient_trend_product_type_month')
 
+''' create dropdown options '''
+market_trend_page_category_options = [{'label': i, 'value': i}
+                                      for i in review_trend_category_df.category.unique()]
+market_trend_page_source_options = [{'label': i, 'value': i}
+                                    for i in review_trend_category_df.source.unique()]
 
 '''create graph figure functions'''
 
@@ -111,6 +108,7 @@ def create_category_review_trend_figure(data: pd.DataFrame, source: str = 'us',
         legend_title_font_color="green",
         hovermode='closest'
     )
+    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     fig.update_xaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
                      title_font=dict(size=20, family='Gotham', color='crimson'))
     fig.update_yaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
@@ -178,6 +176,7 @@ def create_product_type_review_trend_figure(data: pd.DataFrame, source: str = 'u
         legend_title_font_color="green",
         hovermode='closest'
     )
+    fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     fig.update_xaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
                      title_font=dict(size=20, family='Gotham', color='crimson'))
     fig.update_yaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
@@ -208,7 +207,7 @@ def create_category_product_launch_figure(data: pd.DataFrame, source: str = 'us'
     fig = px.line(data[(data.source == source) & (data.category.isin(category))],
                   x="meta_date", y="new_product_count", color='category', hover_data=['category'],
                   hover_name="category", line_shape="spline", title='Product Launch in Categories over Month',
-                  width=600, height=600)
+                  width=1200, height=600)
 
     fig.update_traces(connectgaps=True,
                       mode='markers+lines')
@@ -256,7 +255,7 @@ def create_product_type_product_launch_figure(data: pd.DataFrame, source: str = 
                   x="meta_date", y="new_product_count", color='product_type', line_group='category',
                   hover_name="category", hover_data=["category", "product_type", 'new_product_count'],
                   line_shape="spline", title='Product Launch in Subcategories over Month',
-                  width=800, height=600)
+                  width=1200, height=600)
 
     fig.update_traces(connectgaps=True,
                       mode='markers+lines')
@@ -349,7 +348,7 @@ def create_category_new_ingredient_trend_figure(data: pd.DataFrame, source: str 
     fig = px.line(data[(data.source == source) & (data.category.isin(category))],
                   x="meta_date", y="new_ingredient_count", color='category', hover_data=['category'],
                   hover_name="category", line_shape="spline", title='New Ingredients in Categories over Month',
-                  width=600, height=600)
+                  width=1200, height=600)
 
     fig.update_traces(connectgaps=True,
                       mode='markers+lines')
@@ -397,7 +396,7 @@ def create_product_type_new_ingredient_trend_figure(data: pd.DataFrame, source: 
                   x="meta_date", y="new_ingredient_count", color='product_type', line_group='category',
                   hover_name="category", hover_data=["category", "product_type", 'new_ingredient_count'],
                   line_shape="spline", title='New Ingredients in Subcategories over Month',
-                  width=800, height=600)
+                  width=1200, height=600)
 
     fig.update_traces(connectgaps=True,
                       mode='markers+lines')
