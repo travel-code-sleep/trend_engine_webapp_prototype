@@ -68,21 +68,21 @@ tab_selected_style = {
     'color': 'white',
     'padding': '6px'}
 # the style arguments for the sidebar. We use position:fixed and a fixed width
-SIDEBAR_STYLE = {"position": "fixed",
-                 "top": 0,
-                 "left": 0,
-                 "bottom": 0,
-                 "width": "18rem",
-                 "padding": "2rem 1rem",
-                 "background-color": "#f8f9fa"
-                 }
+# SIDEBAR_STYLE = {"position": "flex",
+#                  "top": 0,
+#                  "left": 0,
+#                  "bottom": 0,
+#                  "width": "20rem",
+#                  "padding": "2rem 1rem",
+#                  "background-color": "#f8f9fa"
+#                  }
 
-# the styles for the main content position it to the right of the sidebar and
-# add some padding.
-CONTENT_STYLE = {
-    "margin-left": "18rem",
-    "margin-right": "2rem",
-    "padding": "2rem 1rem", }
+# # the styles for the main content position it to the right of the sidebar and
+# # add some padding.
+# CONTENT_STYLE = {
+#     "margin-left": "20rem",
+#     "margin-right": "2rem",
+#     "padding": "2rem 1rem", }
 
 # create sidebar page layout and navigation
 search_bar = dbc.Row(
@@ -130,7 +130,7 @@ navbar = dbc.Navbar(
                     dbc.DropdownMenuItem(
                         "Improve Existing Products", href="/page-4"),
                 ],
-                style={'fontSize': 24},
+                style={'fontSize': 30},
                 in_navbar=True,
                 label="Select Application",
             ),
@@ -153,8 +153,9 @@ sidebar_header = html.Div(
                         html.Hr(),
                         html.P(
                             "Turn unstructured data to structured insights using Natural Language Processing and Deep Learning.",
-                            className="lead",
-                            # style={'fontSize': '14', 'case': 'block'}
+                            # className="lead",
+                            style={'fontSize': '15', 'case': 'block',
+                                   'fontName': 'Gotham'}
                         )
                     ]
                 ),
@@ -207,7 +208,7 @@ sidebar = html.Div(
         ),
     ],
     id="sidebar",
-    style=SIDEBAR_STYLE
+
 )
 '''
 sidebar = html.Div(
@@ -236,7 +237,7 @@ sidebar = html.Div(
 )
 '''
 
-content = html.Div(id="page-content", style=CONTENT_STYLE)
+content = html.Div(id="page-content")
 
 app.layout = html.Div(
     [
@@ -248,14 +249,8 @@ app.layout = html.Div(
                 width={'size': 12}
             )
         ),
-        dbc.Row(
-            dbc.Col(
-                [
-                    sidebar,
-                    content
-                ]
-            )
-        ),
+        sidebar,
+        content
     ]
 )
 
@@ -784,7 +779,7 @@ def category_page_layout():
                                 page_current=0,             # page number that user is on
                                 page_size=10,                # number of rows visible per page
                                 style_cell={                # ensure adequate header width when text is shorter than cell's text
-                                    'minWidth': 60, 'maxWidth': 60, 'width': 60
+                                    'minWidth': 60, 'maxWidth': 60, 'width': 60, 'fontSize': 14, 'font-family': 'Gotham'
                                 },
                                 # style_cell_conditional=[    # align text columns to left. By default they are aligned to right
                                 #     {
@@ -835,7 +830,7 @@ def category_page_layout():
                                 page_current=0,             # page number that user is on
                                 page_size=8,                # number of rows visible per page
                                 style_cell={                # ensure adequate header width when text is shorter than cell's text
-                                    'minWidth': 60, 'maxWidth': 95, 'width': 60
+                                    'minWidth': 60, 'maxWidth': 95, 'width': 60, 'fontSize': 14, 'font-family': 'Gotham'
                                 },
                                 style_cell_conditional=[    # align text columns to left. By default they are aligned to right
                                     {
@@ -903,7 +898,7 @@ def category_page_layout():
                                 page_current=0,             # page number that user is on
                                 page_size=10,                # number of rows visible per page
                                 style_cell={                # ensure adequate header width when text is shorter than cell's text
-                                    'minWidth': 80, 'maxWidth': 80, 'width': 80
+                                    'minWidth': 80, 'maxWidth': 80, 'width': 80, 'fontSize': 14, 'font-family': 'Gotham'
                                 },
                                 style_cell_conditional=[    # align text columns to left. By default they are aligned to right
                                     {
@@ -972,7 +967,7 @@ def category_page_layout():
                                 page_current=0,             # page number that user is on
                                 page_size=10,                # number of rows visible per page
                                 style_cell={                # ensure adequate header width when text is shorter than cell's text
-                                    'minWidth': 120, 'maxWidth': 120, 'width': 120, 'textAlign': 'left'
+                                    'minWidth': 120, 'maxWidth': 120, 'width': 120, 'textAlign': 'left', 'fontSize': 14, 'font-family': 'Gotham'
                                 },
                                 style_cell_conditional=[    # align text columns to left. By default they are aligned to right
                                     {
@@ -1003,39 +998,32 @@ def category_page_layout():
                 ],
                 className="row pretty_container"
             ),
-            dbc.Row(
+            html.Div(
                 [
-                    dbc.Col(
+                    html.H3(
+                        'Review Distribution by User Attributes'),
+                    html.Div(
                         [
-                            html.Div(
-                                [
-                                    html.H3(
-                                        'Review Distribution by User Attributes')
-                                ]
-                            ),
-                            html.Div(
-                                [
-                                    html.H5('Select User Attribute'),
-                                    dcc.Dropdown(id='cat_page_user_attribute',
-                                                 options=category_page_user_attribute_options,
-                                                 multi=False,
-                                                 value='age',
-                                                 style={'fontSize': 14},
-                                                 placeholder='Select User Attribute',
-                                                 clearable=False,
-                                                 ),
-                                ],
-                                className="four columns",
-                                style={'width': '30%'}
-                            ),
-                            html.Hr(),
-                            dcc.Graph(id='cat_page_reviews_by_attribute',
-                                      figure=cat_page_user_attribute_figure)
-                        ]
-                    )
+                            html.H5('Select User Attribute'),
+                            dcc.Dropdown(id='cat_page_user_attribute',
+                                         options=category_page_user_attribute_options,
+                                         multi=False,
+                                         value='age',
+                                         style={'fontSize': 14},
+                                         placeholder='Select User Attribute',
+                                         clearable=False,
+                                         ),
+                        ],
+                        # className="four columns",
+                        style={'width': '30%'}
+                    ),
+                    html.Hr(),
+                    dcc.Graph(id='cat_page_reviews_by_attribute',
+                              figure=cat_page_user_attribute_figure)
                 ],
-                className="row pretty_container"
-            )
+                className="pretty_container"
+            ),
+
         ],
         id="mainContainer",
         style={'fontFamily': 'Gotham', "display": "flex",
@@ -1308,7 +1296,7 @@ def update_pricing_analysis_text(source: str, category: str, product_type: str) 
                       Input('review_month_range', 'end_date')
                       ]
               )
-def update_category_review_trend_figure(source: str, category: list, start_date: str, end_date: str)->go.Figure:
+def update_category_review_trend_figure(source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_category_review_trend_figure [summary]
 
     [extended_summary]
@@ -1349,7 +1337,7 @@ def update_category_review_trend_figure(source: str, category: list, start_date:
                       Input('review_month_range', 'end_date')
                       ]
               )
-def update_category_influenced_review_trend_figure(source: str, category: list, start_date: str, end_date: str)->go.Figure:
+def update_category_influenced_review_trend_figure(source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_category_influenced_review_trend_figure [summary]
 
     [extended_summary]
@@ -1385,7 +1373,7 @@ def update_category_influenced_review_trend_figure(source: str, category: list, 
 @app.callback(Output('influenced_category_name', 'children'),
               [Input('influenced_category_trend', 'clickData'),
                ])
-def influenced_display_click_data(clickData)->str:
+def influenced_display_click_data(clickData) -> str:
     """influenced_display_click_data [summary]
 
     [extended_summary]
@@ -1405,7 +1393,7 @@ def influenced_display_click_data(clickData)->str:
 @app.callback(Output('category_name', 'children'),
               [Input('category_trend', 'clickData'),
                ])
-def display_click_data(clickData)->str:
+def display_click_data(clickData) -> str:
     """display_click_data [summary]
 
     [extended_summary]
@@ -1428,7 +1416,7 @@ def display_click_data(clickData)->str:
                Input('review_month_range', 'start_date'),
                Input('review_month_range', 'end_date')]
               )
-def update_product_type_review_trend_figure(source: str, clickData, start_date: str, end_date: str)->go.Figure:
+def update_product_type_review_trend_figure(source: str, clickData, start_date: str, end_date: str) -> go.Figure:
     """update_product_type_review_trend_figure [summary]
 
     [extended_summary]
@@ -1486,7 +1474,7 @@ def update_product_type_review_trend_figure(source: str, clickData, start_date: 
                Input('review_month_range', 'start_date'),
                Input('review_month_range', 'end_date')]
               )
-def update_product_type_influenced_review_trend_figure(source: str, clickData, start_date: str, end_date: str)->go.Figure:
+def update_product_type_influenced_review_trend_figure(source: str, clickData, start_date: str, end_date: str) -> go.Figure:
     """update_product_type_influenced_review_trend_figure
 
     [extended_summary]
@@ -1544,7 +1532,7 @@ def update_product_type_influenced_review_trend_figure(source: str, clickData, s
     dash.dependencies.Output('output-container-date-picker-range', 'children'),
     [dash.dependencies.Input('review_month_range', 'start_date'),
      dash.dependencies.Input('review_month_range', 'end_date')])
-def date_selection_text(start_date: str, end_date: str)->str:
+def date_selection_text(start_date: str, end_date: str) -> str:
     """date_selection_text [summary]
 
     [extended_summary]
@@ -1566,7 +1554,7 @@ def date_selection_text(start_date: str, end_date: str)->str:
                       Input('review_month_range', 'end_date')
                       ]
               )
-def update_category_product_launch_figure(source: str, category: list, start_date: str, end_date: str)->go.Figure:
+def update_category_product_launch_figure(source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_category_product_launch_figure [summary]
 
     [extended_summary]
@@ -1602,7 +1590,7 @@ def update_category_product_launch_figure(source: str, category: list, start_dat
 @app.callback(Output('product_trend_category_name', 'children'),
               [Input('product_launch_trend_category', 'clickData'),
                ])
-def display_click_data_product_trend(clickData)->str:
+def display_click_data_product_trend(clickData) -> str:
     """display_click_data_product_trend [summary]
 
     [extended_summary]
@@ -1625,7 +1613,7 @@ def display_click_data_product_trend(clickData)->str:
                Input('review_month_range', 'start_date'),
                Input('review_month_range', 'end_date')]
               )
-def update_product_type_product_launch_figure(source: str, clickData, start_date: str, end_date: str)->go.Figure:
+def update_product_type_product_launch_figure(source: str, clickData, start_date: str, end_date: str) -> go.Figure:
     """update_product_type_product_launch_figure [summary]
 
     [extended_summary]
@@ -1670,7 +1658,7 @@ def update_product_type_product_launch_figure(source: str, clickData, start_date
                       Input('review_month_range', 'end_date')
                       ]
               )
-def update_product_launch_intensity_figure(source: str, category: list, start_date: str, end_date: str)->go.Figure:
+def update_product_launch_intensity_figure(source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_product_launch_intensity_figure [summary]
 
     [extended_summary]
@@ -1710,7 +1698,7 @@ def update_product_launch_intensity_figure(source: str, category: list, start_da
                       Input('review_month_range', 'end_date')
                       ]
               )
-def update_category_new_ingredient_trend_figure(source: str, category: list, start_date: str, end_date: str)->go.Figure:
+def update_category_new_ingredient_trend_figure(source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_category_new_ingredient_trend_figure [summary]
 
     [extended_summary]
@@ -1746,7 +1734,7 @@ def update_category_new_ingredient_trend_figure(source: str, category: list, sta
 @app.callback(Output('ingredient_trend_category_name', 'children'),
               [Input('ingredient_launch_trend_category', 'clickData'),
                ])
-def display_click_data_product_trend(clickData)->str:
+def display_click_data_product_trend(clickData) -> str:
     """display_click_data_product_trend [summary]
 
     [extended_summary]
@@ -1769,7 +1757,7 @@ def display_click_data_product_trend(clickData)->str:
                Input('review_month_range', 'start_date'),
                Input('review_month_range', 'end_date')]
               )
-def update_product_type_new_ingredient_trend_figure(source: str, clickData, start_date: str, end_date: str)->go.Figure:
+def update_product_type_new_ingredient_trend_figure(source: str, clickData, start_date: str, end_date: str) -> go.Figure:
     """update_product_type_new_ingredient_trend_figure [summary]
 
     [extended_summary]
