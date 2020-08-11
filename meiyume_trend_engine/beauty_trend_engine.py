@@ -117,7 +117,7 @@ navbar = dbc.Navbar(
                     dbc.DropdownMenuItem(
                         "Improve Existing Products", href="/page-4"),
                 ],
-                style={'fontSize': 24},
+                style={'fontSize': 30},
                 in_navbar=True,
                 label="Select Application",
             ),
@@ -559,7 +559,7 @@ def category_page_layout():
         [
             dbc.Row(
                 dbc.Col(
-                    html.H1('Market Trends by Categories and Product Launches',
+                    html.H1('Product, Pricing and Market Position Analysis by Category/Subcategory',
                             style={'color': 'black',
                                    #    'border': '0.5px grey dotted',
                                    'width': 'auto',
@@ -1591,7 +1591,7 @@ def display_click_data_product_trend(clickData) -> str:
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
     else:
-        ('Selected Category: bath-body')
+        return ('Selected Category: bath-body')
 
 
 @app.callback(Output('product_launch_trend_subcategory', 'figure'),
@@ -1721,7 +1721,7 @@ def update_category_new_ingredient_trend_figure(source: str, category: list, sta
 @app.callback(Output('ingredient_trend_category_name', 'children'),
               [Input('ingredient_launch_trend_category', 'clickData'),
                ])
-def display_click_data_product_trend(clickData) -> str:
+def display_click_data_ingredient_trend(clickData) -> str:
     """display_click_data_product_trend [summary]
 
     [extended_summary]
@@ -1735,7 +1735,7 @@ def display_click_data_product_trend(clickData) -> str:
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
     else:
-        ('Selected Category: bath-body')
+        return ('Selected Category: bath-body')
 
 
 @app.callback(Output('ingredient_launch_trend_subcategory', 'figure'),
@@ -1846,4 +1846,5 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server()
+    # app.run_server(debug=True)
