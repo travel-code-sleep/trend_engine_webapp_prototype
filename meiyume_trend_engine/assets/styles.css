@@ -64,11 +64,11 @@ body {
   position: absolute;
 }
 
-#count_graph {
+/* #count_graph {
   position: absolute;
   height: calc(100% - 30px);
   width: calc(100% - 30px);
-}
+} */
 
 #countGraphContainer {
   flex: 5;
@@ -107,25 +107,25 @@ body {
   flex-direction: column;
 }
 
-#wells {
+/* #wells {
   flex: 1;
 }
 
 #gas {
   flex: 1;
-}
+} */
 
 #aggregate_data {
   align-items: center;
 }
 
-#oil {
+/* #oil {
   flex: 1;
 }
 
 #water {
   flex: 1;
-}
+} */
 
 #tripleContainer {
   display: flex;
@@ -137,7 +137,7 @@ body {
   flex-direction: column;
 }
 
-#pie_graph > div > div > svg:nth-child(3) > g.infolayer > g.legend {
+/* #pie_graph > div > div > svg:nth-child(3) > g.infolayer > g.legend {
   pointer-events: all;
   transform: translate(30px, 349px);
-}
+} */

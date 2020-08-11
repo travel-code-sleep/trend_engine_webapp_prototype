@@ -53,7 +53,7 @@ market_trend_page_source_options = [{'label': i, 'value': i}
 
 def create_category_review_trend_figure(data: pd.DataFrame, source: str = 'us',
                                         category: list = review_trend_category_df.category.unique().tolist(),
-                                        start_date: str = default_start_date, end_date: str = default_end_date)-> go.Figure:
+                                        start_date: str = default_start_date, end_date: str = default_end_date) -> go.Figure:
     """create_category_review_trend_figure [summary]
 
     [extended_summary]
@@ -186,7 +186,7 @@ def create_product_type_review_trend_figure(data: pd.DataFrame, source: str = 'u
 
 def create_category_product_launch_figure(data: pd.DataFrame, source: str = 'us',
                                           category: list = meta_product_launch_trend_category_df.category.unique().tolist(),
-                                          start_date: str = default_start_date, end_date: str = default_end_date)->go.Figure:
+                                          start_date: str = default_start_date, end_date: str = default_end_date) -> go.Figure:
     """create_category_product_launch_figure [summary]
 
     [extended_summary]
@@ -233,7 +233,7 @@ def create_category_product_launch_figure(data: pd.DataFrame, source: str = 'us'
 
 def create_product_type_product_launch_figure(data: pd.DataFrame, source: str = 'us',
                                               category: str = 'bath-body',
-                                              start_date: str = default_start_date, end_date: str = default_end_date)->go.Figure:
+                                              start_date: str = default_start_date, end_date: str = default_end_date) -> go.Figure:
     """create_product_type_product_launch_figure [summary]
 
     [extended_summary]
@@ -281,7 +281,7 @@ def create_product_type_product_launch_figure(data: pd.DataFrame, source: str = 
 
 def create_product_launch_intensity_figure(data: pd.DataFrame, source: str = 'us',
                                            category: list = product_launch_intensity_category_df.category.unique().tolist(),
-                                           start_date: str = default_start_date, end_date: str = default_end_date)->go.Figure:
+                                           start_date: str = default_start_date, end_date: str = default_end_date) -> go.Figure:
     """create_product_launch_intensity_figure [summary]
 
     [extended_summary]
@@ -327,7 +327,7 @@ def create_product_launch_intensity_figure(data: pd.DataFrame, source: str = 'us
 
 def create_category_new_ingredient_trend_figure(data: pd.DataFrame, source: str = 'us',
                                                 category: list = new_ingredient_trend_category_df.category.unique().tolist(),
-                                                start_date: str = default_start_date, end_date: str = default_end_date)->go.Figure:
+                                                start_date: str = default_start_date, end_date: str = default_end_date) -> go.Figure:
     """create_category_new_ingredient_trend_figure [summary]
 
     [extended_summary]
@@ -374,7 +374,7 @@ def create_category_new_ingredient_trend_figure(data: pd.DataFrame, source: str 
 
 def create_product_type_new_ingredient_trend_figure(data: pd.DataFrame, source: str = 'us',
                                                     category: str = 'bath-body',
-                                                    start_date: str = default_start_date, end_date: str = default_end_date)->go.Figure:
+                                                    start_date: str = default_start_date, end_date: str = default_end_date) -> go.Figure:
     """create_product_type_new_ingredient_trend_figure [summary]
 
     [extended_summary]

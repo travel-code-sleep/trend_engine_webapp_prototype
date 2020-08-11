@@ -37,7 +37,7 @@
     top: 0;
     left: 0;
     bottom: 0;
-    width: 24rem;
+    width: 23rem;
     text-align: left;
     transition: margin 0.3s ease-in-out, padding 0.3s ease-in-out;
   }
@@ -88,7 +88,7 @@
 
   /* set margins of the main content so that it doesn't overlap the sidebar */
   #page-content {
-    margin-left: 24rem;
+    margin-left: 26rem;
     margin-right: 2rem;
     transition: margin-left 0.3s ease-in-out;
   }
@@ -99,3 +99,7 @@
     width: calc(100% - 235px);
     margin-left: 235px;
 }
+
+/* #navbar-header {
+
+} */
