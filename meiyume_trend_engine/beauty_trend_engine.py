@@ -766,7 +766,7 @@ def category_page_layout():
                                 page_current=0,             # page number that user is on
                                 page_size=10,                # number of rows visible per page
                                 style_cell={                # ensure adequate header width when text is shorter than cell's text
-                                    'minWidth': 60, 'maxWidth': 60, 'width': 60, 'fontSize': 14, 'font-family': 'Gotham'
+                                    'minWidth': 60, 'maxWidth': 60, 'width': 60, 'fontSize': 13, 'font-family': 'Gotham'
                                 },
                                 # style_cell_conditional=[    # align text columns to left. By default they are aligned to right
                                 #     {
@@ -817,7 +817,7 @@ def category_page_layout():
                                 page_current=0,             # page number that user is on
                                 page_size=8,                # number of rows visible per page
                                 style_cell={                # ensure adequate header width when text is shorter than cell's text
-                                    'minWidth': 60, 'maxWidth': 95, 'width': 60, 'fontSize': 14, 'font-family': 'Gotham'
+                                    'minWidth': 60, 'maxWidth': 95, 'width': 60, 'fontSize': 13, 'font-family': 'Gotham'
                                 },
                                 style_cell_conditional=[    # align text columns to left. By default they are aligned to right
                                     {
@@ -885,7 +885,7 @@ def category_page_layout():
                                 page_current=0,             # page number that user is on
                                 page_size=10,                # number of rows visible per page
                                 style_cell={                # ensure adequate header width when text is shorter than cell's text
-                                    'minWidth': 80, 'maxWidth': 80, 'width': 80, 'fontSize': 14, 'font-family': 'Gotham'
+                                    'minWidth': 80, 'maxWidth': 80, 'width': 80, 'fontSize': 13, 'font-family': 'Gotham'
                                 },
                                 style_cell_conditional=[    # align text columns to left. By default they are aligned to right
                                     {
@@ -954,7 +954,7 @@ def category_page_layout():
                                 page_current=0,             # page number that user is on
                                 page_size=10,                # number of rows visible per page
                                 style_cell={                # ensure adequate header width when text is shorter than cell's text
-                                    'minWidth': 120, 'maxWidth': 120, 'width': 120, 'textAlign': 'left', 'fontSize': 14, 'font-family': 'Gotham'
+                                    'minWidth': 120, 'maxWidth': 120, 'width': 120, 'textAlign': 'left', 'fontSize': 13, 'font-family': 'Gotham'
                                 },
                                 style_cell_conditional=[    # align text columns to left. By default they are aligned to right
                                     {
