@@ -5,11 +5,11 @@ one uses the current location to render the appropriate page content, the other
 uses the current location to toggle the "active" properties of the navigation
 links.
 """
+import base64
 import json
 import re
-import base64
 from datetime import datetime as dt
-from typing import Tuple, Union, Optional
+from typing import Optional, Tuple, Union
 
 import dash
 import dash_auth
@@ -21,13 +21,12 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
-from dash.dependencies import Input, Output, State, ClientsideFunction
+from dash.dependencies import ClientsideFunction, Input, Output, State
 from dateutil.relativedelta import relativedelta
 from path import Path
 
-# from bte_utils import set_default_start_and_end_dates
-from bte_market_trend_page_data_and_plots import *
 from bte_category_page_data_and_plots import *
+from bte_market_trend_page_data_and_plots import *
 
 # assign default values
 # px.defaults.template = "plotly_dark"
@@ -196,7 +195,7 @@ sidebar = html.Div(
         ),
     ],
     id="sidebar",
-
+    style={'position': 'flex'}
 )
 '''
 sidebar = html.Div(
