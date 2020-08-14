@@ -210,7 +210,6 @@ def create_prod_page_reviews_by_user_attribute_figure(prod_id: str,
 
     plot_title = user_attribute.replace('_', ' ').title()
     fig = px.bar(data, x="review_count", y=user_attribute, orientation='h',
-                 hover_data=[user_attribute, "review_count"],
                  height=400,
                  title=f'Reviews by {plot_title}')
     fig.update_layout(
@@ -230,6 +229,43 @@ def create_prod_page_reviews_by_user_attribute_figure(prod_id: str,
     fig.update_yaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
                      title_font=dict(size=20, family='Gotham', color='crimson'))
 
+    return fig
+
+
+def create_prod_page_reviews_distribution_figure(data: pd.DataFrame, prod_id: str) -> go.Figure:
+    """create_prod_page_reviews_distribution_figure [summary]
+
+    [extended_summary]
+
+    Args:
+        data (pd.DataFrame): [description]
+        prod_id (str): [description]
+
+    Returns:
+        go.Figure: [description]
+    """
+    rev_dist = pd.DataFrame(
+        data[data.prod_id == prod_id].review_rating.value_counts()).reset_index()
+    rev_dist.columns = ['stars', 'review_count']
+    fig = px.bar(rev_dist, x="review_count", y='stars', orientation='h',
+                 height=400,
+                 title=f'Reviews by Stars')
+    fig.update_layout(
+        font_family="Gotham",
+        font_color="blue",
+        title_font_family="Gotham",
+        title_font_color="blue",
+        title_font_size=24,
+        legend_title_font_color="green",
+        hovermode='closest',
+        xaxis={'title': 'Review Count'},
+        yaxis={'categoryorder': 'category descending',
+               'title': 'Stars'},
+    )
+    fig.update_xaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
+                     title_font=dict(size=20, family='Gotham', color='crimson'))
+    fig.update_yaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
+                     title_font=dict(size=20, family='Gotham', color='crimson'))
     return fig
 
 

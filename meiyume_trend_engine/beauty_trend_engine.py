@@ -184,12 +184,16 @@ sidebar = html.Div(
                 [
                     dbc.NavLink("Beauty Trend Engine Landing Page",
                                 href="/page-1", id="page-1-link"),
-                    dbc.NavLink("Market Trend Page",
+                    dbc.NavLink("Market Trend",
                                 href="/page-2", id="page-2-link"),
-                    dbc.NavLink("Category Page", href="/page-3",
+                    dbc.NavLink("Category Insights", href="/page-3",
                                 id="page-3-link"),
-                    dbc.NavLink("Product Page", href="/page-4",
+                    dbc.NavLink("Product KnowAll", href="/page-4",
                                 id="page-4-link"),
+                    dbc.NavLink("Ingredient Inside", href="/page-5",
+                                id="page-5-link"),
+                    dbc.NavLink("Social Media Trend", href="/page-6",
+                                id="page-6-link"),
                 ],
                 vertical=True,
                 pills=True,
@@ -316,7 +320,9 @@ def market_trend_page_layout():
                             dcc.DatePickerRange(id='review_month_range',
                                                 min_date_allowed=dt(
                                                     2008, 12, 1),
-                                                max_date_allowed=dt.today()
+                                                max_date_allowed=dt.today(),
+                                                start_date=default_start_date,
+                                                end_date=default_end_date,
                                                 ),
                             dcc.Markdown(
                                 id='output-container-date-picker-range',
@@ -1082,7 +1088,9 @@ def product_page_layout():
                                     dcc.DatePickerRange(id='prod_page_review_month_range',
                                                         min_date_allowed=dt(
                                                             2008, 12, 1),
-                                                        max_date_allowed=dt.today()
+                                                        max_date_allowed=dt.today(),
+                                                        start_date=default_start_date,
+                                                        end_date=default_end_date
                                                         ),
                                     dcc.Markdown(
                                         id='prod-page-output-container-date-picker-range',
@@ -1307,42 +1315,110 @@ def product_page_layout():
                                     ],
                                     className="row pretty_container"
                                 ),
-                                html.Div(
+                                dbc.Row(
                                     [
-                                        html.H3(
-                                            'Review Distribution by User Attributes'),
-                                        html.Div(
+                                        dbc.Col(
                                             [
-                                                html.H5(
-                                                    'Select User Attribute'),
-                                                dcc.Dropdown(id='prod_page_user_attribute',
-                                                             options=prod_page_user_attribute_options,
-                                                             multi=False,
-                                                             value='age',
-                                                             style={
-                                                                 'fontSize': 14},
-                                                             placeholder='Select User Attribute',
-                                                             clearable=False,
-                                                             ),
-                                            ],
-                                            # className="four columns",
-                                            style={'width': '30%'}
+                                                html.H3(
+                                                    'Review Distribution by User Attributes'),
+                                                dbc.Row(
+                                                    [
+                                                        dbc.Col(
+                                                            [
+                                                                html.H5('Select User Attribute:',
+                                                                        )
+                                                            ],
+                                                            width=5,
+                                                        ),
+                                                        dbc.Col(
+                                                            dcc.Dropdown(id='prod_page_user_attribute',
+                                                                         options=prod_page_user_attribute_options,
+                                                                         multi=False,
+                                                                         value='age',
+                                                                         style={
+                                                                             'fontSize': 14},
+                                                                         placeholder='Select User Attribute',
+                                                                         clearable=False,
+                                                                         ),
+                                                        )
+                                                    ],
+                                                ),
+                                                # html.Hr(),
+                                                dcc.Graph(
+                                                    id='prod_page_reviews_by_attribute')
+                                            ]
                                         ),
-                                        # html.Hr(),
-                                        dcc.Graph(id='prod_page_reviews_by_attribute',
-                                                  figure=cat_page_user_attribute_figure)
+                                        dbc.Col(
+                                            [
+                                                html.H3(
+                                                    'Review Distribution by Stars'),
+                                                html.Div(),
+                                                dcc.Graph(
+                                                    id='prod_page_reviews_by_stars')
+                                            ]
+                                        )
                                     ],
                                     className="pretty_container"
                                 ),
-
-
                             ],
                             style=tab_style,
                             selected_style=tab_selected_style
                             ),
                     dcc.Tab(label='Price_Analytics',
                             children=[
-
+                                dbc.Row(
+                                    [
+                                        dbc.Col(
+                                            [
+                                                html.Div(
+                                                    [
+                                                        html.Div(
+                                                            [
+                                                                html.H3('Price Overview',
+                                                                        style={
+                                                                            'paddingRight': '30px'}
+                                                                        )
+                                                            ]
+                                                        ),
+                                                        html.Hr(),
+                                                        html.Div(
+                                                            [
+                                                                html.Div(
+                                                                    [html.H5(id="prod_small_price_text"),
+                                                                     html.P("Small Size Price")],
+                                                                    id="prod_min_price",
+                                                                    className="mini_container",
+                                                                ),
+                                                                html.Div(
+                                                                    [html.H5(id="prod_big_price_text"),
+                                                                     html.P("Big Size Price")],
+                                                                    id="prod_max_price",
+                                                                    className="mini_container",
+                                                                ),
+                                                                html.Div(
+                                                                    [html.H5(id="prod_mrp_text"),
+                                                                     html.P("MRP")],
+                                                                    id="prod_mrp",
+                                                                    className="mini_container",
+                                                                ),
+                                                            ],
+                                                            id="info-container",
+                                                            className="container-display",
+                                                        )
+                                                    ],
+                                                )
+                                            ],
+                                            width=4
+                                        ),
+                                        dbc.Col(
+                                            [
+                                                dcc.Graph(
+                                                    'prod_page_price_variation'),
+                                            ]
+                                        )
+                                    ],
+                                    className="row pretty_container"
+                                )
                             ],
                             style=tab_style,
                             selected_style=tab_selected_style
@@ -1367,6 +1443,70 @@ def product_page_layout():
         style={'fontFamily': 'Gotham', "display": "flex",
                "flex-direction": "column"},
     )
+
+
+@app.callback(
+    [Output('prod_small_price_text', 'children'),
+     Output('prod_big_price_text', 'children'),
+     Output('prod_mrp_text', 'children'),
+     ],
+    [Input("prod_page_source", "value"),
+     Input('prod_page_product', 'value'),
+     ]
+)
+def display_prod_page_price_data(source: str, prod_id: str) -> Tuple[str, str, str]:
+    """display_prod_page_price_data [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        prod_id (str): [description]
+
+    Returns:
+        Tuple[str, str, str]: [description]
+    """
+    smp = product_page_metadetail_data_df.small_size_price[(product_page_metadetail_data_df.source == source) &
+                                                           (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    bgp = product_page_metadetail_data_df.big_size_price[(product_page_metadetail_data_df.source == source) &
+                                                         (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    mrp = product_page_metadetail_data_df.mrp[(product_page_metadetail_data_df.source == source) &
+                                              (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    if source == 'us':
+        currency = '$'
+    else:
+        currency = '£'
+    return f'{currency}{smp}', f'{currency}{bgp}', f'{currency}{mrp}'
+
+
+@app.callback(
+    Output('prod_page_reviews_by_stars', 'figure'),
+    [Input("prod_page_source", "value"),
+     Input('prod_page_product', 'value'),
+     Input('prod_page_review_month_range', 'start_date'),
+     Input('prod_page_review_month_range', 'end_date')
+     ])
+def update_prod_page_reviews_distribution_figure(source: str, prod_id: str,
+                                                 start_date: str, end_date: str) -> Tuple[go.Figure, go.Figure]:
+    if start_date is not None:
+        start_date = dt.strptime(re.split('T| ', start_date)[0], '%Y-%m-%d')
+        start_date_string = start_date.strftime('%Y-%m-%d')
+    else:
+        start_date_string = default_start_date
+
+    if end_date is not None:
+        end_date = dt.strptime(re.split('T| ', end_date)[0], '%Y-%m-%d')
+        end_date_string = end_date.strftime('%Y-%m-%d')
+    else:
+        end_date_string = default_end_date
+
+    data = prod_page_review_sentiment_influence_df[
+        (prod_page_review_sentiment_influence_df.review_date >= start_date_string) &
+        (prod_page_review_sentiment_influence_df.review_date <= end_date_string)]
+
+    star_fig = create_prod_page_reviews_distribution_figure(
+        data=data, prod_id=prod_id)
+    return star_fig
 
 
 @app.callback(Output('prod_page_reviews_by_attribute', 'figure'),
@@ -1496,7 +1636,8 @@ def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
     [Output('pos_review_sum', 'children'),
      Output('neg_review_sum', 'children')],
     [Input("prod_page_source", "value"),
-     Input('prod_page_product', 'value')])
+     Input('prod_page_product', 'value'),
+     ])
 def display_product_page_category(source: str, prod_id: str):
     pos_sum = prod_page_review_sum_df.pos_review_summary[
         prod_page_review_sum_df.prod_id == prod_id].values[0]
@@ -1523,21 +1664,37 @@ def update_prod_page_img_src(source: str, prod_id: str):
      Output('prod_page_product_first_review_date', 'children'),
      ],
     [Input("prod_page_source", "value"),
-     Input('prod_page_product', 'value')]
+     Input('prod_page_product', 'value'),
+     Input('prod_page_review_month_range', 'start_date'),
+     Input('prod_page_review_month_range', 'end_date')
+     ]
 )
-def display_product_data_in_card(source: str, prod_id: str):
+def display_product_data_in_card(source: str, prod_id: str, start_date: str, end_date: str):
+    if start_date is not None:
+        start_date = dt.strptime(re.split('T| ', start_date)[0], '%Y-%m-%d')
+        start_date_string = start_date.strftime('%Y-%m-%d')
+    else:
+        start_date_string = default_start_date
+
+    if end_date is not None:
+        end_date = dt.strptime(re.split('T| ', end_date)[0], '%Y-%m-%d')
+        end_date_string = end_date.strftime('%Y-%m-%d')
+    else:
+        end_date_string = default_end_date
     prod_name = product_page_metadetail_data_df.product_name[(product_page_metadetail_data_df.source == source) &
                                                              (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
     brand_name = product_page_metadetail_data_df.brand[(product_page_metadetail_data_df.source == source) &
                                                        (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
     reviews = prod_page_review_sentiment_influence_df[
-        (prod_page_review_sentiment_influence_df.prod_id == prod_id)].shape[0]
+        (prod_page_review_sentiment_influence_df.prod_id == prod_id) &
+        (prod_page_review_sentiment_influence_df.review_date >= start_date_string) &
+        (prod_page_review_sentiment_influence_df.review_date <= end_date_string)].shape[0]
     adjusted_rating = product_page_metadetail_data_df.adjusted_rating[(product_page_metadetail_data_df.source == source) &
                                                                       (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
     first_review_date = product_page_metadetail_data_df.first_review_date[(product_page_metadetail_data_df.source == source) &
                                                                           (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
-    return f'Brand: {brand_name}', f'Product Name: {prod_name}', f'Reviews: {reviews}', \
-        f'AdjustedRating: {adjusted_rating}', f'FirstReview: {first_review_date}'
+    return (f'Brand: {brand_name}', f'Product Name: {prod_name}', f'Reviews: {reviews}',
+            f'AdjustedRating: {adjusted_rating}', f'FirstReview: {first_review_date}')
 
 
 @app.callback(
@@ -1559,8 +1716,10 @@ def display_product_page_category(source: str, prod_id: str):
 )
 def set_product_page_product_options(source: str):
     return [{'label': i[0], 'value': i[1]}
-            for i in product_page_metadetail_data_df[['product_name',
-                                                      'prod_id']][product_page_metadetail_data_df.source == source].values.tolist()]
+            for i in product_page_metadetail_data_df[
+                ['product_name',
+                 'prod_id']][product_page_metadetail_data_df.source == source
+                             ].values.tolist()]
 
 
 @app.callback(
@@ -2342,6 +2501,7 @@ def update_product_type_new_ingredient_trend_figure(source: str, clickData, star
 #     [Input("yourGraph_ID", "figure")],
 # )
 
+
 @app.callback(
     Output("navbar-collapse", "is_open"),
     [Input("navbar-toggler", "n_clicks")],
@@ -2365,14 +2525,14 @@ def toggle_classname(n, classname):
 
 
 @app.callback(
-    [Output(f"page-{i}-link", "active") for i in range(1, 5)],
+    [Output(f"page-{i}-link", "active") for i in range(1, 7)],
     [Input("url", "pathname")],
 )
 def toggle_active_links(pathname):
     if pathname == "/":
         # Treat page 1 as the homepage / index
-        return True, False, False, False
-    return [pathname == f"/page-{i}" for i in range(1, 5)]
+        return True, False, False, False, False, False
+    return [pathname == f"/page-{i}" for i in range(1, 7)]
 
 
 @app.callback(Output("page-content", "children"),
@@ -2387,6 +2547,10 @@ def render_page_content(pathname):
         return category_page_layout()
     elif pathname == "/page-4":
         return product_page_layout()
+    elif pathname == "/page-5":
+        return 'check this out. wip. yipee ki kay'
+    elif pathname == "/page-6":
+        return 'check this out. wip. yipee ki kay'
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
         [
@@ -2398,5 +2562,5 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    # app.run_server()
-    app.run_server(debug=True)
+    app.run_server()
+    # app.run_server(debug=True)
