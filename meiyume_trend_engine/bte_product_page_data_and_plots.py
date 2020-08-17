@@ -16,7 +16,7 @@ default_start_date, default_end_date = set_default_start_and_end_dates()
 Read all the data from flat files.
 '''
 # meta detail data
-product_page_metadetail_data_df = pd.read_feather(
+prod_page_metadetail_data_df = pd.read_feather(
     dash_data_path/'product_page_metadetail_data')
 # review summary data
 prod_page_review_sum_df = pd.read_feather(
@@ -30,16 +30,23 @@ prod_page_review_sentiment_influence_df = pd.read_feather(
 # review attribute data
 prod_page_reviews_attribute_df = pd.read_feather(
     dash_data_path/'prod_page_reviews_attribute')
+# item data
+prod_page_item_df = pd.read_feather(dash_data_path/'prod_page_item_data')
+prod_page_item_price_df = prod_page_item_df[['prod_id', 'item_size',
+                                             'meta_date', 'item_price']].drop_duplicates(subset=['prod_id', 'meta_date', 'item_size'])
+prod_page_item_price_df.reset_index(inplace=True, drop=True)
+# ingredient data
+prod_page_ing_df = pd.read_feather(dash_data_path/'prod_page_ing_data')
 
 ''' create dropdown options '''
 product_page_source_options = [{'label': i, 'value': i}
-                               for i in product_page_metadetail_data_df.source.unique()]
+                               for i in prod_page_metadetail_data_df.source.unique()]
 # product_page_category_options = [{'label': i, 'value': i}
-#                                  for i in product_page_metadetail_data_df.category.unique()]
+#                                  for i in prod_page_metadetail_data_df.category.unique()]
 # product_page_product_type_options = [{'label': i, 'value': i}
-#                                      for i in product_page_metadetail_data_df.product_type.unique()]
+#                                      for i in prod_page_metadetail_data_df.product_type.unique()]
 product_page_product_name_options = [{'label': i[0], 'value': i[1]}
-                                     for i in product_page_metadetail_data_df[['product_name', 'prod_id']].values.tolist()]
+                                     for i in prod_page_metadetail_data_df[['product_name', 'prod_id']].values.tolist()]
 prod_page_user_attribute_options = [{'label': i, 'value': i}
                                     for i in list(prod_page_reviews_attribute_df.columns.difference(
                                         ['prod_id']))]
@@ -261,6 +268,42 @@ def create_prod_page_reviews_distribution_figure(data: pd.DataFrame, prod_id: st
         xaxis={'title': 'Review Count'},
         yaxis={'categoryorder': 'category descending',
                'title': 'Stars'},
+    )
+    fig.update_xaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
+                     title_font=dict(size=20, family='Gotham', color='crimson'))
+    fig.update_yaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
+                     title_font=dict(size=20, family='Gotham', color='crimson'))
+    return fig
+
+
+def create_prod_page_item_price_figure(data: pd.DataFrame) -> go.Figure:
+    """create_prod_page_item_price_figure [summary]
+
+    [extended_summary]
+
+    Args:
+        data (pd.DataFrame): [description]
+
+    Returns:
+        go.Figure: [description]
+    """
+    fig = px.line(data, x="meta_date", y="item_price", color='item_size', line_shape="spline",
+                  height=500, width=1000,
+                  #               color_discrete_sequence=marker_color,
+                  title=f'Price Over Time')
+    fig.update_traces(connectgaps=True,
+                      mode='markers+lines')
+    fig.update_layout(
+        # keep the original annotations and add a list of new annotations:
+        font_family="Gotham",
+        font_color="blue",
+        title_font_family="Gotham",
+        title_font_color="blue",
+        title_font_size=24,
+        legend_title_font_color="green",
+        hovermode='closest',
+        xaxis={'title': 'Month'},
+        yaxis={'title': 'Price'}
     )
     fig.update_xaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
                      title_font=dict(size=20, family='Gotham', color='crimson'))

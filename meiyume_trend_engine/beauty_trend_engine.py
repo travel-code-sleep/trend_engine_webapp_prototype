@@ -1364,48 +1364,87 @@ def product_page_layout():
                             style=tab_style,
                             selected_style=tab_selected_style
                             ),
-                    dcc.Tab(label='Price_Analytics',
+                    dcc.Tab(label='Price&Ingredient_Analytics',
                             children=[
                                 dbc.Row(
                                     [
                                         dbc.Col(
                                             [
-                                                html.Div(
+                                                dbc.Row(
                                                     [
                                                         html.Div(
                                                             [
-                                                                html.H3('Price Overview',
-                                                                        style={
-                                                                            'paddingRight': '30px'}
-                                                                        )
-                                                            ]
-                                                        ),
-                                                        html.Hr(),
+                                                                html.Div(
+                                                                    [
+                                                                        html.H5('Price Overview',
+                                                                                style={
+                                                                                    'paddingRight': '30px'}
+                                                                                )
+                                                                    ]
+                                                                ),
+                                                                html.Div(
+                                                                    [
+                                                                        html.Div(
+                                                                            [html.H5(id="prod_small_price_text"),
+                                                                             html.P("Small Size Price")],
+                                                                            id="prod_min_price",
+                                                                            className="mini_container",
+                                                                        ),
+                                                                        html.Div(
+                                                                            [html.H5(id="prod_big_price_text"),
+                                                                             html.P("Big Size Price")],
+                                                                            id="prod_max_price",
+                                                                            className="mini_container",
+                                                                        ),
+                                                                        html.Div(
+                                                                            [html.H5(id="prod_mrp_text"),
+                                                                             html.P("MRP")],
+                                                                            id="prod_mrp",
+                                                                            className="mini_container",
+                                                                        ),
+                                                                    ],
+                                                                    id="info-container",
+                                                                    className="container-display",
+                                                                )
+                                                            ],
+                                                        )
+                                                    ]
+                                                ),
+                                                html.Hr(),
+                                                dbc.Row(
+                                                    [
                                                         html.Div(
                                                             [
                                                                 html.Div(
-                                                                    [html.H5(id="prod_small_price_text"),
-                                                                     html.P("Small Size Price")],
-                                                                    id="prod_min_price",
-                                                                    className="mini_container",
+                                                                    [
+                                                                        html.H5('Product Overview',
+                                                                                style={
+                                                                                    'paddingRight': '30px'}
+                                                                                )
+                                                                    ]
                                                                 ),
                                                                 html.Div(
-                                                                    [html.H5(id="prod_big_price_text"),
-                                                                     html.P("Big Size Price")],
-                                                                    id="prod_max_price",
-                                                                    className="mini_container",
-                                                                ),
-                                                                html.Div(
-                                                                    [html.H5(id="prod_mrp_text"),
-                                                                     html.P("MRP")],
-                                                                    id="prod_mrp",
-                                                                    className="mini_container",
-                                                                ),
+                                                                    [
+                                                                        html.Div(
+                                                                            [html.H5(id="prod_new_flag"),
+                                                                             html.P("Status")],
+                                                                            id="prod_status",
+                                                                            className="mini_container",
+                                                                        ),
+                                                                        html.Div(
+                                                                            [html.H5(id="prod_dist_ing"),
+                                                                             html.P("Distinct Ingredients")],
+                                                                            id="prod_ing",
+                                                                            className="mini_container",
+                                                                        ),
+
+                                                                    ],
+                                                                    id="info-container",
+                                                                    className="container-display",
+                                                                )
                                                             ],
-                                                            id="info-container",
-                                                            className="container-display",
                                                         )
-                                                    ],
+                                                    ]
                                                 )
                                             ],
                                             width=4
@@ -1418,14 +1457,140 @@ def product_page_layout():
                                         )
                                     ],
                                     className="row pretty_container"
-                                )
-                            ],
-                            style=tab_style,
-                            selected_style=tab_selected_style
-                            ),
-                    dcc.Tab(label='Ingredient_Analytics',
-                            children=[
+                                ),
+                                dbc.Row(
+                                    [
+                                        dbc.Col(
+                                            [
+                                                html.Div(
+                                                    [
+                                                        html.H3(
+                                                            'Product Variants by Size/Color')
+                                                    ]
+                                                ),
+                                                html.Hr(),
+                                                dash_table.DataTable(
+                                                    id='prod_page_product_variants',
+                                                    columns=[
+                                                        {"name": i, "id": i, "deletable": False,
+                                                         "selectable": True, "hideable": False}
+                                                        for i in prod_page_item_df.columns
+                                                    ],
+                                                    # data=new_products_detail_df.to_dict(
+                                                    #     'records'),  # the contents of the table
+                                                    editable=False,              # allow editing of data inside all cells
+                                                    # allow filtering of data by user ('native') or not ('none')
+                                                    filter_action="native",
+                                                    # enables data to be sorted per-column by user or not ('none')
+                                                    sort_action="native",
+                                                    sort_mode="single",         # sort across 'multi' or 'single' columns
+                                                    # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
+                                                    # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
+                                                    # choose if user can delete a row (True) or not (False)
+                                                    row_deletable=False,
+                                                    selected_columns=[],        # ids of columns that user selects
+                                                    selected_rows=[],           # indices of rows that user selects
+                                                    # all data is passed to the table up-front or not ('none')
+                                                    page_action="native",
+                                                    page_current=0,             # page number that user is on
+                                                    page_size=10,                # number of rows visible per page
+                                                    style_cell={                # ensure adequate header width when text is shorter than cell's text
+                                                        'minWidth': 80, 'maxWidth': 80, 'width': 80, 'fontSize': 13,
+                                                        'font-family': 'Gotham'
+                                                    },
+                                                    style_cell_conditional=[    # align text columns to left. By default they are aligned to right
+                                                        {
+                                                            'if': {'column_id': 'product_name'},
+                                                            'textAlign': 'left', 'minWidth': 120, 'maxWidth': 160, 'width': 160
+                                                        },
+                                                        {
+                                                            'if': {'column_id': 'item_name'},
+                                                            'textAlign': 'left', 'minWidth': 120, 'maxWidth': 120, 'width': 120
+                                                        },
+                                                        {
+                                                            'if': {'column_id': 'item_size'},
+                                                            'textAlign': 'left',
+                                                        },
+                                                    ],
+                                                    style_data={                # overflow cells' content into multiple lines
+                                                        'whiteSpace': 'normal',
+                                                        'height': 'auto'
+                                                    }
+                                                )
+                                            ],
+                                            width=12,
+                                            className="pretty_container"
+                                        ),
 
+                                    ],
+                                    className="row pretty_container"
+                                ),
+                                dbc.Row(
+                                    [
+                                        dbc.Col(
+                                            [
+                                                html.Div(
+                                                    [
+                                                        html.H3(
+                                                            'Product Ingredients')
+                                                    ]
+                                                ),
+                                                html.Hr(),
+                                                dash_table.DataTable(
+                                                    id='prod_page_ingredients',
+                                                    columns=[
+                                                        {"name": i, "id": i, "deletable": False,
+                                                         "selectable": True, "hideable": False}
+                                                        for i in ['ingredient', 'ingredient_type', 'ban_flag', 'new_flag']
+                                                    ],
+                                                    # data=new_products_detail_df.to_dict(
+                                                    #     'records'),  # the contents of the table
+                                                    editable=False,              # allow editing of data inside all cells
+                                                    # allow filtering of data by user ('native') or not ('none')
+                                                    filter_action="native",
+                                                    # enables data to be sorted per-column by user or not ('none')
+                                                    sort_action="native",
+                                                    sort_mode="single",         # sort across 'multi' or 'single' columns
+                                                    # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
+                                                    # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
+                                                    # choose if user can delete a row (True) or not (False)
+                                                    row_deletable=False,
+                                                    selected_columns=[],        # ids of columns that user selects
+                                                    selected_rows=[],           # indices of rows that user selects
+                                                    # all data is passed to the table up-front or not ('none')
+                                                    page_action="native",
+                                                    page_current=0,             # page number that user is on
+                                                    page_size=15,                # number of rows visible per page
+                                                    style_cell={                # ensure adequate header width when text is shorter than cell's text
+                                                        'minWidth': 80, 'maxWidth': 80, 'width': 80, 'fontSize': 13, 'font-family': 'Gotham'
+                                                    },
+                                                    style_cell_conditional=[    # align text columns to left. By default they are aligned to right
+                                                        {
+                                                            'if': {'column_id': 'ingredient'},
+                                                            'textAlign': 'left', 'minWidth': 120, 'maxWidth': 160, 'width': 160
+                                                        },
+                                                        {
+                                                            'if': {'column_id': 'ingredient_type'},
+                                                            'textAlign': 'left', 'minWidth': 120, 'maxWidth': 120, 'width': 120
+                                                        },
+                                                        {
+                                                            'if': {'column_id': 'item_size'},
+                                                            'textAlign': 'left',
+                                                        },
+                                                    ],
+                                                    style_data={                # overflow cells' content into multiple lines
+                                                        'whiteSpace': 'normal',
+                                                        'height': 'auto'
+                                                    }
+                                                )
+                                            ],
+                                            width=12,
+                                            className="pretty_container"
+                                        ),
+
+                                    ],
+                                    className="row pretty_container"
+                                ),
                             ],
                             style=tab_style,
                             selected_style=tab_selected_style
@@ -1446,9 +1611,112 @@ def product_page_layout():
 
 
 @app.callback(
+    Output('prod_page_ingredients', 'data'),
+    [Input("prod_page_source", "value"),
+     Input('prod_page_product', 'value'),
+     ])
+def update_prod_page_product_ingredients_table(source: str, prod_id: str) -> list:
+    """update_prod_page_product_ingredients_table [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        prod_id (str): [description]
+
+    Returns:
+        list: [description]
+    """
+    data = prod_page_ing_df[prod_page_ing_df.prod_id == prod_id]
+
+    data.sort_values(
+        by='ingredient', inplace=True, ascending=False)
+
+    return data.to_dict('records')
+
+
+@app.callback(
+    Output('prod_page_product_variants', 'data'),
+    [Input("prod_page_source", "value"),
+     Input('prod_page_product', 'value'),
+     Input('prod_page_review_month_range', 'start_date'),
+     Input('prod_page_review_month_range', 'end_date')
+     ])
+def update_prod_page_product_variants_table(source: str, prod_id: str, start_date: str,
+                                            end_date: str) -> list:
+    """update_prod_page_product_variants_table [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        prod_id (str): [description]
+        start_date (str): [description]
+        end_date (str): [description]
+
+    Returns:
+        list: [description]
+    """
+    if start_date is not None:
+        start_date = dt.strptime(re.split('T| ', start_date)[0], '%Y-%m-%d')
+        start_date_string = start_date.strftime('%Y-%m-%d')
+    else:
+        start_date_string = default_start_date
+
+    if end_date is not None:
+        end_date = dt.strptime(re.split('T| ', end_date)[0], '%Y-%m-%d')
+        end_date_string = end_date.strftime('%Y-%m-%d')
+    else:
+        end_date_string = default_end_date
+
+    data = prod_page_item_df[
+        (prod_page_item_df.prod_id == prod_id) &
+        (prod_page_item_df.meta_date >= start_date_string) &
+        (prod_page_item_df.meta_date <= end_date_string)]
+    data = data[(data.meta_date == data[data.prod_id == prod_id].meta_date.max())]
+
+    data.sort_values(
+        by='item_size', inplace=True, ascending=False)
+
+    return data.to_dict('records')
+
+
+@app.callback(
+    Output('prod_page_price_variation', 'figure'),
+    [Input("prod_page_source", "value"),
+     Input('prod_page_product', 'value'),
+     Input('prod_page_review_month_range', 'start_date'),
+     Input('prod_page_review_month_range', 'end_date')
+     ])
+def update_prod_page_item_price_figure(source: str, prod_id: str, start_date: str, end_date: str) -> go.Figure:
+    if start_date is not None:
+        start_date = dt.strptime(re.split('T| ', start_date)[0], '%Y-%m-%d')
+        start_date_string = start_date.strftime('%Y-%m-%d')
+    else:
+        start_date_string = default_start_date
+
+    if end_date is not None:
+        end_date = dt.strptime(re.split('T| ', end_date)[0], '%Y-%m-%d')
+        end_date_string = end_date.strftime('%Y-%m-%d')
+    else:
+        end_date_string = default_end_date
+
+    data = prod_page_item_price_df[
+        (prod_page_item_price_df.prod_id == prod_id) &
+        (prod_page_item_price_df.meta_date >= start_date_string) &
+        (prod_page_item_price_df.meta_date <= end_date_string)]
+
+    fig = create_prod_page_item_price_figure(data)
+
+    return fig
+
+
+@app.callback(
     [Output('prod_small_price_text', 'children'),
      Output('prod_big_price_text', 'children'),
      Output('prod_mrp_text', 'children'),
+     Output('prod_new_flag', 'children'),
+     Output('prod_dist_ing', 'children'),
      ],
     [Input("prod_page_source", "value"),
      Input('prod_page_product', 'value'),
@@ -1466,17 +1734,21 @@ def display_prod_page_price_data(source: str, prod_id: str) -> Tuple[str, str, s
     Returns:
         Tuple[str, str, str]: [description]
     """
-    smp = product_page_metadetail_data_df.small_size_price[(product_page_metadetail_data_df.source == source) &
-                                                           (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
-    bgp = product_page_metadetail_data_df.big_size_price[(product_page_metadetail_data_df.source == source) &
-                                                         (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
-    mrp = product_page_metadetail_data_df.mrp[(product_page_metadetail_data_df.source == source) &
-                                              (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    smp = prod_page_metadetail_data_df.small_size_price[(prod_page_metadetail_data_df.source == source) &
+                                                        (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    bgp = prod_page_metadetail_data_df.big_size_price[(prod_page_metadetail_data_df.source == source) &
+                                                      (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    mrp = prod_page_metadetail_data_df.mrp[(prod_page_metadetail_data_df.source == source) &
+                                           (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    status = prod_page_metadetail_data_df.new_flag[(prod_page_metadetail_data_df.source == source) &
+                                                   (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    dist_ing = prod_page_ing_df[prod_page_ing_df.prod_id ==
+                                prod_id].ingredient.nunique()
     if source == 'us':
         currency = '$'
     else:
         currency = '£'
-    return f'{currency}{smp}', f'{currency}{bgp}', f'{currency}{mrp}'
+    return f'{currency}{smp}', f'{currency}{bgp}', f'{currency}{mrp}', status.title(), dist_ing
 
 
 @app.callback(
@@ -1681,18 +1953,18 @@ def display_product_data_in_card(source: str, prod_id: str, start_date: str, end
         end_date_string = end_date.strftime('%Y-%m-%d')
     else:
         end_date_string = default_end_date
-    prod_name = product_page_metadetail_data_df.product_name[(product_page_metadetail_data_df.source == source) &
-                                                             (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
-    brand_name = product_page_metadetail_data_df.brand[(product_page_metadetail_data_df.source == source) &
-                                                       (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    prod_name = prod_page_metadetail_data_df.product_name[(prod_page_metadetail_data_df.source == source) &
+                                                          (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    brand_name = prod_page_metadetail_data_df.brand[(prod_page_metadetail_data_df.source == source) &
+                                                    (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
     reviews = prod_page_review_sentiment_influence_df[
         (prod_page_review_sentiment_influence_df.prod_id == prod_id) &
         (prod_page_review_sentiment_influence_df.review_date >= start_date_string) &
         (prod_page_review_sentiment_influence_df.review_date <= end_date_string)].shape[0]
-    adjusted_rating = product_page_metadetail_data_df.adjusted_rating[(product_page_metadetail_data_df.source == source) &
-                                                                      (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
-    first_review_date = product_page_metadetail_data_df.first_review_date[(product_page_metadetail_data_df.source == source) &
-                                                                          (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    adjusted_rating = prod_page_metadetail_data_df.adjusted_rating[(prod_page_metadetail_data_df.source == source) &
+                                                                   (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    first_review_date = prod_page_metadetail_data_df.first_review_date[(prod_page_metadetail_data_df.source == source) &
+                                                                       (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
     return (f'Brand: {brand_name}', f'Product Name: {prod_name}', f'Reviews: {reviews}',
             f'AdjustedRating: {adjusted_rating}', f'FirstReview: {first_review_date}')
 
@@ -1703,10 +1975,10 @@ def display_product_data_in_card(source: str, prod_id: str, start_date: str, end
     [Input("prod_page_source", "value"),
      Input('prod_page_product', 'value')])
 def display_product_page_category(source: str, prod_id: str):
-    category = product_page_metadetail_data_df.category[(product_page_metadetail_data_df.source == source) &
-                                                        (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
-    product_type = product_page_metadetail_data_df.product_type[(product_page_metadetail_data_df.source == source) &
-                                                                (product_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    category = prod_page_metadetail_data_df.category[(prod_page_metadetail_data_df.source == source) &
+                                                     (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
+    product_type = prod_page_metadetail_data_df.product_type[(prod_page_metadetail_data_df.source == source) &
+                                                             (prod_page_metadetail_data_df.prod_id == prod_id)].values[0]
     return category, product_type
 
 
@@ -1716,9 +1988,9 @@ def display_product_page_category(source: str, prod_id: str):
 )
 def set_product_page_product_options(source: str):
     return [{'label': i[0], 'value': i[1]}
-            for i in product_page_metadetail_data_df[
+            for i in prod_page_metadetail_data_df[
                 ['product_name',
-                 'prod_id']][product_page_metadetail_data_df.source == source
+                 'prod_id']][prod_page_metadetail_data_df.source == source
                              ].values.tolist()]
 
 
@@ -2562,5 +2834,5 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    app.run_server()
-    # app.run_server(debug=True)
+    # app.run_server()
+    app.run_server(debug=True)
