@@ -10,9 +10,6 @@ from path import Path
 
 from bte_utils import read_file_s3, set_default_start_and_end_dates
 
-# dash_data_path = Path(r'D:\Amit\Meiyume\meiyume_bte_dash_flask_app\dash_data')
-dash_data_path = 'Feeds/BeautyTrendEngine/WebAppData'
-
 default_start_date, default_end_date = set_default_start_and_end_dates()
 
 '''

@@ -1,15 +1,14 @@
 """this module reads all the required data for category page of web-app, defines figure functions and create initial placeholder graphs."""
 import json
 import re
+
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
 from path import Path
-from bte_utils import set_default_start_and_end_dates, read_file_s3
 
-# dash_data_path = Path(r'D:\Amit\Meiyume\meiyume_bte_dash_flask_app\dash_data')
-dash_data_path = 'Feeds/BeautyTrendEngine/WebAppData'
+from bte_utils import read_file_s3, set_default_start_and_end_dates
 
 default_start_date, default_end_date = set_default_start_and_end_dates()
 

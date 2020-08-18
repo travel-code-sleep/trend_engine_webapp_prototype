@@ -25,12 +25,13 @@ from dash.dependencies import ClientsideFunction, Input, Output, State
 from dateutil.relativedelta import relativedelta
 from path import Path
 
-from bte_utils import read_image_s3
 from bte_category_page_data_and_plots import *
+from bte_ingredient_page_data_and_plots import *
 from bte_market_trend_page_data_and_plots import *
 from bte_product_page_data_and_plots import *
-from bte_ingredient_page_data_and_plots import *
-from bte_utils import set_default_start_and_end_dates, read_file_s3
+from bte_utils import (read_file_s3, read_image_s3,
+                       set_default_start_and_end_dates)
+
 # assign default values
 # px.defaults.template = "plotly_dark"
 # landing page data
