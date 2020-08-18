@@ -14,13 +14,18 @@ from dateutil.relativedelta import relativedelta
 from PIL import Image
 
 
-def read_feather_s3(filename: str, prefix: str, bucket: str = 'meiyume-datawarehouse-prod') -> pd.DataFrame:
-    """read_feather_s3 [summary]
+def read_file_s3(filename: str, prefix: str,
+                 bucket: str = 'meiyume-datawarehouse-prod',
+                 file_type: str = 'feather') -> pd.DataFrame:
+    """read_file_s3 [summary]
 
     [extended_summary]
 
     Args:
-        key (str): [description]
+        filename (str): [description]
+        prefix (str): [description]
+        bucket (str, optional): [description]. Defaults to 'meiyume-datawarehouse-prod'.
+        file_type (str, optional): [description]. Defaults to 'feather'.
 
     Returns:
         pd.DataFrame: [description]
@@ -28,7 +33,10 @@ def read_feather_s3(filename: str, prefix: str, bucket: str = 'meiyume-datawareh
     key = prefix+'/'+filename
     s3 = boto3.client('s3')
     obj = s3.get_object(Bucket=bucket, Key=key)
-    df = pd.read_feather(io.BytesIO(obj['Body'].read()))
+    if file_type == 'feather':
+        df = pd.read_feather(io.BytesIO(obj['Body'].read()))
+    elif file_type == 'pickle':
+        df = pd.read_pickle(io.BytesIO(obj['Body'].read()))
     return df
 
 

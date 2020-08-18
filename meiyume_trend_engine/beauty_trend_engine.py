@@ -30,11 +30,14 @@ from bte_category_page_data_and_plots import *
 from bte_market_trend_page_data_and_plots import *
 from bte_product_page_data_and_plots import *
 from bte_ingredient_page_data_and_plots import *
-
+from bte_utils import set_default_start_and_end_dates, read_file_s3
 # assign default values
 # px.defaults.template = "plotly_dark"
 # landing page data
-lp_df = pd.read_feather(dash_data_path/'landing_page_data')
+dash_data_path = 'Feeds/BeautyTrendEngine/WebAppData'
+lp_df = read_file_s3(
+    filename='landing_page_data', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(dash_data_path/'landing_page_data')
 
 USERNAME_PASSWORD_PAIRS = [
     ['user', 'pwd123'], ['meiyume', 'pwd123']
@@ -1832,7 +1835,12 @@ def ingredient_page_layout():
                 className="pretty_container"
             ),
             dbc.Row(
+                html.H4('Ingredient Analysis by Category/Subcategory'),
+                className='mini_container'
+            ),
+            dbc.Row(
                 [
+
                     dbc.Col(
                         html.Div(
                             [
@@ -3434,5 +3442,5 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    # app.run_server()
-    app.run_server(debug=True)
+    app.run_server()
+    # app.run_server(debug=True)

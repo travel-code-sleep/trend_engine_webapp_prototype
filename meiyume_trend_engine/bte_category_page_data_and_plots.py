@@ -6,9 +6,10 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
 from path import Path
-from bte_utils import set_default_start_and_end_dates
+from bte_utils import set_default_start_and_end_dates, read_file_s3
 
-dash_data_path = Path(r'D:\Amit\Meiyume\meiyume_bte_dash_flask_app\dash_data')
+# dash_data_path = Path(r'D:\Amit\Meiyume\meiyume_bte_dash_flask_app\dash_data')
+dash_data_path = 'Feeds/BeautyTrendEngine/WebAppData'
 
 default_start_date, default_end_date = set_default_start_and_end_dates()
 
@@ -16,31 +17,49 @@ default_start_date, default_end_date = set_default_start_and_end_dates()
 Read all the data from flat files.
 '''
 # pricing data
-cat_page_pricing_analytics_df = pd.read_feather(
-    dash_data_path/'category_page_pricing_data')
+cat_page_pricing_analytics_df = read_file_s3(
+    filename='category_page_pricing_data', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(
+#     dash_data_path/'category_page_pricing_data')
 # new products data
-cat_page_new_products_count_df = pd.read_feather(
-    dash_data_path/'category_page_new_products_count')
-cat_page_new_products_details_df = pd.read_feather(
-    dash_data_path/'category_page_new_products_details')
+cat_page_new_products_count_df = read_file_s3(
+    filename='category_page_new_products_count', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(
+#     dash_data_path/'category_page_new_products_count')
+cat_page_new_products_details_df = read_file_s3(
+    filename='category_page_new_products_details', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(
+#     dash_data_path/'category_page_new_products_details')
 # distinct brands/products data
-cat_page_distinct_brands_products_df = pd.read_feather(
-    dash_data_path/'category_page_distinct_brands_products')
-# item variations and price data
-cat_page_item_variations_price_df = pd.read_feather(
-    dash_data_path/'category_page_item_variations_price')
+cat_page_distinct_brands_products_df = read_file_s3(
+    filename='category_page_distinct_brands_products', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(
+#     dash_data_path/'category_page_distinct_brands_products')
+# # item variations and price data
+cat_page_item_variations_price_df = read_file_s3(
+    filename='category_page_item_variations_price', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(
+#     dash_data_path/'category_page_item_variations_price')
 # item packaging data
-cat_page_item_package_oz_df = pd.read_feather(
-    dash_data_path/'category_page_item_package_oz')
+cat_page_item_package_oz_df = read_file_s3(
+    filename='category_page_item_package_oz', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(
+#     dash_data_path/'category_page_item_package_oz')
 # top products data
-cat_page_top_products_df = pd.read_feather(
-    dash_data_path/'category_page_top_products')
+cat_page_top_products_df = read_file_s3(
+    filename='category_page_top_products', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(
+#     dash_data_path/'category_page_top_products')
 # new ingredients data
-cat_page_new_ingredients_df = pd.read_feather(
-    dash_data_path/'category_page_new_ingredients')
+cat_page_new_ingredients_df = read_file_s3(
+    filename='category_page_new_ingredients', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(
+#     dash_data_path/'category_page_new_ingredients')
 # review data
-cat_page_reviews_by_user_attributes_df = pd.read_feather(
-    dash_data_path/'category_page_reviews_by_user_attributes')
+cat_page_reviews_by_user_attributes_df = read_file_s3(
+    filename='category_page_reviews_by_user_attributes', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(
+#     dash_data_path/'category_page_reviews_by_user_attributes')
 
 ''' create dropdown options '''
 category_page_category_options = [{'label': i, 'value': i}

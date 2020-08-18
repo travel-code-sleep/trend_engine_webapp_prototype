@@ -6,9 +6,10 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
 from path import Path
-from bte_utils import set_default_start_and_end_dates
+from bte_utils import set_default_start_and_end_dates, read_file_s3
 
-dash_data_path = Path(r'D:\Amit\Meiyume\meiyume_bte_dash_flask_app\dash_data')
+# dash_data_path = Path(r'D:\Amit\Meiyume\meiyume_bte_dash_flask_app\dash_data')
+dash_data_path = 'Feeds/BeautyTrendEngine/WebAppData'
 
 default_start_date, default_end_date = set_default_start_and_end_dates()
 
@@ -17,7 +18,9 @@ Read all the data from flat files.
 '''
 # ingredient data
 # prod_page_ing_df = pd.read_feather(dash_data_path/'prod_page_ing_data')
-ing_page_ing_df = pd.read_feather(dash_data_path/'ing_page_ing_data')
+ing_page_ing_df = read_file_s3(
+    filename='ing_page_ing_data', prefix=dash_data_path, file_type='feather')
+# pd.read_feather(dash_data_path/'ing_page_ing_data')
 
 ''' create dropdown options '''
 ing_page_source_options = [{'label': i, 'value': i}
