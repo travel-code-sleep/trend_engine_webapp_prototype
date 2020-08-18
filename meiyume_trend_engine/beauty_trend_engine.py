@@ -29,6 +29,7 @@ from bte_utils import read_image_s3
 from bte_category_page_data_and_plots import *
 from bte_market_trend_page_data_and_plots import *
 from bte_product_page_data_and_plots import *
+from bte_ingredient_page_data_and_plots import *
 
 # assign default values
 # px.defaults.template = "plotly_dark"
@@ -1610,6 +1611,477 @@ def product_page_layout():
     )
 
 
+def ingredient_page_layout():
+    return html.Div(
+        [
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.H2('Ingredient Search and Analysis',
+                                style={'color': 'black',
+                                       #    'border': '0.5px grey dotted',
+                                       'width': 'auto',
+                                       },
+                                className="row pretty_container"
+                                )
+                    )
+                ]
+            ),
+            html.Div(
+                [
+                    html.H3('Find Products by Ingredient'),
+                    # html.Hr(),
+                    html.Div(
+                        [
+                            html.H4('Search Ingredient'),
+                            dcc.Dropdown(id='ing_page_ing',
+                                         options=ing_page_ingredient_options,
+                                         multi=False,
+                                         value='us',
+                                         style={
+                                             'fontSize': 14},
+                                         placeholder='Select Ingredient',
+                                         clearable=False),
+                        ],
+                        style={'width': '60%'}
+                    ),
+                    dbc.Row(
+                        [
+                            dbc.Col(
+                                [
+                                    dash_table.DataTable(
+                                        id='ing_page_prod_search_table',
+                                        columns=[
+                                            {"name": i, "id": i, "deletable": False,
+                                             "selectable": True, "hideable": False}
+                                            for i in ['product_name', 'product_type', 'category', 'source']
+                                        ],
+                                        # data=new_products_detail_df.to_dict(
+                                        #     'records'),  # the contents of the table
+                                        editable=False,              # allow editing of data inside all cells
+                                        # allow filtering of data by user ('native') or not ('none')
+                                        filter_action="native",
+                                        # enables data to be sorted per-column by user or not ('none')
+                                        sort_action="native",
+                                        sort_mode="single",         # sort across 'multi' or 'single' columns
+                                        # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
+                                                    # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
+                                                    # choose if user can delete a row (True) or not (False)
+                                                    row_deletable=False,
+                                                    selected_columns=[],        # ids of columns that user selects
+                                                    selected_rows=[],           # indices of rows that user selects
+                                                    # all data is passed to the table up-front or not ('none')
+                                                    page_action="native",
+                                                    page_current=0,             # page number that user is on
+                                                    page_size=15,                # number of rows visible per page
+                                                    style_cell={                # ensure adequate header width when text is shorter than cell's text
+                                                        'minWidth': 80, 'maxWidth': 80, 'width': 80, 'fontSize': 13,
+                                                        'font-family': 'Gotham', 'textAlign': 'left'
+                                        },
+                                        style_cell_conditional=[    # align text columns to left. By default they are aligned to right
+                                                        {
+                                                            'if': {'column_id': 'product_name'},
+                                                            'minWidth': 120, 'maxWidth': 160, 'width': 160
+                                                        },
+                                                        {
+                                                            'if': {'column_id': 'product_type'},
+                                                            'textAlign': 'left', 'minWidth': 120, 'maxWidth': 120, 'width': 120
+                                                        },
+                                        ],
+                                        style_data={                # overflow cells' content into multiple lines
+                                                        'whiteSpace': 'normal',
+                                                        'height': 'auto'
+                                        }
+                                    )
+                                ],
+                                width=12,
+                                className="pretty_container"
+                            ),
+
+                        ],
+                        className="row pretty_container"
+                    ),
+                ],
+                className="pretty_container"
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.Div(
+                            [
+                                html.H4('Select Geography'),
+                                dcc.Dropdown(id='ing_page_source',
+                                             options=ing_page_source_options,
+                                             multi=False,
+                                             value='us',
+                                             style={'fontSize': 14},
+                                             placeholder='Select Geography',
+                                             clearable=False),
+                            ],
+                        ),
+                        width=3
+                    ),
+                    dbc.Col(
+                        html.Div(
+                            [
+                                html.H4('Select Category',
+                                        style={
+                                            'paddingRight': '30px'}
+                                        ),
+                                dcc.Dropdown(id='ing_page_category',
+                                             options=ing_page_category_options,
+                                             multi=False,
+                                             style={'fontSize': 14,
+                                                    'width': '100%'},
+                                             placeholder='Select Category',
+                                             value='skincare',
+                                             clearable=False)
+                            ],
+                        ),
+                        width=4
+                    ),
+                    dbc.Col(
+                        html.Div(
+                            [
+                                html.H4('Select Subcategory',
+                                        style={
+                                            'paddingRight': '30px'}
+                                        ),
+                                dcc.Dropdown(id='ing_page_product_type',
+                                             options=ing_page_product_type_options,
+                                             multi=False,
+                                             style={'fontSize': 14,
+                                                    'width': '100%'},
+                                             placeholder='Select Subcategory',
+                                             )
+                            ],
+                        ),
+                        width=5
+                    ),
+                ],
+                className="row pretty_container"
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.Div(
+                                [
+                                    html.Div(
+                                        [
+                                            html.H4('Ingredient Analysis',
+                                                    style={
+                                                        'paddingRight': '30px'}
+                                                    )
+                                        ]
+                                    ),
+                                    html.Div(
+                                        [
+                                            html.Div(
+                                                [html.H5(id="new_ing_count_text"),
+                                                 html.P("New Ingredients")],
+                                                id="new_ing",
+                                                className="mini_container",
+                                            ),
+                                            html.Div(
+                                                [html.H5(id="distinct_ing_text"),
+                                                 html.P("Distinct Ingredients")],
+                                                id="distinct_ing",
+                                                className="mini_container",
+                                            ),
+                                            html.Div(
+                                                [html.H5(id="banned_ing_text"),
+                                                 html.P("Distinct Banned Ingredients")],
+                                                id="banned_ing",
+                                                className="mini_container",
+                                            ),
+
+                                        ],
+                                        id="info-container",
+                                        className="container-display",
+                                    )
+                                ],
+                            )
+                        ],
+                        width=5
+                    ),
+                    dbc.Col(
+                        [
+                            html.Div(dcc.Graph('ing_page_ing_type_fig'))
+                        ],
+                        width=7
+                    )
+                ],
+                className="pretty_container"
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        [
+                            html.H6('Banned Ingredients'),
+                            dash_table.DataTable(
+                                id='ing_page_banned_ing_table',
+                                columns=[
+                                    {"name": i, "id": i, "deletable": False,
+                                     "selectable": True, "hideable": False}
+                                    for i in ['ingredient', 'product_name']
+                                ],
+                                # data=new_products_detail_df.to_dict(
+                                #     'records'),  # the contents of the table
+                                editable=False,              # allow editing of data inside all cells
+                                # allow filtering of data by user ('native') or not ('none')
+                                filter_action="native",
+                                # enables data to be sorted per-column by user or not ('none')
+                                sort_action="native",
+                                sort_mode="single",         # sort across 'multi' or 'single' columns
+                                # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
+                                # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
+                                # choose if user can delete a row (True) or not (False)
+                                row_deletable=False,
+                                selected_columns=[],        # ids of columns that user selects
+                                selected_rows=[],           # indices of rows that user selects
+                                # all data is passed to the table up-front or not ('none')
+                                page_action="native",
+                                page_current=0,             # page number that user is on
+                                page_size=10,                # number of rows visible per page
+                                style_cell={                # ensure adequate header width when text is shorter than cell's text
+                                    'minWidth': 80, 'maxWidth': 80, 'width': 80, 'fontSize': 13,
+                                    'font-family': 'Gotham', 'textAlign': 'left'
+                                },
+                                style_cell_conditional=[    # align text columns to left. By default they are aligned to right
+                                    {
+                                                            'if': {'column_id': 'product_name'},
+                                                            'minWidth': 120, 'maxWidth': 150, 'width': 150
+                                    },
+                                    {
+                                        'if': {'column_id': 'ingredient'},
+                                        'minWidth': 120, 'maxWidth': 120, 'width': 120
+                                    },
+                                ],
+                                style_data={                # overflow cells' content into multiple lines
+                                    'whiteSpace': 'normal',
+                                    'height': 'auto'
+                                }
+                            )
+                        ],
+                        width=5
+                    ),
+                    dbc.Col(
+                        [
+                            html.H6('New Ingredients'),
+                            dash_table.DataTable(
+                                id='ing_page_new_ing_table',
+                                columns=[
+                                    {"name": i, "id": i, "deletable": False,
+                                     "selectable": True, "hideable": False}
+                                    for i in ['ingredient', 'ingredient_type', 'product_name']
+                                ],
+                                # data=new_products_detail_df.to_dict(
+                                #     'records'),  # the contents of the table
+                                editable=False,              # allow editing of data inside all cells
+                                # allow filtering of data by user ('native') or not ('none')
+                                filter_action="native",
+                                # enables data to be sorted per-column by user or not ('none')
+                                sort_action="native",
+                                sort_mode="single",         # sort across 'multi' or 'single' columns
+                                # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
+                                # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
+                                # choose if user can delete a row (True) or not (False)
+                                row_deletable=False,
+                                selected_columns=[],        # ids of columns that user selects
+                                selected_rows=[],           # indices of rows that user selects
+                                # all data is passed to the table up-front or not ('none')
+                                page_action="native",
+                                page_current=0,             # page number that user is on
+                                page_size=10,                # number of rows visible per page
+                                style_cell={                # ensure adequate header width when text is shorter than cell's text
+                                    'minWidth': 60, 'maxWidth': 60, 'width': 60, 'fontSize': 13,
+                                    'font-family': 'Gotham', 'textAlign': 'left'
+                                },
+                                style_cell_conditional=[    # align text columns to left. By default they are aligned to right
+                                    {
+                                                            'if': {'column_id': 'product_name'},
+                                                            'minWidth': 120, 'maxWidth': 150, 'width': 150
+                                    },
+                                    {
+                                        'if': {'column_id': 'ingredient'},
+                                        'minWidth': 120, 'maxWidth': 120, 'width': 120
+                                    },
+                                ],
+                                style_data={                # overflow cells' content into multiple lines
+                                    'whiteSpace': 'normal',
+                                    'height': 'auto'
+                                }
+                            )
+                        ],
+                        width=7,
+                        style={'padding-left': '20px'}
+                    ),
+                ],
+                className="pretty_container"
+            )
+
+        ],
+        id="mainContainer",
+        style={'fontFamily': 'Gotham', "display": "flex",
+               "flex-direction": "column"},
+    )
+
+
+@app.callback(
+    Output("ing_page_new_ing_table", "data"),
+    [Input("ing_page_source", "value"),
+     Input("ing_page_category", "value"),
+     Input("ing_page_product_type", "value")],
+)
+def update_ing_page_new_ing_table(source: str, category: str, product_type: str) -> list:
+    """update_ing_page_new_ing_table [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        list: [description]
+    """
+    new_ing = prod_page_ing_df[prod_page_ing_df.new_flag == 'new_ingredient'][
+        (prod_page_ing_df.source == source) &
+        (prod_page_ing_df.category == category) &
+        (prod_page_ing_df.product_type == product_type)][['ingredient', 'ingredient_type', 'product_name']]
+    for col in new_ing.columns:
+        new_ing[col] = new_ing[col].astype(str)
+    new_ing = new_ing.groupby(
+        by=['ingredient', 'ingredient_type']).product_name.apply(', '.join).reset_index()
+
+    return new_ing.to_dict('records')
+
+
+@app.callback(
+    Output("ing_page_banned_ing_table", "data"),
+    [Input("ing_page_source", "value"),
+     Input("ing_page_category", "value"),
+     Input("ing_page_product_type", "value")],
+)
+def update_ing_page_banned_ing_table(source: str, category: str, product_type: str) -> list:
+    """update_ing_page_banned_ing_table [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        list: [description]
+    """
+    ban_ing = ing_page_ing_df[ing_page_ing_df.ban_flag == 'yes'][
+        (ing_page_ing_df.source == source) &
+        (ing_page_ing_df.category == category) &
+        (ing_page_ing_df.product_type == product_type)][['ingredient', 'product_name']].drop_duplicates()
+    ban_ing.product_name = ban_ing.product_name.astype('str')
+    ban_ing.reset_index(inplace=True, drop=True)
+    ban_ing = ban_ing.groupby('product_name').ingredient.apply(
+        ', '.join).reset_index()
+
+    return ban_ing.to_dict('records')
+
+
+@app.callback(
+    Output('ing_page_prod_search_table', 'data'),
+    [Input('ing_page_ing', 'value')]
+)
+def update_ing_page_product_table(ingredient: str) -> list:
+    """update_ing_page_product_table [summary]
+
+    [extended_summary]
+
+    Args:
+        ingredient (str): [description]
+
+    Returns:
+        list: [description]
+    """
+    data = ing_page_ing_df[['product_name', 'product_type', 'category', 'source']
+                           ][ing_page_ing_df.ingredient == ingredient].drop_duplicates().sort_values('source', ascending=False)
+    return data.to_dict('records')
+
+
+@app.callback(
+    Output('ing_page_ing_type_fig', 'figure'),
+    [Input("ing_page_source", "value"),
+     Input("ing_page_category", "value"),
+     Input("ing_page_product_type", "value")
+     ]
+)
+def update_ing_page_ingredient_type_figure(source: str, category: str, product_type: str) -> go.Figure:
+    fig = create_ing_page_ingredient_type_figure(
+        source, category, product_type)
+    return fig
+
+
+@app.callback(
+    [
+        Output("new_ing_count_text", "children"),
+        Output("distinct_ing_text", "children"),
+        Output("banned_ing_text", "children"),
+    ],
+    [Input("ing_page_source", "value"),
+     Input("ing_page_category", "value"),
+     Input("ing_page_product_type", "value")],
+)
+def update_ing_page_ing_analysis_text(source: str, category: str, product_type: str) -> Tuple[str, str, str, str]:
+    """update_text [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        Tuple[str, str, str, str]: [description]
+    """
+    new_ing = prod_page_ing_df[prod_page_ing_df.new_flag == 'new_ingredient'][
+        (prod_page_ing_df.source == source) &
+        (prod_page_ing_df.category == category) &
+        (prod_page_ing_df.product_type == product_type)].ingredient.nunique()
+
+    dist_ing = ing_page_ing_df[(ing_page_ing_df.source == source) &
+                               (ing_page_ing_df.category == category) &
+                               (ing_page_ing_df.product_type == product_type)].ingredient.nunique()
+
+    ban_ing = ing_page_ing_df[ing_page_ing_df.ban_flag == 'yes'][
+        (ing_page_ing_df.source == source) &
+        (ing_page_ing_df.category == category) &
+        (ing_page_ing_df.product_type == product_type)].ingredient.nunique()
+
+    return new_ing, dist_ing, ban_ing
+
+
+@app.callback(
+    Output('ing_page_product_type', 'options'),
+    [Input('ing_page_source', 'value'),
+     Input('ing_page_category', 'value')])
+def set_ing_page_product_type_options(source: str, category: str):
+    return [{'label': i, 'value': i}
+            for i in ing_page_ing_df.product_type[(ing_page_ing_df.source == source) &
+                                                  (ing_page_ing_df.category == category)].unique().tolist()]
+
+
+@app.callback(
+    Output('ing_page_product_type', 'value'),
+    [Input("ing_page_source", "value"),
+     Input("ing_page_category", "value"),
+     Input('ing_page_product_type', 'options')])
+def set_ing_page_product_type_value(source, category, available_options):
+    return available_options[0]['value']
+
+
 @app.callback(
     Output('prod_page_ingredients', 'data'),
     [Input("prod_page_source", "value"),
@@ -1627,10 +2099,11 @@ def update_prod_page_product_ingredients_table(source: str, prod_id: str) -> lis
     Returns:
         list: [description]
     """
-    data = prod_page_ing_df[prod_page_ing_df.prod_id == prod_id]
+    data = prod_page_ing_df[['ingredient', 'ingredient_type',
+                             'ban_flag', 'new_flag']][prod_page_ing_df.prod_id == prod_id]
 
     data.sort_values(
-        by='ingredient', inplace=True, ascending=False)
+        by='ingredient', inplace=True, ascending=True)
 
     return data.to_dict('records')
 
@@ -2820,7 +3293,7 @@ def render_page_content(pathname):
     elif pathname == "/page-4":
         return product_page_layout()
     elif pathname == "/page-5":
-        return 'check this out. wip. yipee ki kay'
+        return ingredient_page_layout()
     elif pathname == "/page-6":
         return 'check this out. wip. yipee ki kay'
     # If the user tries to reach a different page, return a 404 message
