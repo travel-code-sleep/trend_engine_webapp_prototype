@@ -33,6 +33,8 @@ from bte_ingredient_page_data_and_plots import *
 
 # assign default values
 # px.defaults.template = "plotly_dark"
+# landing page data
+lp_df = pd.read_feather(dash_data_path/'landing_page_data')
 
 USERNAME_PASSWORD_PAIRS = [
     ['user', 'pwd123'], ['meiyume', 'pwd123']
@@ -142,12 +144,7 @@ sidebar_header = html.Div(
                         html.Img(
                             src=f'data:image/png;base64,{logo_base64}', height='250px', width='200px'),
                         html.Hr(),
-                        html.P(
-                            "Turn unstructured data to structured insights using Natural Language Processing and Deep Learning.",
-                            # className="lead",
-                            style={'fontSize': '15', 'case': 'block',
-                                   'fontName': 'Gotham'}
-                        )
+
                     ]
                 ),
                 dbc.Col(
@@ -183,7 +180,7 @@ sidebar = html.Div(
         dbc.Collapse(
             dbc.Nav(
                 [
-                    dbc.NavLink("Beauty Trend Engine Landing Page",
+                    dbc.NavLink("Beauty Trend Engine",
                                 href="/page-1", id="page-1-link"),
                     dbc.NavLink("Market Trend",
                                 href="/page-2", id="page-2-link"),
@@ -254,23 +251,153 @@ app.layout = html.Div(
 
 def landing_page_layout():
     return html.Div(
-        className='row',
-        style={'verticalAlign': 'middle',
-               'textAlign': 'center',
-               'background-image': 'url(assets/landing_page_bg.jpg)',
-               'width': '100%',
-               'height': '100%',
-               'top': '0px',
-               'left': '0px'},
         children=[
             html.Div(
                 [
-                    html.P("Landing Page Work in Progress. Please click on Market Trend Page on the Sidebar to \
-                            experience first complete page of Beauty Trend Engine. Yay!",
-                           style={"background-color": "powderblue"})
-                ]
+                    dbc.Row(
+                        [
+                            dbc.Col(
+                                [
+                                    html.Img(id='landing_page_logo', width=200, height=300,
+                                             src=f'data:image/png;base64,{logo_base64}',
+                                             alt='Product image will be displayed here once available.'),
+                                ],
+                                width={'size': 6, 'offest': 3},
+                                # className='pretty_container'
+                            )
+                        ],
+                        justify="center",
+                        style={'opacity': 0.90}
+                    ),
+                    dbc.Row(
+                        [
+                            dbc.Col(
+                                [
+                                    html.Div(
+                                        [
+                                            html.Div(
+                                                [
+                                                    html.P(
+                                                        "Turn unstructured data to structured insights using \
+                                                         Natural Language Processing and Deep Learning.",
+                                                        # className="lead",
+                                                        style={'fontSize': '25px', 'case': 'block', 'width': '70%',
+                                                               'fontName': 'Gotham', 'background-color': 'powderblue',
+                                                               'text-algin': 'center'}
+                                                    ),
+                                                ],
+                                                style={'display': 'flex',
+                                                       'align-items': 'center',
+                                                       'justify-content': 'center'
+                                                       }
+                                            ),
+                                            html.Div(
+                                                [
+                                                    html.H2('Total Data Gathered',
+                                                            className="mini_container"
+                                                            )
+                                                ]
+                                            ),
+                                            dbc.Row(
+                                                [
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5(
+                                                                id="lp_total_brands",
+                                                                children=[
+                                                                    str(lp_df['brands'].values[0])]
+                                                            ),
+                                                            html.H6(
+                                                                "Brands")
+                                                        ],
+                                                        id="distinct_brands",
+                                                        className="mini_container",
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5(
+                                                                id="lp_total_products",
+                                                                children=[
+                                                                    str(lp_df['products'].values[0])
+                                                                ]
+                                                            ),
+                                                            html.H6(
+                                                                "Products")
+                                                        ],
+                                                        id="distinct_products",
+                                                        className="mini_container",
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5(
+                                                                id="lp_total_ingredients",
+                                                                children=[
+                                                                    str(
+                                                                        lp_df['ingredients'].values[0])
+                                                                ]
+                                                            ),
+                                                            html.H6(
+                                                                "Ingredients")
+                                                        ],
+                                                        id="distinct_ingredients",
+                                                        className="mini_container",
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5(
+                                                                id="lp_total_reviews",
+                                                                children=[
+                                                                    str(lp_df['reviews'].values[0])
+                                                                ]
+                                                            ),
+                                                            html.H6(
+                                                                "Reviews")
+                                                        ],
+                                                        id="distinct_reviews",
+                                                        className="mini_container",
+                                                    ),
+                                                    dbc.Col(
+                                                        [
+                                                            html.H5(
+                                                                id="lp_total_images",
+                                                                children=[
+                                                                    str(lp_df['images'].values[0])
+                                                                ]
+                                                            ),
+                                                            html.H6(
+                                                                "Images")
+                                                        ],
+                                                        id="distinct_images",
+                                                        className="mini_container",
+                                                    ),
+                                                ],
+                                                id="info-container",
+                                                className="container-display",
+                                                justify='center'
+                                            )
+                                        ],
+                                    )
+                                ],
+                                width={'size': 8, 'offest': 3},
+                            )
+                        ],
+                        justify="center",
+                    ),
+                ],
+                id="mainContainer",
+                style={'verticalAlign': 'middle',
+                       'textAlign': 'center',
+                       'background-image': 'url(assets/landing_page_bg.jpg)',
+                       'background-size': 'cover',
+                       'width': '100%',
+                       'height': '100%',
+                       'top': '0px',
+                       'left': '0px',
+                       'fontFamily': 'Gotham',
+                       "display": "absolute",
+                       "flex-direction": "column"},
             )
-        ]
+        ],
     )
 
 
