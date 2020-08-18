@@ -19,7 +19,7 @@ Read all the data from flat files.
 # ingredient data
 # prod_page_ing_df = pd.read_feather(dash_data_path/'prod_page_ing_data')
 ing_page_ing_df = read_file_s3(
-    filename='ing_page_ing_data', prefix=dash_data_path, file_type='feather')
+    filename='ing_page_ing_data', file_type='feather')
 # pd.read_feather(dash_data_path/'ing_page_ing_data')
 
 ''' create dropdown options '''

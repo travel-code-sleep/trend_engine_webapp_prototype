@@ -34,9 +34,9 @@ from bte_utils import set_default_start_and_end_dates, read_file_s3
 # assign default values
 # px.defaults.template = "plotly_dark"
 # landing page data
-dash_data_path = 'Feeds/BeautyTrendEngine/WebAppData'
+
 lp_df = read_file_s3(
-    filename='landing_page_data', prefix=dash_data_path, file_type='feather')
+    filename='landing_page_data', file_type='feather')
 # pd.read_feather(dash_data_path/'landing_page_data')
 
 USERNAME_PASSWORD_PAIRS = [

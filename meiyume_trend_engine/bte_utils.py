@@ -14,7 +14,7 @@ from dateutil.relativedelta import relativedelta
 from PIL import Image
 
 
-def read_file_s3(filename: str, prefix: str,
+def read_file_s3(filename: str, prefix: str = 'Feeds/BeautyTrendEngine/WebAppData',
                  bucket: str = 'meiyume-datawarehouse-prod',
                  file_type: str = 'feather') -> pd.DataFrame:
     """read_file_s3 [summary]
@@ -23,7 +23,7 @@ def read_file_s3(filename: str, prefix: str,
 
     Args:
         filename (str): [description]
-        prefix (str): [description]
+        prefix (str, optional): [description]. Defaults to 'Feeds/BeautyTrendEngine/WebAppData'.
         bucket (str, optional): [description]. Defaults to 'meiyume-datawarehouse-prod'.
         file_type (str, optional): [description]. Defaults to 'feather'.
 

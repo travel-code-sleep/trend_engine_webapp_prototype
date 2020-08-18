@@ -19,39 +19,39 @@ Read all the data from flat files.
 '''
 # meta detail data
 prod_page_metadetail_data_df = read_file_s3(
-    filename='product_page_metadetail_data', prefix=dash_data_path, file_type='feather')
+    filename='product_page_metadetail_data', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'product_page_metadetail_data')
 # review summary data
 prod_page_review_sum_df = read_file_s3(
-    filename='prod_page_product_review_summary', prefix=dash_data_path, file_type='feather')
+    filename='prod_page_product_review_summary', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'prod_page_product_review_summary')
 # review talking points data
 prod_page_review_talking_points_df = read_file_s3(
-    filename='prod_page_review_talking_points', prefix=dash_data_path, file_type='pickle')
+    filename='prod_page_review_talking_points', file_type='pickle')
 # pd.read_pickle(
 #     dash_data_path/'prod_page_review_talking_points')
 # review sentiment and influence data
 prod_page_review_sentiment_influence_df = read_file_s3(
-    filename='prod_page_review_sentiment_influence', prefix=dash_data_path, file_type='feather')
+    filename='prod_page_review_sentiment_influence', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'prod_page_review_sentiment_influence')
 # review attribute data
 prod_page_reviews_attribute_df = read_file_s3(
-    filename='prod_page_reviews_attribute', prefix=dash_data_path, file_type='feather')
+    filename='prod_page_reviews_attribute', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'prod_page_reviews_attribute')
 # item data
 prod_page_item_df = read_file_s3(
-    filename='prod_page_item_data', prefix=dash_data_path, file_type='feather')
+    filename='prod_page_item_data', file_type='feather')
 # pd.read_feather(dash_data_path/'prod_page_item_data')
 prod_page_item_price_df = prod_page_item_df[['prod_id', 'item_size',
                                              'meta_date', 'item_price']].drop_duplicates(subset=['prod_id', 'meta_date', 'item_size'])
 prod_page_item_price_df.reset_index(inplace=True, drop=True)
 # ingredient data
 prod_page_ing_df = read_file_s3(
-    filename='prod_page_ing_data', prefix=dash_data_path, file_type='feather')
+    filename='prod_page_ing_data', file_type='feather')
 # pd.read_feather(dash_data_path/'prod_page_ing_data')
 
 ''' create dropdown options '''

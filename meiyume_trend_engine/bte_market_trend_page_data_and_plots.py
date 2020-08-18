@@ -20,44 +20,44 @@ Read all the data from flat files.
 '''
 # review trend data
 review_trend_category_df = read_file_s3(
-    filename='review_trend_category_month', prefix=dash_data_path, file_type='feather')
+    filename='review_trend_category_month', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'review_trend_category_month')
 review_trend_product_type_df = read_file_s3(
-    filename='review_trend_product_type_month', prefix=dash_data_path, file_type='feather')
+    filename='review_trend_product_type_month', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'review_trend_product_type_month')
 
 influenced_review_trend_category_df = read_file_s3(
-    filename='review_trend_by_marketing_category_month', prefix=dash_data_path, file_type='feather')
+    filename='review_trend_by_marketing_category_month', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'review_trend_by_marketing_category_month')
 influenced_review_trend_product_type_df = read_file_s3(
-    filename='review_trend_by_marketing_product_type_month', prefix=dash_data_path, file_type='feather')
+    filename='review_trend_by_marketing_product_type_month', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'review_trend_by_marketing_product_type_month')
 
 # product launch trend data
 meta_product_launch_trend_category_df = read_file_s3(
-    filename='meta_product_launch_trend_category_month', prefix=dash_data_path, file_type='feather')
+    filename='meta_product_launch_trend_category_month', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'meta_product_launch_trend_category_month')
 meta_product_launch_trend_product_type_df = read_file_s3(
-    filename='meta_product_launch_trend_product_type_month', prefix=dash_data_path, file_type='feather')
+    filename='meta_product_launch_trend_product_type_month', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'meta_product_launch_trend_product_type_month')
 product_launch_intensity_category_df = read_file_s3(
-    filename='meta_product_launch_intensity_category_month', prefix=dash_data_path, file_type='feather')
+    filename='meta_product_launch_intensity_category_month', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'meta_product_launch_intensity_category_month')
 
 # ingredient trend data
 new_ingredient_trend_category_df = read_file_s3(
-    filename='new_ingredient_trend_category_month', prefix=dash_data_path, file_type='feather')
+    filename='new_ingredient_trend_category_month', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'new_ingredient_trend_category_month')
 new_ingredient_trend_product_type_df = read_file_s3(
-    filename='new_ingredient_trend_product_type_month', prefix=dash_data_path, file_type='feather')
+    filename='new_ingredient_trend_product_type_month', file_type='feather')
 # pd.read_feather(
 #     dash_data_path/'new_ingredient_trend_product_type_month')
 
