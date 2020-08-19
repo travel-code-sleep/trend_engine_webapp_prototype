@@ -9,7 +9,7 @@ Run `pip install --upgrade -r requirements.txt` in the desired virtual environme
 `dash_data_path = 'Feeds/BeautyTrendEngine/WebAppData'`
 
 
-To run the app on local machine run `python beauty_trend_engine.py` in the command line.
+To run the app on local machine run `python beauty_trend_engine_app.py` in the command line.
 ## Navigate to the correct folder containing the python file before running it.
 
 ## To deploy the application, please follow how to deploy flask app on aws. Dash app and Flask app deployment procedures are identical.
