@@ -37,10 +37,9 @@ meiyume_bte_dash_flask_app
 │   |   │   temp_product_image.png
 │   |   │   ...
 |   └───assets
-│   |   │   landing_page_bg.jpg
-│   |   │   file112.txt
+│   |   │   bte_logo.png
 │   |   │   resizing_script.js
 │   |   |   responsive-sidebar.css
 |   |   |   styles.css
-|   |   |   temp_product_image.png
+|   |   |   landing_page_bg.jpg
 ```
