@@ -202,7 +202,7 @@ def create_prod_page_review_timeseries_figure(data: pd.DataFrame, prod_id: str, 
         legend_title_font_color="green",
         hovermode='closest',
         xaxis={'title': 'Month'},
-        yaxis={'title': 'New Ingredient Count'}
+        yaxis={'title': 'Review Count'}
     )
     fig.update_xaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
                      title_font=dict(size=20, family='Gotham', color='crimson'))
