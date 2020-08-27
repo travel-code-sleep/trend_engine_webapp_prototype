@@ -1,6 +1,7 @@
 """utility classes and functions for trend engine web-app."""
 import base64
 import gc
+import sys
 import io
 import os
 from datetime import datetime as dt
@@ -13,8 +14,28 @@ from botocore.exceptions import ClientError
 from dateutil.relativedelta import relativedelta
 from PIL import Image
 
+S3_REGION = os.environ.get('S3_REGION', '')
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
 
-def read_file_s3(filename: str, prefix: str = 'Feeds/BeautyTrendEngine/WebAppData',
+def get_s3_client(region: str,
+                    access_key_id: str,
+                    secret_access_key: str):
+    """
+    Return S3 client object 
+    """
+    if region == '' or access_key_id == '' or secret_access_key == '':
+        print ('*ERROR: S3 client information not set*')
+        return sys.exit(1)
+    else:
+        return boto3.client('s3',
+                            region,
+                            aws_access_key_id=access_key_id,
+                            aws_secret_access_key=secret_access_key
+                        )
+
+def read_file_s3(filename: str,
+                prefix: str = 'Feeds/BeautyTrendEngine/WebAppData',
                  bucket: str = 'meiyume-datawarehouse-prod',
                  file_type: str = 'feather') -> pd.DataFrame:
     """read_file_s3 [summary]
@@ -31,7 +52,7 @@ def read_file_s3(filename: str, prefix: str = 'Feeds/BeautyTrendEngine/WebAppDat
         pd.DataFrame: [description]
     """
     key = prefix+'/'+filename
-    s3 = boto3.client('s3')
+    s3 = get_s3_client(S3_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
     obj = s3.get_object(Bucket=bucket, Key=key)
     if file_type == 'feather':
         df = pd.read_feather(io.BytesIO(obj['Body'].read()))
@@ -56,8 +77,7 @@ def read_image_s3(prod_id: str, prefix: str = 'Feeds/BeautyTrendEngine/Image/Sta
     """
     try:
         key = prefix+'/' + f'{prod_id}/{prod_id}_image_1.jpg'
-        # print(key)
-        s3 = boto3.client('s3')
+        s3 = get_s3_client(S3_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
         product_image = s3.get_object(Bucket=bucket,
                                       Key=key)['Body'].read()
         product_image = Image.fromarray(
