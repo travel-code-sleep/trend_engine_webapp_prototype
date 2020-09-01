@@ -1,16 +1,13 @@
 dash==1.13.4
 dash_auth==1.3.2
 dash_bootstrap_components==0.10.3
+dash_table==4.8.1
 numpy==1.18.1
 pandas==1.0.1
 plotly==4.9.0
 path==13.1.0
 pyarrow==1.0
-dash_table==4.8.1
-<<<<<<< HEAD
-=======
 Pillow==7.2.0
 requests==2.24.0
 boto3==1.14.49
 python-dotenv==0.14.0
->>>>>>> 8e9d47f6feffa00ffc83ec69f7b85a99a664d47e
