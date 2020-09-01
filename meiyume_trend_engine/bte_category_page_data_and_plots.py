@@ -76,7 +76,7 @@ category_page_user_attribute_options = [{'label': i, 'value': i}
 
 def create_reviews_by_user_attribute_figure(source: str = 'us', category: str = 'skincare',
                                             product_type: str = 'acne-products-acne-cream',
-                                            user_attribute: str = 'age'):
+                                            user_attribute: str = 'age') -> go.Figure:
     """create_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
@@ -88,7 +88,7 @@ def create_reviews_by_user_attribute_figure(source: str = 'us', category: str = 
         user_attribute (str, optional): [description]. Defaults to 'age'.
 
     Returns:
-        [type]: [description]
+        go.Figure: [description]
     """
     data = pd.DataFrame(cat_page_reviews_by_user_attributes_df[
         (cat_page_reviews_by_user_attributes_df.source == source) &

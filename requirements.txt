@@ -7,3 +7,4 @@ plotly==4.9.0
 path==13.1.0
 pyarrow==1.0
 dash_table==4.8.1
+python-dotenv
