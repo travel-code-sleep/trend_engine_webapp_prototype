@@ -3,7 +3,6 @@ import base64
 import gc
 import sys
 import io
-import os
 from datetime import datetime as dt
 from pathlib import Path
 
@@ -13,10 +12,7 @@ import pandas as pd
 from botocore.exceptions import ClientError
 from dateutil.relativedelta import relativedelta
 from PIL import Image
-
-S3_REGION = os.environ.get('S3_REGION', '')
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
+from settings import *
 
 def get_s3_client(region: str,
                     access_key_id: str,
@@ -35,8 +31,8 @@ def get_s3_client(region: str,
                         )
 
 def read_file_s3(filename: str,
-                prefix: str = 'Feeds/BeautyTrendEngine/WebAppData',
-                 bucket: str = 'meiyume-datawarehouse-prod',
+                prefix: str = f'{S3_PREFIX}/WebAppData',
+                 bucket: str = S3_BUCKET,
                  file_type: str = 'feather') -> pd.DataFrame:
     """read_file_s3 [summary]
 
@@ -44,8 +40,8 @@ def read_file_s3(filename: str,
 
     Args:
         filename (str): [description]
-        prefix (str, optional): [description]. Defaults to 'Feeds/BeautyTrendEngine/WebAppData'.
-        bucket (str, optional): [description]. Defaults to 'meiyume-datawarehouse-prod'.
+        prefix (str, optional): [description]. Defaults to f'{S3_PREFIX}/WebAppData'.
+        bucket (str, optional): [description]. Defaults to S3_BUCKET.
         file_type (str, optional): [description]. Defaults to 'feather'.
 
     Returns:
@@ -60,33 +56,35 @@ def read_file_s3(filename: str,
         df = pd.read_pickle(io.BytesIO(obj['Body'].read()))
     return df
 
-
-def read_image_s3(prod_id: str, prefix: str = 'Feeds/BeautyTrendEngine/Image/Staging',
-                  bucket: str = 'meiyume-datawarehouse-prod') -> str:
+def read_image_s3(prod_id: str, prefix: str = f'{S3_PREFIX}/Image/Staging',
+                  bucket: str = S3_BUCKET) -> str:
     """read_image_s3 [summary]
 
     [extended_summary]
 
     Args:
         prod_id (str): [description]
-        prefix (str, optional): [description]. Defaults to 'Feeds/BeautyTrendEngine/Image/Staging'.
-        bucket (str, optional): [description]. Defaults to 'meiyume-datawarehouse-prod'.
+        prefix (str, optional): [description]. Defaults to f'{S3_PREFIX}/Image/Staging'.
+        bucket (str, optional): [description]. Defaults to S3_BUCKET.
 
     Returns:
         str: [description]
     """
-    try:
-        key = prefix+'/' + f'{prod_id}/{prod_id}_image_1.jpg'
-        s3 = get_s3_client(S3_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
-        product_image = s3.get_object(Bucket=bucket,
-                                      Key=key)['Body'].read()
-        product_image = Image.fromarray(
-            np.array(Image.open(io.BytesIO(product_image))))
-        product_image.save('images/temp_product_image.png')
-        return 'images/temp_product_image.png'
-    except ClientError as ex:
-        return 'images/not_avlbl.jpg'
+    ### commented by Arnold ###
+    ### return image URL strictly from read_image_s3 ###
 
+    # try:
+    #     key = prefix+'/' + f'{prod_id}/{prod_id}_image_1.jpg'
+    #     s3 = get_s3_client(S3_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+    #     product_image = s3.get_object(Bucket=bucket,
+    #                                   Key=key)['Body'].read()
+    #     product_image = Image.fromarray(
+    #         np.array(Image.open(io.BytesIO(product_image))))
+    #     product_image.save('images/temp_product_image.png')
+    #     return 'images/temp_product_image.png'
+    # except ClientError as ex:
+    #     return 'images/not_avlbl.jpg'
+    return f'https://{bucket}.s3-{S3_REGION}.amazonaws.com/{prefix}/{prod_id}/{prod_id}_image_1.jpg'
 
 def set_default_start_and_end_dates():
     three_yrs_ago = dt.now() - relativedelta(years=3)

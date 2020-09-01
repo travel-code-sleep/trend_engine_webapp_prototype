@@ -10,7 +10,6 @@ import json
 import re
 from datetime import datetime as dt
 from typing import Optional, Tuple, Union
-
 import dash
 import dash_auth
 import dash_bootstrap_components as dbc
@@ -32,6 +31,7 @@ from bte_product_page_data_and_plots import *
 from bte_utils import (read_file_s3, read_image_s3,
                        set_default_start_and_end_dates)
 
+from settings import *
 # assign default values
 # px.defaults.template = "plotly_dark"
 # landing page data
@@ -45,8 +45,7 @@ USERNAME_PASSWORD_PAIRS = [
 ]
 
 # read and encode logo image
-logo = 'assets/bte_logo.png'
-logo_base64 = base64.b64encode(open(logo, 'rb').read()).decode('ascii')
+logo_url = f'https://{S3_BUCKET}.s3-{S3_REGION}.amazonaws.com/{S3_PREFIX}/static/assets/bte_logo.png'
 
 # Create Dash Application
 external_stylesheets = [dbc.themes.LUX,
@@ -146,7 +145,7 @@ sidebar_header = html.Div(
                 dbc.Col(
                     [
                         html.Img(
-                            src=f'data:image/png;base64,{logo_base64}', height='250px', width='200px'),
+                            src=logo_url, height='250px', width='200px'),
                         html.Hr(),
 
                     ]
@@ -252,7 +251,6 @@ app.layout = html.Div(
     ]
 )
 
-
 def landing_page_layout():
     return html.Div(
         children=[
@@ -263,7 +261,7 @@ def landing_page_layout():
                             dbc.Col(
                                 [
                                     html.Img(id='landing_page_logo', width=200, height=300,
-                                             src=f'data:image/png;base64,{logo_base64}',
+                                             src=logo_url,
                                              alt='Product image will be displayed here once available.'),
                                 ],
                                 width={'size': 6, 'offest': 3},
@@ -2532,9 +2530,12 @@ def display_product_page_category(source: str, prod_id: str):
     [Input("prod_page_source", "value"),
      Input('prod_page_product', 'value')])
 def update_prod_page_img_src(source: str, prod_id: str):
-    prod_img_path = read_image_s3(prod_id=prod_id)
-    encoded_image = base64.b64encode(open(prod_img_path, 'rb').read())
-    return 'data:image/png;base64,{}'.format(encoded_image.decode())
+    ### commented by Arnold ###
+    ### return image URL strictly from read_image_s3 ###
+    # prod_img_path = read_image_s3(prod_id=prod_id)
+    # encoded_image = base64.b64encode(open(prod_img_path, 'rb').read())
+    # return 'data:image/png;base64,{}'.format(encoded_image.decode())
+    return read_image_s3(prod_id=prod_id)
 
 
 @app.callback(
