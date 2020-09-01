@@ -49,6 +49,8 @@ meiyume_bte_dash_flask_app
 |   setup.py
 └───meiyume_trend_engine
 │   │   __init__.py
+│   │   .env
+│   │   settings.py
 │   │   main.py
 |   |   bte_category_page_data_and_plots.py
 │   │   bte_ingredient_page_data_and_plots.py
