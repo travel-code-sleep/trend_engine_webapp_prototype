@@ -10,6 +10,12 @@ You have to set AWS credentials environment variables before you can get your ap
 
 To start with, create a file (if it is not exists) .env and set your AWS credentials inside the file.
 
+The content of the .env file should be as follows:
+```
+AWS_ACCESS_KEY_ID=your_access_key_id
+AWS_SECRET_ACCESS_KEY=your_secret_access_key
+```
+
 The .env file should be in the same folder as settings.py.
 
 ## 3. (Optional) Make neccessary changes on the settings.py file 
