@@ -14,24 +14,30 @@ from dateutil.relativedelta import relativedelta
 from PIL import Image
 from settings import *
 
+
 def get_s3_client(region: str,
-                    access_key_id: str,
-                    secret_access_key: str):
+                  access_key_id: str,
+                  secret_access_key: str):
     """
-    Return S3 client object 
+    Return S3 client object
     """
-    if region == '' or access_key_id == '' or secret_access_key == '':
-        print ('*ERROR: S3 client information not set*')
+    if region == '':  # or access_key_id == '' or secret_access_key == '':
+        print('*ERROR: S3 client information not set*')
         return sys.exit(1)
     else:
-        return boto3.client('s3',
-                            region,
-                            aws_access_key_id=access_key_id,
-                            aws_secret_access_key=secret_access_key
-                        )
+        try:
+            client = boto3.client('s3',
+                                  region,
+                                  aws_access_key_id=access_key_id,
+                                  aws_secret_access_key=secret_access_key
+                                  )
+        except Exception as ex:
+            client = boto3.client('s3')
+    return client
+
 
 def read_file_s3(filename: str,
-                prefix: str = f'{S3_PREFIX}/WebAppData',
+                 prefix: str = f'{S3_PREFIX}/WebAppData',
                  bucket: str = S3_BUCKET,
                  file_type: str = 'feather') -> pd.DataFrame:
     """read_file_s3 [summary]
@@ -56,6 +62,7 @@ def read_file_s3(filename: str,
         df = pd.read_pickle(io.BytesIO(obj['Body'].read()))
     return df
 
+
 def read_image_s3(prod_id: str, prefix: str = f'{S3_PREFIX}/Image/Staging',
                   bucket: str = S3_BUCKET) -> str:
     """read_image_s3 [summary]
@@ -70,8 +77,8 @@ def read_image_s3(prod_id: str, prefix: str = f'{S3_PREFIX}/Image/Staging',
     Returns:
         str: [description]
     """
-    ### commented by Arnold ###
-    ### return image URL strictly from read_image_s3 ###
+    # commented by Arnold ###
+    # return image URL strictly from read_image_s3 ###
 
     # try:
     #     key = prefix+'/' + f'{prod_id}/{prod_id}_image_1.jpg'
@@ -85,6 +92,7 @@ def read_image_s3(prod_id: str, prefix: str = f'{S3_PREFIX}/Image/Staging',
     # except ClientError as ex:
     #     return 'images/not_avlbl.jpg'
     return f'https://{bucket}.s3-{S3_REGION}.amazonaws.com/{prefix}/{prod_id}/{prod_id}_image_1.jpg'
+
 
 def set_default_start_and_end_dates():
     three_yrs_ago = dt.now() - relativedelta(years=3)

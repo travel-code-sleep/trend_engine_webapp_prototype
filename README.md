@@ -18,7 +18,7 @@ AWS_SECRET_ACCESS_KEY=your_secret_access_key
 
 The .env file should be in the same folder as settings.py.
 
-## 3. (Optional) Make neccessary changes on the settings.py file 
+## 3. (Optional) Make necessary changes on the settings.py file
 Default value inside settings.py should be fine. Feel free to make any changes
 
 ## 4. Start the dash server on your local computer
