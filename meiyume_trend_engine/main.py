@@ -240,16 +240,17 @@ app.layout = html.Div(
     [
         dcc.Location(id="url"),
         html.Div(id="output-clientside"),
-        dbc.Row(
-            dbc.Col(
-                navbar,
-                width={'size': 12}
-            )
-        ),
+        # dbc.Row(
+        #     dbc.Col(
+        #         navbar,
+        #         width={'size': 12}
+        #     )
+        # ),
         sidebar,
         content
     ]
 )
+
 
 def landing_page_layout():
     return html.Div(
@@ -519,7 +520,7 @@ def market_trend_page_layout():
                                                                 }),
                                                 html.Hr(),
                                                 dcc.Graph(id='subcategory_trend',
-                                                          figure=subcategory_trend_figure)
+                                                          )
                                             ],
                                             className="pretty_container"
                                         )
@@ -558,7 +559,7 @@ def market_trend_page_layout():
                                                                 }),
                                                 html.Hr(),
                                                 dcc.Graph(id='influenced_subcategory_trend',
-                                                          figure=influenced_subcategory_trend_figure)
+                                                          )
                                             ],
                                             className="pretty_container"
                                         )
@@ -1263,48 +1264,72 @@ def product_page_layout():
                                 [
                                     dbc.CardBody(
                                         [
-                                            html.Img(id='prod_page_product_image', width=700, height=400,
-                                                     alt='Product image will be displayed here once available.'),
-                                            html.P(id='prod_page_card_brand_name',
-                                                   style={'fontSize': '16px'}
-                                                   ),
-                                            html.P(id='prod_page_card_product_name',
-                                                   style={'fontSize': '16px'}
-                                                   ),
                                             dbc.Row(
                                                 [
                                                     dbc.Col(
                                                         [
-                                                            html.P(id="prod_page_product_review_count",
-                                                                   className="mini_container",
+                                                            html.Img(id='prod_page_product_image', width=300, height=250,
+                                                                     alt='Product image will be displayed here once available.'),
+                                                            html.P(id='prod_page_card_brand_name',
                                                                    style={
-                                                                       'fontSize': '15px'},
+                                                                       'fontSize': '16px'}
+                                                                   ),
+                                                            html.P(id='prod_page_card_product_name',
+                                                                   style={
+                                                                       'fontSize': '16px'}
                                                                    ),
                                                         ],
-                                                        width=4
+                                                        width=7
                                                     ),
                                                     dbc.Col(
                                                         [
-                                                            html.P(id="prod_page_product_adjusted_rating",
-                                                                   className="mini_container",
-                                                                   style={
-                                                                       'fontSize': '15px'}
-                                                                   ),
+                                                            dbc.Row(
+                                                                [
+                                                                    dbc.Col(
+                                                                        [
+                                                                            html.P(id="prod_page_product_review_count",
+                                                                                   className="mini_container",
+                                                                                   style={
+                                                                                       'fontSize': '14.5px'},
+                                                                                   ),
+                                                                        ],
+                                                                        # width=4
+                                                                    ),
+                                                                ]
+                                                            ),
+                                                            dbc.Row(
+                                                                [
+                                                                    dbc.Col(
+                                                                        [
+                                                                            html.P(id="prod_page_product_adjusted_rating",
+                                                                                   className="mini_container",
+                                                                                   style={
+                                                                                       'fontSize': '14.5px'}
+                                                                                   ),
+                                                                        ],
+                                                                        # width=4
+                                                                    ),
+                                                                ]
+                                                            ),
+                                                            dbc.Row(
+                                                                [
+                                                                    dbc.Col(
+                                                                        [
+                                                                            html.P(id="prod_page_product_first_review_date",
+                                                                                   className="mini_container",
+                                                                                   style={
+                                                                                       'fontSize': '14.5px'}
+                                                                                   ),
+                                                                        ],
+                                                                        # width=4
+                                                                    )
+                                                                ]
+                                                            )
                                                         ],
-                                                        width=4
-                                                    ),
-                                                    dbc.Col(
-                                                        [
-                                                            html.P(id="prod_page_product_first_review_date",
-                                                                   className="mini_container",
-                                                                   style={
-                                                                       'fontSize': '14.5px'}
-                                                                   ),
-                                                        ],
-                                                        width=4
+                                                        width=5
                                                     )
                                                 ]
-                                            )
+                                            ),
                                         ]
                                     ),
                                 ],
@@ -2530,8 +2555,8 @@ def display_product_page_category(source: str, prod_id: str):
     [Input("prod_page_source", "value"),
      Input('prod_page_product', 'value')])
 def update_prod_page_img_src(source: str, prod_id: str):
-    ### commented by Arnold ###
-    ### return image URL strictly from read_image_s3 ###
+    # commented by Arnold #
+    # return image URL strictly from read_image_s3 #
     # prod_img_path = read_image_s3(prod_id=prod_id)
     # encoded_image = base64.b64encode(open(prod_img_path, 'rb').read())
     # return 'data:image/png;base64,{}'.format(encoded_image.decode())
@@ -2868,6 +2893,8 @@ def update_pricing_analysis_text(source: str, category: str, product_type: str) 
 
     return pricing_data[0], pricing_data[1], pricing_data[2], pricing_data[3], item_price[0]
 
+# Market Trend Page Callbacks
+
 
 @app.callback(Output('category_trend', 'figure'),
               inputs=[Input('source', 'value'),
@@ -2967,7 +2994,7 @@ def influenced_display_click_data(clickData) -> str:
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
     else:
-        return ('Selected Category: bath-body')
+        return ''
 
 
 @app.callback(Output('category_name', 'children'),
@@ -2987,7 +3014,7 @@ def display_click_data(clickData) -> str:
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
     else:
-        return ('Selected Category: bath-body')
+        return ''
 
 
 @app.callback(Output('subcategory_trend', 'figure'),
@@ -3025,27 +3052,28 @@ def update_product_type_review_trend_figure(source: str, clickData, start_date: 
 
     if clickData is not None:
         category = clickData['points'][0]['customdata'][0]
-    else:
-        category = 'bath-body'
+
     # pt_df = review_trend_product_type_df[(review_trend_product_type_df.category==category)
     #                               review_trend_product_type_df.source==source]
-    product_type_count = len(review_trend_product_type_df[(review_trend_product_type_df.category ==
-                                                           category) & (review_trend_product_type_df.source == source)].product_type.unique())
-    if product_type_count <= 10:
-        height = 600
-    elif product_type_count <= 20:
-        height = 1200
-    elif product_type_count <= 30:
-        height = 1800
-    elif product_type_count <= 50:
-        height = 2200
-    else:
-        height = 2600
+        product_type_count = len(review_trend_product_type_df[(review_trend_product_type_df.category ==
+                                                               category) & (review_trend_product_type_df.source == source)].product_type.unique())
+        if product_type_count <= 10:
+            height = 600
+        elif product_type_count <= 20:
+            height = 1200
+        elif product_type_count <= 30:
+            height = 1800
+        elif product_type_count <= 50:
+            height = 2200
+        else:
+            height = 2600
 
-    fig = create_product_type_review_trend_figure(
-        data=review_trend_product_type_df, source=source, category=category, height=height,
-        start_date=start_date_string, end_date=end_date_string)
-    return fig
+        fig = create_product_type_review_trend_figure(
+            data=review_trend_product_type_df, source=source, category=category, height=height,
+            start_date=start_date_string, end_date=end_date_string)
+        return fig
+    else:
+        return {}
 
 
 @app.callback(Output('influenced_subcategory_trend', 'figure'),
@@ -3083,29 +3111,30 @@ def update_product_type_influenced_review_trend_figure(source: str, clickData, s
 
     if clickData is not None:
         category = clickData['points'][0]['customdata'][0]
-    else:
-        category = 'bath-body'
-    # pt_df = review_trend_product_type_df[(review_trend_product_type_df.category==category)
-    #                               review_trend_product_type_df.source==source]
-    product_type_count = len(influenced_review_trend_product_type_df[(influenced_review_trend_product_type_df.category
-                                                                      == category) &
-                                                                     (influenced_review_trend_product_type_df.source
-                                                                      == source)].product_type.unique())
-    if product_type_count <= 10:
-        height = 600
-    elif product_type_count <= 20:
-        height = 1200
-    elif product_type_count <= 30:
-        height = 1800
-    elif product_type_count <= 50:
-        height = 2200
-    else:
-        height = 2600
 
-    fig = create_product_type_review_trend_figure(
-        data=influenced_review_trend_product_type_df, source=source, category=category, height=height,
-        start_date=start_date_string, end_date=end_date_string)
-    return fig
+        # pt_df = review_trend_product_type_df[(review_trend_product_type_df.category==category)
+        #                               review_trend_product_type_df.source==source]
+        product_type_count = len(influenced_review_trend_product_type_df[(influenced_review_trend_product_type_df.category
+                                                                          == category) &
+                                                                         (influenced_review_trend_product_type_df.source
+                                                                          == source)].product_type.unique())
+        if product_type_count <= 10:
+            height = 600
+        elif product_type_count <= 20:
+            height = 1200
+        elif product_type_count <= 30:
+            height = 1800
+        elif product_type_count <= 50:
+            height = 2200
+        else:
+            height = 2600
+
+        fig = create_product_type_review_trend_figure(
+            data=influenced_review_trend_product_type_df, source=source, category=category, height=height,
+            start_date=start_date_string, end_date=end_date_string)
+        return fig
+    else:
+        return {}
 
 
 @app.callback(
@@ -3444,5 +3473,5 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    app.run_server()
-    # app.run_server(debug=True)
+    # app.run_server()
+    app.run_server(debug=True)

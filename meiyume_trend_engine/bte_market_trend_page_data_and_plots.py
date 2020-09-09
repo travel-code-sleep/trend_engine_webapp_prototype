@@ -129,6 +129,7 @@ def create_category_review_trend_figure(data: pd.DataFrame, source: str = 'us',
                      title_font=dict(size=20, family='Gotham', color='crimson'))
     fig.update_yaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
                      title_font=dict(size=20, family='Gotham', color='crimson'))
+    fig.update_layout(showlegend=False)
     return fig
 
 
@@ -197,6 +198,7 @@ def create_product_type_review_trend_figure(data: pd.DataFrame, source: str = 'u
                      title_font=dict(size=20, family='Gotham', color='crimson'))
     fig.update_yaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
                      title_font=dict(size=20, family='Gotham', color='crimson'))
+    fig.update_layout(showlegend=False)
     return fig
 
 
