@@ -194,11 +194,15 @@ def create_product_type_review_trend_figure(data: pd.DataFrame, source: str = 'u
         hovermode='closest'
     )
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
+
     fig.update_xaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
-                     title_font=dict(size=20, family='Gotham', color='crimson'))
+                     title_font=dict(size=20, family='Gotham',
+                                     color='crimson'),
+                     showticklabels=True)
     fig.update_yaxes(tickfont=dict(family='Gotham', color='crimson', size=14),
                      title_font=dict(size=20, family='Gotham', color='crimson'))
     fig.update_layout(showlegend=False)
+
     return fig
 
 
