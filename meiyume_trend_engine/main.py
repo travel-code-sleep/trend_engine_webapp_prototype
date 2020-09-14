@@ -10,6 +10,7 @@ import json
 import re
 from datetime import datetime as dt
 from typing import Optional, Tuple, Union
+
 import dash
 import dash_auth
 import dash_bootstrap_components as dbc
@@ -29,7 +30,6 @@ from bte_ingredient_page_data_and_plots import *
 from bte_market_trend_page_data_and_plots import *
 from bte_product_page_data_and_plots import *
 from bte_utils import read_file_s3, read_image_s3, set_default_start_and_end_dates
-
 from settings import *
 
 # assign default values
