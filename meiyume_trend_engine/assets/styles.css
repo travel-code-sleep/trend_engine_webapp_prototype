@@ -12,8 +12,7 @@ body {
   width: 16.25%;
 }
 
-.column,
-.columns {
+.column, .columns {
   margin-left: 0.5%;
 }
 
@@ -58,8 +57,7 @@ body {
   display: flex;
 }
 
-#individual_graph,
-#aggregate_graph {
+#individual_graph, #aggregate_graph {
   width: calc(100% - 30px);
   position: absolute;
 }
@@ -89,6 +87,7 @@ body {
   margin-right: 10px;
   margin-top: 30px;
 }
+
 #title {
   text-align: center;
 }
