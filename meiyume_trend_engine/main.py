@@ -35,6 +35,9 @@ from settings import *
 # assign default values
 # px.defaults.template = "plotly_dark"
 # landing page data
+def mark_digit(d):
+    return format(d, ",d")
+
 
 lp_df = read_file_s3(filename="landing_page_data", file_type="feather")
 # pd.read_feather(dash_data_path/'landing_page_data')
@@ -326,7 +329,7 @@ def landing_page_layout():
                                                             html.H5(
                                                                 id="lp_total_brands",
                                                                 children=[
-                                                                    str(
+                                                                    mark_digit(
                                                                         lp_df[
                                                                             "brands"
                                                                         ].values[0]
@@ -344,7 +347,7 @@ def landing_page_layout():
                                                             html.H5(
                                                                 id="lp_total_products",
                                                                 children=[
-                                                                    str(
+                                                                    mark_digit(
                                                                         lp_df[
                                                                             "products"
                                                                         ].values[0]
@@ -362,7 +365,7 @@ def landing_page_layout():
                                                             html.H5(
                                                                 id="lp_total_ingredients",
                                                                 children=[
-                                                                    str(
+                                                                    mark_digit(
                                                                         lp_df[
                                                                             "ingredients"
                                                                         ].values[0]
@@ -380,13 +383,13 @@ def landing_page_layout():
                                                             html.H5(
                                                                 id="lp_total_reviews",
                                                                 children=[
-                                                                    str(
+                                                                    mark_digit(
                                                                         lp_df[
                                                                             "reviews"
                                                                         ].values[0]
                                                                     )
                                                                 ],
-                                                                className="gildaDisplay22pt"
+                                                                className="gildaDisplay22pt",
                                                             ),
                                                             html.H6("Reviews"),
                                                         ],
@@ -398,7 +401,7 @@ def landing_page_layout():
                                                             html.H5(
                                                                 id="lp_total_images",
                                                                 children=[
-                                                                    str(
+                                                                    mark_digit(
                                                                         lp_df[
                                                                             "images"
                                                                         ].values[0]
