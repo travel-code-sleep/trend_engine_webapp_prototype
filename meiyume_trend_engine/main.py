@@ -203,7 +203,6 @@ sidebar = html.Div(
         html.P("Data is correct as of 1st August 2020"),
     ],
     id="sidebar",
-    style={"position": "flexible"},
 )
 """
 sidebar = html.Div(

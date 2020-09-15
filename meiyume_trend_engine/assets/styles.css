@@ -189,8 +189,14 @@ body {
 
 .navbarToggleButton {
     font-size: 15pt;
-    border-color: rgba(0, 0, 0, .1);
-    background-color: lightgrey;
+    border-color: #e6e6e6;
+    background-color: #e6e6e6;
     width: 40px;
     height: 40px;
+}
+
+#sidebar {
+    position: flexible;
+    font-family: GothamLight;
+    font-size: 12pt;
 }
