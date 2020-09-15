@@ -35,8 +35,6 @@ from settings import *
 # assign default values
 # px.defaults.template = "plotly_dark"
 # landing page data
-def mark_digit(d):
-    return format(d, ",d")
 
 
 lp_df = read_file_s3(filename="landing_page_data", file_type="feather")
@@ -161,17 +159,11 @@ sidebar_header = html.Div(
                 dbc.Col(
                     [
                         html.Button(
+                            "|||",
                             # use the Bootstrap navbar-toggler classes to style
-                            className="navbar-toggler",
+                            className="navbar-toggler navbarToggleButton",
                             # the navbar-toggler classes don't set color,
                             id="sidebar-toggle",
-                            style={
-                                "color": "orange",
-                                "border-color": "rgba(0,0,0,.1)",
-                                "background-color": "orange",
-                                "width": "30px",
-                                "height": "40px",
-                            },
                         ),
                     ],
                     # the column containing the toggle will be only as wide as the
@@ -198,9 +190,9 @@ sidebar = html.Div(
                     ),
                     dbc.NavLink("Market Trend", href="/page-2", id="page-2-link"),
                     dbc.NavLink("Category Insights", href="/page-3", id="page-3-link"),
-                    dbc.NavLink("Product KnowAll", href="/page-4", id="page-4-link"),
-                    dbc.NavLink("Ingredient Inside", href="/page-5", id="page-5-link"),
-                    dbc.NavLink("Social Media Trend", href="/page-6", id="page-6-link"),
+                    dbc.NavLink("Product Insights", href="/page-4", id="page-4-link"),
+                    dbc.NavLink("Ingredient Insights", href="/page-5", id="page-5-link"),
+                    # dbc.NavLink("Social Media Trend", href="/page-6", id="page-6-link"),
                 ],
                 vertical=True,
                 pills=True,
@@ -208,10 +200,9 @@ sidebar = html.Div(
             id="collapse",
         ),
         html.Div(),
-        html.P("Data is correct as of 1st August 2020"),
+        html.P("Data last scraped: 1st August 2020"),
     ],
     id="sidebar",
-    style={"position": "flexible"},
 )
 """
 sidebar = html.Div(
@@ -294,14 +285,7 @@ def landing_page_layout():
                                                         "Turn unstructured data to structured insights using \
                                                          Natural Language Processing and Deep Learning.",
                                                         # className="lead",
-                                                        style={
-                                                            "fontSize": "25px",
-                                                            "case": "block",
-                                                            "width": "70%",
-                                                            "fontName": "Gotham",
-                                                            "background-color": "powderblue",
-                                                            "text-algin": "center",
-                                                        },
+                                                        className="pageSubtitle",
                                                     ),
                                                 ],
                                                 style={
@@ -335,7 +319,7 @@ def landing_page_layout():
                                                                         ].values[0]
                                                                     )
                                                                 ],
-                                                                className="gildadisplay22pt",
+                                                                className="gildaDisplay22pt",
                                                             ),
                                                             html.H6("Brands"),
                                                         ],
@@ -474,7 +458,7 @@ def market_trend_page_layout():
                 [
                     html.Div(
                         [
-                            html.H3("Select Geography", style={"paddingRight": "15px"}),
+                            html.H3("Geography", style={"paddingRight": "15px"}),
                             dcc.Dropdown(
                                 id="source",
                                 options=market_trend_page_source_options,
@@ -494,7 +478,7 @@ def market_trend_page_layout():
                     html.Div(
                         [
                             html.H3(
-                                "Select Date Range", style={"paddingRight": "20px"}
+                                "Date Range", style={"paddingRight": "20px"}
                             ),
                             dcc.DatePickerRange(
                                 id="review_month_range",
@@ -516,7 +500,7 @@ def market_trend_page_layout():
                     ),
                     html.Div(
                         [
-                            html.H3("Select Category", style={"paddingRight": "30px"}),
+                            html.H3("Category", style={"paddingRight": "30px"}),
                             dcc.Dropdown(
                                 id="category",
                                 options=market_trend_page_category_options,
@@ -813,7 +797,7 @@ def category_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H3("Select Geography"),
+                                html.H3("Geography"),
                                 dcc.Dropdown(
                                     id="cat_page_source",
                                     options=category_page_source_options,
@@ -831,7 +815,7 @@ def category_page_layout():
                         html.Div(
                             [
                                 html.H3(
-                                    "Select Category", style={"paddingRight": "30px"}
+                                    "Category", style={"paddingRight": "30px"}
                                 ),
                                 dcc.Dropdown(
                                     id="cat_page_category",
@@ -850,7 +834,7 @@ def category_page_layout():
                         html.Div(
                             [
                                 html.H3(
-                                    "Select Subcategory", style={"paddingRight": "30px"}
+                                    "Subcategory", style={"paddingRight": "30px"}
                                 ),
                                 dcc.Dropdown(
                                     id="cat_page_product_type",
@@ -1282,7 +1266,7 @@ def category_page_layout():
                     html.H3("Review Distribution by User Attributes"),
                     html.Div(
                         [
-                            html.H5("Select User Attribute"),
+                            html.H5("User Attribute"),
                             dcc.Dropdown(
                                 id="cat_page_user_attribute",
                                 options=category_page_user_attribute_options,
@@ -1334,7 +1318,7 @@ def product_page_layout():
                         [
                             html.Div(
                                 [
-                                    html.H5("Select Geography"),
+                                    html.H5("Geography"),
                                     dcc.Dropdown(
                                         id="prod_page_source",
                                         options=product_page_source_options,
@@ -1349,7 +1333,7 @@ def product_page_layout():
                             html.Div(
                                 [
                                     html.H5(
-                                        "Select Product", style={"paddingRight": "30px"}
+                                        "Product", style={"paddingRight": "30px"}
                                     ),
                                     dcc.Dropdown(
                                         id="prod_page_product",
@@ -1363,7 +1347,7 @@ def product_page_layout():
                             html.Div(
                                 [
                                     html.H5(
-                                        "Select Date Range",
+                                        "Date Range",
                                         # style={
                                         #     'paddingRight': '20px'}
                                     ),
@@ -1658,7 +1642,7 @@ def product_page_layout():
                                                     dbc.Col(
                                                         [
                                                             html.H5(
-                                                                "Select User Attribute:",
+                                                                "User Attribute:",
                                                             )
                                                         ],
                                                         width=5,
@@ -2133,7 +2117,7 @@ def ingredient_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H4("Select Geography"),
+                                html.H4("Geography"),
                                 dcc.Dropdown(
                                     id="ing_page_source",
                                     options=ing_page_source_options,
@@ -2151,7 +2135,7 @@ def ingredient_page_layout():
                         html.Div(
                             [
                                 html.H4(
-                                    "Select Category", style={"paddingRight": "30px"}
+                                    "Category", style={"paddingRight": "30px"}
                                 ),
                                 dcc.Dropdown(
                                     id="ing_page_category",
@@ -2170,7 +2154,7 @@ def ingredient_page_layout():
                         html.Div(
                             [
                                 html.H4(
-                                    "Select Subcategory", style={"paddingRight": "30px"}
+                                    "Subcategory", style={"paddingRight": "30px"}
                                 ),
                                 dcc.Dropdown(
                                     id="ing_page_product_type",
@@ -2381,6 +2365,10 @@ def ingredient_page_layout():
         id="mainContainer",
         style={"fontFamily": "Gotham", "display": "flex", "flex-direction": "column"},
     )
+
+
+def mark_digit(d):
+    return format(d, ",d")
 
 
 @app.callback(
