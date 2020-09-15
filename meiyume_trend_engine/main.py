@@ -797,7 +797,7 @@ def category_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H3("Select Geography"),
+                                html.H3("Geography"),
                                 dcc.Dropdown(
                                     id="cat_page_source",
                                     options=category_page_source_options,
@@ -815,7 +815,7 @@ def category_page_layout():
                         html.Div(
                             [
                                 html.H3(
-                                    "Select Category", style={"paddingRight": "30px"}
+                                    "Category", style={"paddingRight": "30px"}
                                 ),
                                 dcc.Dropdown(
                                     id="cat_page_category",
@@ -834,7 +834,7 @@ def category_page_layout():
                         html.Div(
                             [
                                 html.H3(
-                                    "Select Subcategory", style={"paddingRight": "30px"}
+                                    "Subcategory", style={"paddingRight": "30px"}
                                 ),
                                 dcc.Dropdown(
                                     id="cat_page_product_type",
@@ -1266,7 +1266,7 @@ def category_page_layout():
                     html.H3("Review Distribution by User Attributes"),
                     html.Div(
                         [
-                            html.H5("Select User Attribute"),
+                            html.H5("User Attribute"),
                             dcc.Dropdown(
                                 id="cat_page_user_attribute",
                                 options=category_page_user_attribute_options,
@@ -1318,7 +1318,7 @@ def product_page_layout():
                         [
                             html.Div(
                                 [
-                                    html.H5("Select Geography"),
+                                    html.H5("Geography"),
                                     dcc.Dropdown(
                                         id="prod_page_source",
                                         options=product_page_source_options,
@@ -1333,7 +1333,7 @@ def product_page_layout():
                             html.Div(
                                 [
                                     html.H5(
-                                        "Select Product", style={"paddingRight": "30px"}
+                                        "Product", style={"paddingRight": "30px"}
                                     ),
                                     dcc.Dropdown(
                                         id="prod_page_product",
@@ -1347,7 +1347,7 @@ def product_page_layout():
                             html.Div(
                                 [
                                     html.H5(
-                                        "Select Date Range",
+                                        "Date Range",
                                         # style={
                                         #     'paddingRight': '20px'}
                                     ),
@@ -1642,7 +1642,7 @@ def product_page_layout():
                                                     dbc.Col(
                                                         [
                                                             html.H5(
-                                                                "Select User Attribute:",
+                                                                "User Attribute:",
                                                             )
                                                         ],
                                                         width=5,
@@ -2117,7 +2117,7 @@ def ingredient_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H4("Select Geography"),
+                                html.H4("Geography"),
                                 dcc.Dropdown(
                                     id="ing_page_source",
                                     options=ing_page_source_options,
@@ -2135,7 +2135,7 @@ def ingredient_page_layout():
                         html.Div(
                             [
                                 html.H4(
-                                    "Select Category", style={"paddingRight": "30px"}
+                                    "Category", style={"paddingRight": "30px"}
                                 ),
                                 dcc.Dropdown(
                                     id="ing_page_category",
@@ -2154,7 +2154,7 @@ def ingredient_page_layout():
                         html.Div(
                             [
                                 html.H4(
-                                    "Select Subcategory", style={"paddingRight": "30px"}
+                                    "Subcategory", style={"paddingRight": "30px"}
                                 ),
                                 dcc.Dropdown(
                                     id="ing_page_product_type",
