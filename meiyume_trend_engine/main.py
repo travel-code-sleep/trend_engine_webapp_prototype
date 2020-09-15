@@ -190,9 +190,9 @@ sidebar = html.Div(
                     ),
                     dbc.NavLink("Market Trend", href="/page-2", id="page-2-link"),
                     dbc.NavLink("Category Insights", href="/page-3", id="page-3-link"),
-                    dbc.NavLink("Product KnowAll", href="/page-4", id="page-4-link"),
-                    dbc.NavLink("Ingredient Inside", href="/page-5", id="page-5-link"),
-                    dbc.NavLink("Social Media Trend", href="/page-6", id="page-6-link"),
+                    dbc.NavLink("Product Insights", href="/page-4", id="page-4-link"),
+                    dbc.NavLink("Ingredient Insights", href="/page-5", id="page-5-link"),
+                    # dbc.NavLink("Social Media Trend", href="/page-6", id="page-6-link"),
                 ],
                 vertical=True,
                 pills=True,
@@ -200,7 +200,7 @@ sidebar = html.Div(
             id="collapse",
         ),
         html.Div(),
-        html.P("Data is correct as of 1st August 2020"),
+        html.P("Data last scraped: 1st August 2020"),
     ],
     id="sidebar",
 )
@@ -458,7 +458,7 @@ def market_trend_page_layout():
                 [
                     html.Div(
                         [
-                            html.H3("Select Geography", style={"paddingRight": "15px"}),
+                            html.H3("Geography", style={"paddingRight": "15px"}),
                             dcc.Dropdown(
                                 id="source",
                                 options=market_trend_page_source_options,
@@ -478,7 +478,7 @@ def market_trend_page_layout():
                     html.Div(
                         [
                             html.H3(
-                                "Select Date Range", style={"paddingRight": "20px"}
+                                "Date Range", style={"paddingRight": "20px"}
                             ),
                             dcc.DatePickerRange(
                                 id="review_month_range",
@@ -500,7 +500,7 @@ def market_trend_page_layout():
                     ),
                     html.Div(
                         [
-                            html.H3("Select Category", style={"paddingRight": "30px"}),
+                            html.H3("Category", style={"paddingRight": "30px"}),
                             dcc.Dropdown(
                                 id="category",
                                 options=market_trend_page_category_options,
