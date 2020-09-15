@@ -176,3 +176,13 @@ body {
     font-family: GildaDisplay;
     font-size: 22pt;
 }
+
+.pageSubtitle {
+    font-size: 18pt;
+    text-transform: uppercase;
+    font-family: GothamLight;
+    width: 100%;
+    background-color: powderblue;
+    text-align: center;
+    margin: 15px;
+}

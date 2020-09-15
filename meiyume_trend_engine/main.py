@@ -35,8 +35,6 @@ from settings import *
 # assign default values
 # px.defaults.template = "plotly_dark"
 # landing page data
-def mark_digit(d):
-    return format(d, ",d")
 
 
 lp_df = read_file_s3(filename="landing_page_data", file_type="feather")
@@ -294,14 +292,7 @@ def landing_page_layout():
                                                         "Turn unstructured data to structured insights using \
                                                          Natural Language Processing and Deep Learning.",
                                                         # className="lead",
-                                                        style={
-                                                            "fontSize": "25px",
-                                                            "case": "block",
-                                                            "width": "70%",
-                                                            "fontName": "Gotham",
-                                                            "background-color": "powderblue",
-                                                            "text-algin": "center",
-                                                        },
+                                                        className="pageSubtitle",
                                                     ),
                                                 ],
                                                 style={
@@ -335,7 +326,7 @@ def landing_page_layout():
                                                                         ].values[0]
                                                                     )
                                                                 ],
-                                                                className="gildadisplay22pt",
+                                                                className="gildaDisplay22pt",
                                                             ),
                                                             html.H6("Brands"),
                                                         ],
@@ -2381,6 +2372,10 @@ def ingredient_page_layout():
         id="mainContainer",
         style={"fontFamily": "Gotham", "display": "flex", "flex-direction": "column"},
     )
+
+
+def mark_digit(d):
+    return format(d, ",d")
 
 
 @app.callback(
