@@ -191,7 +191,9 @@ sidebar = html.Div(
                     dbc.NavLink("Market Trend", href="/page-2", id="page-2-link"),
                     dbc.NavLink("Category Insights", href="/page-3", id="page-3-link"),
                     dbc.NavLink("Product Insights", href="/page-4", id="page-4-link"),
-                    dbc.NavLink("Ingredient Insights", href="/page-5", id="page-5-link"),
+                    dbc.NavLink(
+                        "Ingredient Insights", href="/page-5", id="page-5-link"
+                    ),
                     # dbc.NavLink("Social Media Trend", href="/page-6", id="page-6-link"),
                 ],
                 vertical=True,
@@ -477,9 +479,7 @@ def market_trend_page_layout():
                     ),
                     html.Div(
                         [
-                            html.H3(
-                                "Date Range", style={"paddingRight": "20px"}
-                            ),
+                            html.H3("Date Range", style={"paddingRight": "20px"}),
                             dcc.DatePickerRange(
                                 id="review_month_range",
                                 min_date_allowed=dt(2008, 12, 1),
@@ -733,6 +733,10 @@ def category_page_layout():
         & (cat_page_item_package_oz_df.category == "travel-size-toiletries")
         & (cat_page_item_package_oz_df.product_type == "vitamins-for-hair-skin-nails")
     ]
+    packaging_filtered_df_columns_dict = {
+        "item_size": "Packaging Size",
+        "product_count": "Number of Products",
+    }
 
     top_products_df = cat_page_top_products_df[
         [
@@ -748,6 +752,14 @@ def category_page_layout():
         & (cat_page_top_products_df.category == "travel-size-toiletries")
         & (cat_page_top_products_df.product_type == "vitamins-for-hair-skin-nails")
     ]
+    top_products_df_columns_dict = {
+        "brand": "Brand",
+        "product_name": "Product Description",
+        "adjusted_rating": "Product Rating (Adjusted)",
+        "first_review_date": "Date (First Reviewed)",
+        "small_size_price": "Price (Low)",
+        "big_size_price": "Price (High)",
+    }
 
     new_products_detail_df = cat_page_new_products_details_df[
         [
@@ -814,9 +826,7 @@ def category_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H3(
-                                    "Category", style={"paddingRight": "30px"}
-                                ),
+                                html.H3("Category", style={"paddingRight": "30px"}),
                                 dcc.Dropdown(
                                     id="cat_page_category",
                                     options=category_page_category_options,
@@ -833,9 +843,7 @@ def category_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H3(
-                                    "Subcategory", style={"paddingRight": "30px"}
-                                ),
+                                html.H3("Subcategory", style={"paddingRight": "30px"}),
                                 dcc.Dropdown(
                                     id="cat_page_product_type",
                                     options=category_page_product_type_options,
@@ -870,7 +878,7 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(id="distinct_brands_text"),
-                                                    html.P("Distinct Brands"),
+                                                    html.P("Unique Brands"),
                                                 ],
                                                 id="distinct_brands",
                                                 className="mini_container",
@@ -880,7 +888,7 @@ def category_page_layout():
                                                     html.H5(
                                                         id="distinct_products_text"
                                                     ),
-                                                    html.P("Distinct Products"),
+                                                    html.P("Unique Products"),
                                                 ],
                                                 id="distinct_products",
                                                 className="mini_container",
@@ -898,7 +906,7 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(id="new_products_text"),
-                                                    html.P("New Products"),
+                                                    html.P("New Products Launched"),
                                                 ],
                                                 id="new_products",
                                                 className="mini_container",
@@ -981,14 +989,18 @@ def category_page_layout():
                 [
                     dbc.Col(
                         [
-                            html.Div([html.H3("Package Analysis")]),
+                            html.Div([html.H3("Packaging")]),
                             html.Hr(),
                             dash_table.DataTable(
                                 id="product_package_data_table",
                                 columns=[
                                     {
-                                        "name": i,
-                                        "id": i,
+                                        "name": packaging_filtered_df_columns_dict[i]
+                                        if i in packaging_filtered_df_columns_dict
+                                        else i,
+                                        "id": packaging_filtered_df_columns_dict[i]
+                                        if i in packaging_filtered_df_columns_dict
+                                        else i,
                                         "deletable": False,
                                         "selectable": True,
                                         "hideable": False,
@@ -1038,14 +1050,18 @@ def category_page_layout():
                     ),
                     dbc.Col(
                         [
-                            html.Div([html.H3("Top Products by Adjusted Rating")]),
+                            html.Div([html.H3("Top Rated Products")]),
                             html.Hr(),
                             dash_table.DataTable(
                                 id="top_products_data_table",
                                 columns=[
                                     {
-                                        "name": i,
-                                        "id": i,
+                                        "name": top_products_df_columns_dict[i]
+                                        if i in top_products_df_columns_dict
+                                        else i,
+                                        "id": top_products_df_columns_dict[i]
+                                        if i in top_products_df_columns_dict
+                                        else i,
                                         "deletable": False,
                                         "selectable": True,
                                         "hideable": False,
@@ -1263,7 +1279,7 @@ def category_page_layout():
             ),
             html.Div(
                 [
-                    html.H3("Review Distribution by User Attributes"),
+                    html.H3("Reviewer's Demographics"),
                     html.Div(
                         [
                             html.H5("User Attribute"),
@@ -1332,9 +1348,7 @@ def product_page_layout():
                             ),
                             html.Div(
                                 [
-                                    html.H5(
-                                        "Product", style={"paddingRight": "30px"}
-                                    ),
+                                    html.H5("Product", style={"paddingRight": "30px"}),
                                     dcc.Dropdown(
                                         id="prod_page_product",
                                         options=product_page_product_name_options,
@@ -2134,9 +2148,7 @@ def ingredient_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H4(
-                                    "Category", style={"paddingRight": "30px"}
-                                ),
+                                html.H4("Category", style={"paddingRight": "30px"}),
                                 dcc.Dropdown(
                                     id="ing_page_category",
                                     options=ing_page_category_options,
@@ -2153,9 +2165,7 @@ def ingredient_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H4(
-                                    "Subcategory", style={"paddingRight": "30px"}
-                                ),
+                                html.H4("Subcategory", style={"paddingRight": "30px"}),
                                 dcc.Dropdown(
                                     id="ing_page_product_type",
                                     options=ing_page_product_type_options,
