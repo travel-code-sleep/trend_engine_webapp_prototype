@@ -75,8 +75,6 @@ tab_selected_style = {
     "color": "white",
     "padding": "6px",
 }
-
-
 # create sidebar page layout and navigation
 search_bar = dbc.Row(
     [
@@ -314,8 +312,12 @@ def landing_page_layout():
                                                     html.H2(
                                                         "Total Data Gathered",
                                                         className="mini_container",
-                                                    )
-                                                ]
+                                                    ),
+                                                ],
+                                                style={
+                                                    "fontFamily": "GildaDisplay",
+                                                    "fontSize": "20pt",
+                                                },
                                             ),
                                             dbc.Row(
                                                 [
@@ -330,11 +332,12 @@ def landing_page_layout():
                                                                         ].values[0]
                                                                     )
                                                                 ],
+                                                                className="gildadisplay22pt",
                                                             ),
                                                             html.H6("Brands"),
                                                         ],
                                                         id="distinct_brands",
-                                                        className="mini_container",
+                                                        className="mini_container gothamBook15pt",
                                                     ),
                                                     dbc.Col(
                                                         [
@@ -347,11 +350,12 @@ def landing_page_layout():
                                                                         ].values[0]
                                                                     )
                                                                 ],
+                                                                className="gildaDisplay22pt",
                                                             ),
                                                             html.H6("Products"),
                                                         ],
                                                         id="distinct_products",
-                                                        className="mini_container",
+                                                        className="mini_container gothamBook15pt",
                                                     ),
                                                     dbc.Col(
                                                         [
@@ -364,11 +368,12 @@ def landing_page_layout():
                                                                         ].values[0]
                                                                     )
                                                                 ],
+                                                                className="gildaDisplay22pt",
                                                             ),
                                                             html.H6("Ingredients"),
                                                         ],
                                                         id="distinct_ingredients",
-                                                        className="mini_container",
+                                                        className="mini_container gothamBook15pt",
                                                     ),
                                                     dbc.Col(
                                                         [
@@ -381,11 +386,12 @@ def landing_page_layout():
                                                                         ].values[0]
                                                                     )
                                                                 ],
+                                                                className="gildaDisplay22pt"
                                                             ),
                                                             html.H6("Reviews"),
                                                         ],
                                                         id="distinct_reviews",
-                                                        className="mini_container",
+                                                        className="mini_container gothamBook15pt",
                                                     ),
                                                     dbc.Col(
                                                         [
@@ -398,11 +404,12 @@ def landing_page_layout():
                                                                         ].values[0]
                                                                     )
                                                                 ],
+                                                                className="gildaDisplay22pt",
                                                             ),
                                                             html.H6("Images"),
                                                         ],
                                                         id="distinct_images",
-                                                        className="mini_container",
+                                                        className="mini_container gothamBook15pt",
                                                     ),
                                                 ],
                                                 id="info-container",
@@ -412,10 +419,14 @@ def landing_page_layout():
                                         ],
                                     )
                                 ],
-                                width={"size": 8, "offest": 3},
+                                width={
+                                    "size": 8,
+                                    # "offest": 3,
+                                },
                             )
                         ],
                         justify="center",
+                        style={"backgroundColor": "white"},
                     ),
                 ],
                 id="mainContainer",
@@ -4047,5 +4058,5 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    app.run_server()
-    # app.run_server(debug=True)
+    # app.run_server()
+    app.run_server(debug=True)
