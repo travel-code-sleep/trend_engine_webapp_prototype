@@ -186,3 +186,11 @@ body {
     text-align: center;
     margin: 15px;
 }
+
+.navbarToggleButton {
+    font-size: 15pt;
+    border-color: rgba(0, 0, 0, .1);
+    background-color: lightgrey;
+    width: 40px;
+    height: 40px;
+}

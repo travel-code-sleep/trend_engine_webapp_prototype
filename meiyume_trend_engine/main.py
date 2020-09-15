@@ -159,17 +159,11 @@ sidebar_header = html.Div(
                 dbc.Col(
                     [
                         html.Button(
+                            "|||",
                             # use the Bootstrap navbar-toggler classes to style
-                            className="navbar-toggler",
+                            className="navbar-toggler navbarToggleButton",
                             # the navbar-toggler classes don't set color,
                             id="sidebar-toggle",
-                            style={
-                                "color": "orange",
-                                "border-color": "rgba(0,0,0,.1)",
-                                "background-color": "orange",
-                                "width": "30px",
-                                "height": "40px",
-                            },
                         ),
                     ],
                     # the column containing the toggle will be only as wide as the
