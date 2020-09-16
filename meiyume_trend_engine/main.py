@@ -5,11 +5,9 @@ one uses the current location to render the appropriate page content, the other
 uses the current location to toggle the "active" properties of the navigation
 links.
 """
-import base64
-import json
 import re
 from datetime import datetime as dt
-from typing import Optional, Tuple, Union
+from typing import Tuple
 
 import dash
 import dash_auth
@@ -17,24 +15,27 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
-import numpy as np
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objs as go
-from dash.dependencies import ClientsideFunction, Input, Output, State
-from dateutil.relativedelta import relativedelta
-from path import Path
+from dash.dependencies import Input, Output, State
 
 from bte_category_page_data_and_plots import *
 from bte_ingredient_page_data_and_plots import *
 from bte_market_trend_page_data_and_plots import *
 from bte_product_page_data_and_plots import *
-from bte_utils import read_file_s3, read_image_s3, set_default_start_and_end_dates
+from bte_utils import read_file_s3, read_image_s3
 from settings import *
 
 # assign default values
 # px.defaults.template = "plotly_dark"
 # landing page data
+PACKAGING_SIZE = "Packaging Size"
+NUMBER_OF_PRODUCTS = "Number of Products"
+PRODUCT_DESCRIPTION = "Product Description"
+PRODUCT_RATING_ADJUSTED = "Product Rating (Adjusted)"
+DATE_FIRST_REVIEWED = "Date (First Reviewed)"
+PRICE_LOW = "Price (Low)"
+PRICE_HIGH = "Price (High)"
 
 
 lp_df = read_file_s3(filename="landing_page_data", file_type="feather")
@@ -728,47 +729,37 @@ def market_trend_page_layout():
 
 
 def category_page_layout():
-    packaging_filtered_df = cat_page_item_package_oz_df[["item_size", "product_count"]][
+    packaging_filtered_df = cat_page_item_package_oz_df[
+        [PACKAGING_SIZE, NUMBER_OF_PRODUCTS]
+    ][
         (cat_page_item_package_oz_df.source == "us")
         & (cat_page_item_package_oz_df.category == "travel-size-toiletries")
         & (cat_page_item_package_oz_df.product_type == "vitamins-for-hair-skin-nails")
     ]
-    packaging_filtered_df_columns_dict = {
-        "item_size": "Packaging Size",
-        "product_count": "Number of Products",
-    }
 
     top_products_df = cat_page_top_products_df[
         [
             "brand",
-            "product_name",
-            "adjusted_rating",
-            "first_review_date",
-            "small_size_price",
-            "big_size_price",
+            PRODUCT_DESCRIPTION,
+            PRODUCT_RATING_ADJUSTED,
+            DATE_FIRST_REVIEWED,
+            PRICE_LOW,
+            PRICE_HIGH,
         ]
     ][
         (cat_page_top_products_df.source == "us")
         & (cat_page_top_products_df.category == "travel-size-toiletries")
         & (cat_page_top_products_df.product_type == "vitamins-for-hair-skin-nails")
     ]
-    top_products_df_columns_dict = {
-        "brand": "Brand",
-        "product_name": "Product Description",
-        "adjusted_rating": "Product Rating (Adjusted)",
-        "first_review_date": "Date (First Reviewed)",
-        "small_size_price": "Price (Low)",
-        "big_size_price": "Price (High)",
-    }
 
     new_products_detail_df = cat_page_new_products_details_df[
         [
             "brand",
-            "product_name",
-            "adjusted_rating",
-            "first_review_date",
-            "small_size_price",
-            "big_size_price",
+            PRODUCT_DESCRIPTION,
+            PRODUCT_RATING_ADJUSTED,
+            DATE_FIRST_REVIEWED,
+            PRICE_LOW,
+            PRICE_HIGH,
             "reviews",
         ]
     ][
@@ -995,17 +986,13 @@ def category_page_layout():
                                 id="product_package_data_table",
                                 columns=[
                                     {
-                                        "name": packaging_filtered_df_columns_dict[i]
-                                        if i in packaging_filtered_df_columns_dict
-                                        else i,
-                                        "id": packaging_filtered_df_columns_dict[i]
-                                        if i in packaging_filtered_df_columns_dict
-                                        else i,
+                                        "name": i,
+                                        "id": i,
                                         "deletable": False,
                                         "selectable": True,
                                         "hideable": False,
                                     }
-                                    for i in ["item_size", "product_count"]
+                                    for i in packaging_filtered_df.columns
                                 ],
                                 data=packaging_filtered_df.to_dict(
                                     "records"
@@ -1056,12 +1043,8 @@ def category_page_layout():
                                 id="top_products_data_table",
                                 columns=[
                                     {
-                                        "name": top_products_df_columns_dict[i]
-                                        if i in top_products_df_columns_dict
-                                        else i,
-                                        "id": top_products_df_columns_dict[i]
-                                        if i in top_products_df_columns_dict
-                                        else i,
+                                        "name": i,
+                                        "id": i,
                                         "deletable": False,
                                         "selectable": True,
                                         "hideable": False,
@@ -3142,11 +3125,11 @@ def filter_top_products_data_table(
     new_products_detail_df = cat_page_new_products_details_df[
         [
             "brand",
-            "product_name",
-            "adjusted_rating",
-            "first_review_date",
-            "small_size_price",
-            "big_size_price",
+            PRODUCT_DESCRIPTION,
+            PRODUCT_RATING_ADJUSTED,
+            DATE_FIRST_REVIEWED,
+            PRICE_LOW,
+            PRICE_HIGH,
             "reviews",
         ]
     ][
@@ -3188,11 +3171,11 @@ def filter_top_products_data_table(
     top_products_df = cat_page_top_products_df[
         [
             "brand",
-            "product_name",
-            "adjusted_rating",
-            "first_review_date",
-            "small_size_price",
-            "big_size_price",
+            PRODUCT_DESCRIPTION,
+            PRODUCT_RATING_ADJUSTED,
+            DATE_FIRST_REVIEWED,
+            PRICE_LOW,
+            PRICE_HIGH,
         ]
     ][
         (cat_page_top_products_df.source == source)
@@ -3228,7 +3211,9 @@ def filter_product_packaging_data_table(
     Returns:
         pd.DataFrame: [description]
     """
-    packaging_filtered_df = cat_page_item_package_oz_df[["item_size", "product_count"]][
+    packaging_filtered_df = cat_page_item_package_oz_df[
+        [PACKAGING_SIZE, NUMBER_OF_PRODUCTS]
+    ][
         (cat_page_item_package_oz_df.source == source)
         & (cat_page_item_package_oz_df.category == category)
         & (cat_page_item_package_oz_df.product_type == product_type)
