@@ -323,7 +323,7 @@ def create_product_launch_intensity_figure(data: pd.DataFrame, source: str = 'us
     fig = px.bar(data[(data.source == source) & (data.category.isin(category))],
                  x='meta_date', y='launch_intensity', color='category', hover_name="category",
                  hover_data=['category', 'launch_intensity', 'new', 'old'],
-                 , width=1200, height=800)
+                 width=1200, height=800)
 
     fig.update_layout(
         # keep the original annotations and add a list of new annotations:
