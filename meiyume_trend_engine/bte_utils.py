@@ -15,31 +15,32 @@ from PIL import Image
 from settings import *
 
 
-def get_s3_client(region: str,
-                  access_key_id: str,
-                  secret_access_key: str):
+def get_s3_client(region: str, access_key_id: str, secret_access_key: str):
     """
     Return S3 client object
     """
-    if region == '':  # or access_key_id == '' or secret_access_key == '':
-        print('*ERROR: S3 client information not set*')
+    if region == "":  # or access_key_id == '' or secret_access_key == '':
+        print("*ERROR: S3 client information not set*")
         return sys.exit(1)
     else:
         try:
-            client = boto3.client('s3',
-                                  region,
-                                  aws_access_key_id=access_key_id,
-                                  aws_secret_access_key=secret_access_key
-                                  )
+            client = boto3.client(
+                "s3",
+                region,
+                aws_access_key_id=access_key_id,
+                aws_secret_access_key=secret_access_key,
+            )
         except Exception as ex:
-            client = boto3.client('s3')
+            client = boto3.client("s3")
     return client
 
 
-def read_file_s3(filename: str,
-                 prefix: str = f'{S3_PREFIX}/WebAppData',
-                 bucket: str = S3_BUCKET,
-                 file_type: str = 'feather') -> pd.DataFrame:
+def read_file_s3(
+    filename: str,
+    prefix: str = f"{S3_PREFIX}/WebAppData",
+    bucket: str = S3_BUCKET,
+    file_type: str = "feather",
+) -> pd.DataFrame:
     """read_file_s3 [summary]
 
     [extended_summary]
@@ -53,18 +54,19 @@ def read_file_s3(filename: str,
     Returns:
         pd.DataFrame: [description]
     """
-    key = prefix+'/'+filename
+    key = prefix + "/" + filename
     s3 = get_s3_client(S3_REGION, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
     obj = s3.get_object(Bucket=bucket, Key=key)
-    if file_type == 'feather':
-        df = pd.read_feather(io.BytesIO(obj['Body'].read()))
-    elif file_type == 'pickle':
-        df = pd.read_pickle(io.BytesIO(obj['Body'].read()))
+    if file_type == "feather":
+        df = pd.read_feather(io.BytesIO(obj["Body"].read()))
+    elif file_type == "pickle":
+        df = pd.read_pickle(io.BytesIO(obj["Body"].read()))
     return df
 
 
-def read_image_s3(prod_id: str, prefix: str = f'{S3_PREFIX}/Image/Staging',
-                  bucket: str = S3_BUCKET) -> str:
+def read_image_s3(
+    prod_id: str, prefix: str = f"{S3_PREFIX}/Image/Staging", bucket: str = S3_BUCKET
+) -> str:
     """read_image_s3 [summary]
 
     [extended_summary]
@@ -91,18 +93,20 @@ def read_image_s3(prod_id: str, prefix: str = f'{S3_PREFIX}/Image/Staging',
     #     return 'images/temp_product_image.png'
     # except ClientError as ex:
     #     return 'images/not_avlbl.jpg'
-    return f'https://{bucket}.s3-{S3_REGION}.amazonaws.com/{prefix}/{prod_id}/{prod_id}_image_1.jpg'
+    return f"https://{bucket}.s3-{S3_REGION}.amazonaws.com/{prefix}/{prod_id}/{prod_id}_image_1.jpg"
 
 
 def set_default_start_and_end_dates():
     three_yrs_ago = dt.now() - relativedelta(years=3)
-    default_start_date = str(pd.to_datetime(
-        three_yrs_ago.strftime('%m/%d/%Y')))[:10].split('-')
-    default_start_date[-1] = '01'
-    default_start_date = ('-').join(default_start_date)
+    default_start_date = str(pd.to_datetime(three_yrs_ago.strftime("%m/%d/%Y")))[
+        :10
+    ].split("-")
+    default_start_date[-1] = "01"
+    default_start_date = ("-").join(default_start_date)
 
-    default_end_date = str(pd.to_datetime(
-        dt.today().strftime('%m/%d/%Y')))[:10].split('-')
-    default_end_date[-1] = '01'
-    default_end_date = ('-').join(default_end_date)
+    default_end_date = str(pd.to_datetime(dt.today().strftime("%m/%d/%Y")))[:10].split(
+        "-"
+    )
+    default_end_date[-1] = "01"
+    default_end_date = ("-").join(default_end_date)
     return default_start_date, default_end_date
