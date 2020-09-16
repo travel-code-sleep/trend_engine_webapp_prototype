@@ -448,7 +448,7 @@ def market_trend_page_layout():
     return html.Div(
         [
             html.H2(
-                "Market Trends by Categories and Product Launches",
+                "What is happening in the market?",
                 style={
                     "color": "black",
                     #    'border': '0.5px grey dotted',
@@ -528,7 +528,7 @@ def market_trend_page_layout():
             dcc.Tabs(
                 [
                     dcc.Tab(
-                        label="Review_Trend",
+                        label="User Reviews",
                         children=[
                             html.Div(
                                 [
@@ -572,7 +572,7 @@ def market_trend_page_layout():
                         selected_style=tab_selected_style,
                     ),
                     dcc.Tab(
-                        label="Reviews_by_Marketing",
+                        label="Paid Reviews",
                         children=[
                             html.Div(
                                 [
@@ -617,7 +617,7 @@ def market_trend_page_layout():
                         selected_style=tab_selected_style,
                     ),
                     dcc.Tab(
-                        label="Product_Launch_Trend",
+                        label="Product Launches",
                         children=[
                             html.H2(
                                 "Product Launch Trends and Intensity by Category",
@@ -675,7 +675,7 @@ def market_trend_page_layout():
                         selected_style=tab_selected_style,
                     ),
                     dcc.Tab(
-                        label="New_Ingredient_Trend",
+                        label="New Ingredients",
                         children=[
                             html.H2(
                                 "Ingredient Trends by Category",
