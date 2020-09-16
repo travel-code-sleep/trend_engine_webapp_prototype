@@ -733,10 +733,6 @@ def category_page_layout():
         & (cat_page_item_package_oz_df.category == "travel-size-toiletries")
         & (cat_page_item_package_oz_df.product_type == "vitamins-for-hair-skin-nails")
     ]
-    packaging_filtered_df_columns_dict = {
-        "item_size": "Packaging Size",
-        "product_count": "Number of Products",
-    }
 
     top_products_df = cat_page_top_products_df[
         [
@@ -752,14 +748,6 @@ def category_page_layout():
         & (cat_page_top_products_df.category == "travel-size-toiletries")
         & (cat_page_top_products_df.product_type == "vitamins-for-hair-skin-nails")
     ]
-    top_products_df_columns_dict = {
-        "brand": "Brand",
-        "product_name": "Product Description",
-        "adjusted_rating": "Product Rating (Adjusted)",
-        "first_review_date": "Date (First Reviewed)",
-        "small_size_price": "Price (Low)",
-        "big_size_price": "Price (High)",
-    }
 
     new_products_detail_df = cat_page_new_products_details_df[
         [
@@ -995,12 +983,8 @@ def category_page_layout():
                                 id="product_package_data_table",
                                 columns=[
                                     {
-                                        "name": packaging_filtered_df_columns_dict[i]
-                                        if i in packaging_filtered_df_columns_dict
-                                        else i,
-                                        "id": packaging_filtered_df_columns_dict[i]
-                                        if i in packaging_filtered_df_columns_dict
-                                        else i,
+                                        "name": i,
+                                        "id": i,
                                         "deletable": False,
                                         "selectable": True,
                                         "hideable": False,
@@ -1056,12 +1040,8 @@ def category_page_layout():
                                 id="top_products_data_table",
                                 columns=[
                                     {
-                                        "name": top_products_df_columns_dict[i]
-                                        if i in top_products_df_columns_dict
-                                        else i,
-                                        "id": top_products_df_columns_dict[i]
-                                        if i in top_products_df_columns_dict
-                                        else i,
+                                        "name": i,
+                                        "id": i,
                                         "deletable": False,
                                         "selectable": True,
                                         "hideable": False,
