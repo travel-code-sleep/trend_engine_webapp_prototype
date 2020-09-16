@@ -2998,9 +2998,9 @@ def display_product_data_in_card(
     return (
         f"Brand: {brand_name}",
         f"Product Name: {prod_name}",
-        f"Reviews: {reviews}",
-        f"AdjustedRating: {adjusted_rating}",
-        f"FirstReview: {first_review_date}",
+        f"Product Reviews: {reviews}",
+        f"Product Rating: {adjusted_rating}",
+        f"Date: {first_review_date}",
     )
 
 
