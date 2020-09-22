@@ -1308,7 +1308,7 @@ def product_page_layout():
                             className="row pretty_container",
                         )
                     )
-                ]
+                ],
             ),
             dbc.Row(
                 [
@@ -1480,12 +1480,20 @@ def product_page_layout():
                                 # # change color of text (black or white)
                                 # inverse=True,
                                 outline=False,  # True = remove the block colors from the background and header
+                                style={
+                                    "height": "100%",
+                                },
                             )
                         ],
                         width=6,
                     ),
                 ],
                 className="row pretty_container",
+                style={
+                    "display": "flex",
+                    "flexDirection": "row",
+                    "alignItems": "normal",
+                },
             ),
             dcc.Tabs(
                 [
@@ -1626,6 +1634,10 @@ def product_page_layout():
                                     ),
                                 ],
                                 className="row pretty_container",
+                                style={
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                },
                             ),
                             dbc.Row(
                                 [
