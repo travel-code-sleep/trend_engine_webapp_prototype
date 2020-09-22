@@ -42,9 +42,9 @@ renaming_cat_page_new_products_details_df_columns = {
     "small_size_price": PRICE_LOW,
     "big_size_price": PRICE_HIGH,
 }
-cat_page_new_products_details_df.rename(
-    columns=renaming_cat_page_new_products_details_df_columns, inplace=True
-)
+# cat_page_new_products_details_df.rename(
+#     columns=renaming_cat_page_new_products_details_df_columns, inplace=True
+# )
 # pd.read_feather(
 #     dash_data_path/'category_page_new_products_details')
 # distinct brands/products data
@@ -67,9 +67,9 @@ renaming_cat_page_item_package_oz_df_columns = {
     "item_size": PACKAGING_SIZE,
     "product_count": NUMBER_OF_PRODUCTS,
 }
-cat_page_item_package_oz_df.rename(
-    columns=renaming_cat_page_item_package_oz_df_columns, inplace=True
-)
+# cat_page_item_package_oz_df.rename(
+#     columns=renaming_cat_page_item_package_oz_df_columns, inplace=True
+# )
 # pd.read_feather(
 #     dash_data_path/'category_page_item_package_oz')
 # top products data
@@ -83,9 +83,9 @@ renaming_cat_page_top_products_df_columns = {
     "small_size_price": PRICE_LOW,
     "big_size_price": PRICE_HIGH,
 }
-cat_page_top_products_df.rename(
-    columns=renaming_cat_page_top_products_df_columns, inplace=True
-)
+# cat_page_top_products_df.rename(
+#     columns=renaming_cat_page_top_products_df_columns, inplace=True
+# )
 # pd.read_feather(
 #     dash_data_path/'category_page_top_products')
 # new ingredients data
@@ -98,9 +98,9 @@ renaming_cat_page_new_ingredients_df_columns = {
     "adjusted_rating": PRODUCT_RATING_ADJUSTED,
     "ban_flag": BANNED,
 }
-cat_page_new_ingredients_df.rename(
-    columns=renaming_cat_page_new_ingredients_df_columns, inplace=True
-)
+# cat_page_new_ingredients_df.rename(
+#     columns=renaming_cat_page_new_ingredients_df_columns, inplace=True
+# )
 # pd.read_feather(
 #     dash_data_path/'category_page_new_ingredients')
 # review data
