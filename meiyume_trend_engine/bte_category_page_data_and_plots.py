@@ -129,7 +129,7 @@ def create_reviews_by_user_attribute_figure(
         orientation="h",
         hover_data=[user_attribute, "review_count"],
         height=400,
-        title=f"Reviews by {plot_title}",
+        # title=f"Reviews by {plot_title}",
     )
     fig.update_layout(
         font_family="Gotham",

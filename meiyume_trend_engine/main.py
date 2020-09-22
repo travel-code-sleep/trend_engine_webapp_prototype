@@ -5,11 +5,18 @@ one uses the current location to render the appropriate page content, the other
 uses the current location to toggle the "active" properties of the navigation
 links.
 """
-import base64
-import json
+# import base64
+# import json
+# import numpy as np
+# from path import Path
+# from dateutil.relativedelta import relativedelta
+# import plotly.express as px
+# from typing import Optional, Union
+
+
 import re
 from datetime import datetime as dt
-from typing import Optional, Tuple, Union
+from typing import Tuple
 
 import dash
 import dash_auth
@@ -17,13 +24,9 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
-import numpy as np
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objs as go
 from dash.dependencies import ClientsideFunction, Input, Output, State
-from dateutil.relativedelta import relativedelta
-from path import Path
 
 from bte_category_page_data_and_plots import *
 from bte_ingredient_page_data_and_plots import *
@@ -46,7 +49,10 @@ USERNAME_PASSWORD_PAIRS = [["user", "pwd123"], ["meiyume", "pwd123"]]
 logo_url = f"https://{S3_BUCKET}.s3-{S3_REGION}.amazonaws.com/{S3_PREFIX}/static/assets/bte_logo.png"
 
 # Create Dash Application
-external_stylesheets = [dbc.themes.LUX, "https://codepen.io/chriddyp/pen/bWLwgP.css"]
+external_stylesheets = [
+    dbc.themes.LUX,
+    "https://codepen.io/chriddyp/pen/bWLwgP.css",
+]
 
 app = dash.Dash(
     __name__,
@@ -153,7 +159,7 @@ sidebar_header = html.Div(
                 dbc.Col(
                     [
                         html.Img(src=logo_url, height="250px", width="200px"),
-                        html.Hr(),
+                        # html.Hr(),
                     ]
                 ),
                 dbc.Col(
@@ -210,7 +216,7 @@ sidebar = html.Div(
 sidebar = html.Div(
     [html.Img(
         src=f'data:image/png;base64,{logo_base64}', height='250px', width='200px'),
-        html.Hr(),
+        # html.Hr(),
         html.P(
             "Turn unstructured data to structured insights using Natural Language Processing and Deep Learning.",
             className="lead",
@@ -535,7 +541,7 @@ def market_trend_page_layout():
                                     html.H2(
                                         "Review Trend", style={"paddingRight": "30px"}
                                     ),
-                                    html.Hr(),
+                                    # html.Hr(),
                                     html.Div(
                                         [
                                             dcc.Graph(
@@ -558,7 +564,7 @@ def market_trend_page_layout():
                                                     "fontFamily": "Gotham",
                                                 },
                                             ),
-                                            html.Hr(),
+                                            # html.Hr(),
                                             dcc.Graph(
                                                 id="subcategory_trend",
                                             ),
@@ -580,7 +586,7 @@ def market_trend_page_layout():
                                         "Review Trend by Marketing Output",
                                         style={"paddingRight": "30px"},
                                     ),
-                                    html.Hr(),
+                                    # html.Hr(),
                                     html.Div(
                                         [
                                             dcc.Graph(
@@ -603,7 +609,7 @@ def market_trend_page_layout():
                                                     "fontFamily": "Gotham",
                                                 },
                                             ),
-                                            html.Hr(),
+                                            # html.Hr(),
                                             dcc.Graph(
                                                 id="influenced_subcategory_trend",
                                             ),
@@ -623,7 +629,7 @@ def market_trend_page_layout():
                                 "Product Launch Trends and Intensity by Category",
                                 style={"paddingRight": "30px"},
                             ),
-                            html.Hr(),
+                            # html.Hr(),
                             html.Div(
                                 [
                                     html.Div(
@@ -681,7 +687,7 @@ def market_trend_page_layout():
                                 "Ingredient Trends by Category",
                                 style={"paddingRight": "30px"},
                             ),
-                            html.Hr(),
+                            # html.Hr(),
                             html.Div(
                                 [
                                     dcc.Graph(
@@ -860,7 +866,6 @@ def category_page_layout():
                                             )
                                         ]
                                     ),
-                                    html.Hr(),
                                     html.Div(
                                         [
                                             html.Div(
@@ -919,7 +924,6 @@ def category_page_layout():
                                             )
                                         ]
                                     ),
-                                    html.Hr(),
                                     html.Div(
                                         [
                                             html.Div(
@@ -978,7 +982,6 @@ def category_page_layout():
                     dbc.Col(
                         [
                             html.Div([html.H3("Packaging")]),
-                            html.Hr(),
                             dash_table.DataTable(
                                 id="product_package_data_table",
                                 columns=[
@@ -1008,8 +1011,8 @@ def category_page_layout():
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
                                 page_action="native",
-                                page_current=0,  # page number that user is on
-                                page_size=10,  # number of rows visible per page
+                                # page_current=0,  # page number that user is on
+                                # page_size=8,  # number of rows visible per page
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 60,
                                     "maxWidth": 60,
@@ -1027,6 +1030,8 @@ def category_page_layout():
                                     "whiteSpace": "normal",
                                     "height": "auto",
                                 },
+                                fixed_rows={"headers": True},
+                                style_table={"height": 360,"overflow": "auto",},
                             ),
                         ],
                         width=3,
@@ -1035,7 +1040,6 @@ def category_page_layout():
                     dbc.Col(
                         [
                             html.Div([html.H3("Top Rated Products")]),
-                            html.Hr(),
                             dash_table.DataTable(
                                 id="top_products_data_table",
                                 columns=[
@@ -1065,14 +1069,14 @@ def category_page_layout():
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
                                 page_action="native",
-                                page_current=0,  # page number that user is on
-                                page_size=8,  # number of rows visible per page
+                                # page_current=0,  # page number that user is on
+                                # page_size=4,  # number of rows visible per page
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 60,
                                     "maxWidth": 95,
-                                    "width": 60,
                                     "fontSize": 13,
-                                    "font-family": "Gotham",
+                                    "fontFamily": "Gotham",
+                                    # "paddingLeft": 15,
                                 },
                                 style_cell_conditional=[  # align text columns to left. By default they are aligned to right
                                     {
@@ -1097,6 +1101,8 @@ def category_page_layout():
                                     "whiteSpace": "normal",
                                     "height": "auto",
                                 },
+                                fixed_rows={"headers": True},
+                                style_table={"height": 360, "overflow": "auto",},
                             ),
                         ],
                         width=8,
@@ -1110,7 +1116,6 @@ def category_page_layout():
                     dbc.Col(
                         [
                             html.Div([html.H3("New Products to Market")]),
-                            html.Hr(),
                             dash_table.DataTable(
                                 id="new_products_data_table",
                                 columns=[
@@ -1185,7 +1190,7 @@ def category_page_layout():
                     dbc.Col(
                         [
                             html.Div([html.H3("New Ingredients to Market")]),
-                            html.Hr(),
+                            # html.Hr(),
                             dash_table.DataTable(
                                 id="new_ingredients_data_table",
                                 columns=[
@@ -1276,7 +1281,7 @@ def category_page_layout():
                         # className="four columns",
                         style={"width": "30%"},
                     ),
-                    html.Hr(),
+                    # html.Hr(),
                     dcc.Graph(
                         id="cat_page_reviews_by_attribute",
                         figure=cat_page_user_attribute_figure,
@@ -1654,7 +1659,7 @@ def product_page_layout():
                                                     ),
                                                 ],
                                             ),
-                                            # html.Hr(),
+                                            # # html.Hr(),
                                             dcc.Graph(
                                                 id="prod_page_reviews_by_attribute"
                                             ),
@@ -1741,7 +1746,7 @@ def product_page_layout():
                                                     )
                                                 ]
                                             ),
-                                            html.Hr(),
+                                            # html.Hr(),
                                             dbc.Row(
                                                 [
                                                     html.Div(
@@ -1812,7 +1817,7 @@ def product_page_layout():
                                                     )
                                                 ]
                                             ),
-                                            html.Hr(),
+                                            # html.Hr(),
                                             dash_table.DataTable(
                                                 id="prod_page_product_variants",
                                                 columns=[
@@ -1893,7 +1898,7 @@ def product_page_layout():
                                     dbc.Col(
                                         [
                                             html.Div([html.H3("Product Ingredients")]),
-                                            html.Hr(),
+                                            # html.Hr(),
                                             dash_table.DataTable(
                                                 id="prod_page_ingredients",
                                                 columns=[
@@ -2009,7 +2014,7 @@ def ingredient_page_layout():
             html.Div(
                 [
                     html.H3("Find Products by Ingredient"),
-                    # html.Hr(),
+                    # # html.Hr(),
                     html.Div(
                         [
                             html.H4("Search Ingredient"),
@@ -4032,7 +4037,7 @@ def render_page_content(pathname):
     return dbc.Jumbotron(
         [
             html.H1("404: Not found", className="text-danger"),
-            html.Hr(),
+            # html.Hr(),
             html.P(f"The pathname {pathname} was not recognised..."),
         ]
     )
