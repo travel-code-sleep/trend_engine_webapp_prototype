@@ -1,14 +1,19 @@
 """this module reads all the required data for category page of web-app, defines figure functions and create initial placeholder graphs."""
-import json
-import re
-
-import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
-from path import Path
 
 from bte_utils import read_file_s3, set_default_start_and_end_dates
+
+BANNED = "Banned?"
+DATE_FIRST_REVIEWED = "Date (First Reviewed)"
+INGREDIENT_TYPE = "ingredient_type"
+NUMBER_OF_PRODUCTS = "Number of Products"
+PACKAGING_SIZE = "Packaging Size"
+PRICE_HIGH = "Price (High)"
+PRICE_LOW = "Price (Low)"
+PRODUCT_DESCRIPTION = "Product Description"
+PRODUCT_RATING_ADJUSTED = "Product Rating (Adjusted)"
 
 default_start_date, default_end_date = set_default_start_and_end_dates()
 
@@ -30,6 +35,16 @@ cat_page_new_products_count_df = read_file_s3(
 cat_page_new_products_details_df = read_file_s3(
     filename="category_page_new_products_details", file_type="feather"
 )
+renaming_cat_page_new_products_details_df_columns = {
+    "product_name": PRODUCT_DESCRIPTION,
+    "adjusted_rating": PRODUCT_RATING_ADJUSTED,
+    "first_review_date": DATE_FIRST_REVIEWED,
+    "small_size_price": PRICE_LOW,
+    "big_size_price": PRICE_HIGH,
+}
+cat_page_new_products_details_df.rename(
+    columns=renaming_cat_page_new_products_details_df_columns, inplace=True
+)
 # pd.read_feather(
 #     dash_data_path/'category_page_new_products_details')
 # distinct brands/products data
@@ -48,17 +63,43 @@ cat_page_item_variations_price_df = read_file_s3(
 cat_page_item_package_oz_df = read_file_s3(
     filename="category_page_item_package_oz", file_type="feather"
 )
+renaming_cat_page_item_package_oz_df_columns = {
+    "item_size": PACKAGING_SIZE,
+    "product_count": NUMBER_OF_PRODUCTS,
+}
+cat_page_item_package_oz_df.rename(
+    columns=renaming_cat_page_item_package_oz_df_columns, inplace=True
+)
 # pd.read_feather(
 #     dash_data_path/'category_page_item_package_oz')
 # top products data
 cat_page_top_products_df = read_file_s3(
     filename="category_page_top_products", file_type="feather"
 )
+renaming_cat_page_top_products_df_columns = {
+    "product_name": PRODUCT_DESCRIPTION,
+    "adjusted_rating": PRODUCT_RATING_ADJUSTED,
+    "first_review_date": DATE_FIRST_REVIEWED,
+    "small_size_price": PRICE_LOW,
+    "big_size_price": PRICE_HIGH,
+}
+cat_page_top_products_df.rename(
+    columns=renaming_cat_page_top_products_df_columns, inplace=True
+)
 # pd.read_feather(
 #     dash_data_path/'category_page_top_products')
 # new ingredients data
 cat_page_new_ingredients_df = read_file_s3(
     filename="category_page_new_ingredients", file_type="feather"
+)
+renaming_cat_page_new_ingredients_df_columns = {
+    "product_name": PRODUCT_DESCRIPTION,
+    "ingredient_type": INGREDIENT_TYPE,
+    "adjusted_rating": PRODUCT_RATING_ADJUSTED,
+    "ban_flag": BANNED,
+}
+cat_page_new_ingredients_df.rename(
+    columns=renaming_cat_page_new_ingredients_df_columns, inplace=True
 )
 # pd.read_feather(
 #     dash_data_path/'category_page_new_ingredients')
@@ -129,7 +170,7 @@ def create_reviews_by_user_attribute_figure(
         orientation="h",
         hover_data=[user_attribute, "review_count"],
         height=400,
-        title=f"Reviews by {plot_title}",
+        # title=f"Reviews by {plot_title}",
     )
     fig.update_layout(
         font_family="Gotham",
