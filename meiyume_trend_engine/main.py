@@ -177,7 +177,8 @@ sidebar_header = html.Div(
                     width={"size": "auto"},
                     # vertically align the toggle in the center
                 ),
-            ]
+            ],
+            style={"marginLeft": -20},
         )
     ],
 )
@@ -1011,8 +1012,6 @@ def category_page_layout():
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
                                 page_action="native",
-                                # page_current=0,  # page number that user is on
-                                # page_size=8,  # number of rows visible per page
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 60,
                                     "maxWidth": 60,
@@ -1020,18 +1019,15 @@ def category_page_layout():
                                     "fontSize": 13,
                                     "font-family": "Gotham",
                                 },
-                                # style_cell_conditional=[    # align text columns to left. By default they are aligned to right
-                                #     {
-                                #         'if': {'column_id': c},
-                                #         'textAlign': 'left'
-                                #     } for c in ['country', 'iso_alpha3']
-                                # ],
                                 style_data={  # overflow cells' content into multiple lines
                                     "whiteSpace": "normal",
                                     "height": "auto",
                                 },
                                 fixed_rows={"headers": True},
-                                style_table={"height": 360,"overflow": "auto",},
+                                style_table={
+                                    "height": 360,
+                                    "overflow": "auto",
+                                },
                             ),
                         ],
                         width=3,
@@ -1069,14 +1065,12 @@ def category_page_layout():
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
                                 page_action="native",
-                                # page_current=0,  # page number that user is on
-                                # page_size=4,  # number of rows visible per page
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 60,
+                                    "width": 80,
                                     "maxWidth": 95,
                                     "fontSize": 13,
                                     "fontFamily": "Gotham",
-                                    # "paddingLeft": 15,
                                 },
                                 style_cell_conditional=[  # align text columns to left. By default they are aligned to right
                                     {
@@ -1102,7 +1096,10 @@ def category_page_layout():
                                     "height": "auto",
                                 },
                                 fixed_rows={"headers": True},
-                                style_table={"height": 360, "overflow": "auto",},
+                                style_table={
+                                    "height": 360,
+                                    "overflow": "auto",
+                                },
                             ),
                         ],
                         width=8,
@@ -1148,9 +1145,9 @@ def category_page_layout():
                                 page_current=0,  # page number that user is on
                                 page_size=10,  # number of rows visible per page
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
-                                    "minWidth": 80,
-                                    "maxWidth": 80,
+                                    "minWidth": 60,
                                     "width": 80,
+                                    "maxWidth": 80,
                                     "fontSize": 13,
                                     "font-family": "Gotham",
                                 },
@@ -1493,7 +1490,7 @@ def product_page_layout():
             dcc.Tabs(
                 [
                     dcc.Tab(
-                        label="Review_Analytics",
+                        label="Review Analytics",
                         children=[
                             dbc.Row(
                                 [
@@ -1561,6 +1558,7 @@ def product_page_layout():
                                         [
                                             dbc.Row(
                                                 [
+                                                    html.H6(),
                                                     dcc.Graph(
                                                         id="review_sentiment_breakdown"
                                                     ),
@@ -1663,14 +1661,23 @@ def product_page_layout():
                                             dcc.Graph(
                                                 id="prod_page_reviews_by_attribute"
                                             ),
-                                        ]
+                                        ],
+                                        style={
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                        },
                                     ),
                                     dbc.Col(
                                         [
                                             html.H3("Review Distribution by Stars"),
                                             html.Div(),
                                             dcc.Graph(id="prod_page_reviews_by_stars"),
-                                        ]
+                                        ],
+                                        style={
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                            "justifyContent": "space-between",
+                                        },
                                     ),
                                 ],
                                 className="pretty_container",
@@ -1680,7 +1687,7 @@ def product_page_layout():
                         selected_style=tab_selected_style,
                     ),
                     dcc.Tab(
-                        label="Price&Ingredient_Analytics",
+                        label="Price & Ingredient Analytics",
                         children=[
                             dbc.Row(
                                 [
@@ -2029,6 +2036,7 @@ def ingredient_page_layout():
                             ),
                         ],
                         style={"width": "60%"},
+                        className="pretty_container",
                     ),
                     dbc.Row(
                         [
@@ -2099,10 +2107,9 @@ def ingredient_page_layout():
                                     )
                                 ],
                                 width=12,
-                                className="pretty_container",
                             ),
                         ],
-                        className="row pretty_container",
+                        className="pretty_container",
                     ),
                 ],
                 className="pretty_container",
@@ -2253,8 +2260,6 @@ def ingredient_page_layout():
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
                                 page_action="native",
-                                page_current=0,  # page number that user is on
-                                page_size=10,  # number of rows visible per page
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 80,
                                     "maxWidth": 80,
@@ -2280,6 +2285,11 @@ def ingredient_page_layout():
                                 style_data={  # overflow cells' content into multiple lines
                                     "whiteSpace": "normal",
                                     "height": "auto",
+                                },
+                                fixed_rows={"headers": True},
+                                style_table={
+                                    "height": 500,
+                                    "overflow": "auto",
                                 },
                             ),
                         ],
@@ -2320,8 +2330,6 @@ def ingredient_page_layout():
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
                                 page_action="native",
-                                page_current=0,  # page number that user is on
-                                page_size=10,  # number of rows visible per page
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 60,
                                     "maxWidth": 60,
@@ -2348,17 +2356,25 @@ def ingredient_page_layout():
                                     "whiteSpace": "normal",
                                     "height": "auto",
                                 },
+                                fixed_rows={"headers": True},
+                                style_table={
+                                    "height": 500,
+                                    "overflow": "auto",
+                                },
                             ),
                         ],
                         width=7,
-                        style={"padding-left": "20px"},
                     ),
                 ],
                 className="pretty_container",
             ),
         ],
         id="mainContainer",
-        style={"fontFamily": "Gotham", "display": "flex", "flex-direction": "column"},
+        style={
+            "fontFamily": "Gotham",
+            "display": "flex",
+            "flex-direction": "column",
+        },
     )
 
 
@@ -2475,6 +2491,10 @@ def update_ing_page_product_table(ingredient: str) -> list:
 def update_ing_page_ingredient_type_figure(
     source: str, category: str, product_type: str
 ) -> go.Figure:
+    from bte_ingredient_page_data_and_plots import (
+        create_ing_page_ingredient_type_figure,
+    )
+
     fig = create_ing_page_ingredient_type_figure(source, category, product_type)
     return fig
 
@@ -2861,6 +2881,11 @@ def update_prod_page_review_timeseries_figure(
 def update_prod_page_review_breakdown_figure(
     source: str, prod_id: str, start_date: str, end_date: str
 ) -> Tuple[go.Figure, go.Figure]:
+    from bte_product_page_data_and_plots import (
+        prod_page_review_sentiment_influence_df,
+        create_prod_page_review_breakdown_figure,
+    )
+
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -2891,6 +2916,11 @@ def update_prod_page_review_breakdown_figure(
     [Input("prod_page_source", "value"), Input("prod_page_product", "value")],
 )
 def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
+    from bte_product_page_data_and_plots import (
+        create_prod_page_review_talking_points_figure,
+        prod_page_review_talking_points_df,
+    )
+
     pos_fig = create_prod_page_review_talking_points_figure(
         prod_page_review_talking_points_df, prod_id, "pos_talking_points"
     )

@@ -69,7 +69,7 @@ def create_ing_page_ingredient_type_figure(
         data,
         x="count",
         y="ingredient_type",
-        width=900,
+        width=750,
         height=300,
         orientation="h",
         title="Ingredient Type Distribution",

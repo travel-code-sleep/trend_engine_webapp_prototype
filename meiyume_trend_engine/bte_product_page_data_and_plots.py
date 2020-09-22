@@ -1,12 +1,12 @@
 """this module reads all the required data for product page of web-app, defines figure functions and create initial placeholder graphs."""
-import json
-import re
+# import json
+# import re
+# import numpy as np
+# from path import Path
 
-import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
-from path import Path
 
 from bte_utils import read_file_s3, set_default_start_and_end_dates
 
@@ -185,6 +185,14 @@ def create_prod_page_review_breakdown_figure(
         width=400,
         title=f"Review {col.title()} Breakdown",
     )
+    fig.update_layout(
+        font_family="Gotham",
+        font_color="blue",
+        title_font_family="Gotham",
+        title_font_color="blue",
+        title_font_size=24,
+        legend_title_font_color="green",
+    )
     fig.update_traces(marker_colors=marker_colors, pull=[0, 0.2])
     return fig
 
@@ -285,7 +293,7 @@ def create_prod_page_reviews_by_user_attribute_figure(
         y=user_attribute,
         orientation="h",
         height=400,
-        title=f"Reviews by {plot_title}",
+        # title=f"Reviews by {plot_title}",
     )
     fig.update_layout(
         font_family="Gotham",
@@ -334,7 +342,7 @@ def create_prod_page_reviews_distribution_figure(
         y="stars",
         orientation="h",
         height=400,
-        title=f"Reviews by Stars",
+        # title=f"Reviews by Stars",
     )
     fig.update_layout(
         font_family="Gotham",

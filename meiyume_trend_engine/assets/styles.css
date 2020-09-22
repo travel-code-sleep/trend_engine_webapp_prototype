@@ -203,3 +203,8 @@ body {
     font-family: GothamLight;
     font-size: 12pt;
 }
+
+.dash-table-container .row {
+    display: block;
+    margin: 0;
+}
