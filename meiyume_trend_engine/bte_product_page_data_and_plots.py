@@ -131,10 +131,10 @@ def create_prod_page_review_talking_points_figure(
             if type(fig.layout[axis]) == go.layout.YAxis:
                 fig.layout[axis].title.text = ""
         fig.update_layout(
-            font_family="Gotham",
-            font_color="blue",
-            title_font_family="Gotham",
-            title_font_color="blue",
+            font_family="GothamLight",
+            font_color="#c09891",
+            title_font_family="GildaDisplay",
+            title_font_color="#c09891",
             title_font_size=24,
             legend_title_font_color="green",
             hovermode="closest",
@@ -142,12 +142,12 @@ def create_prod_page_review_talking_points_figure(
             margin=go.layout.Margin(l=200),
         )
         fig.update_xaxes(
-            tickfont=dict(family="Gotham", color="crimson", size=14),
-            title_font=dict(size=20, family="Gotham", color="crimson"),
+            tickfont=dict(family="GothamLight", color="crimson", size=14),
+            title_font=dict(size=20, family="GothamLight", color="crimson"),
         )
         fig.update_yaxes(
-            tickfont=dict(family="Gotham", color="crimson", size=14),
-            title_font=dict(size=20, family="Gotham", color="crimson"),
+            tickfont=dict(family="GothamLight", color="crimson", size=14),
+            title_font=dict(size=20, family="GothamLight", color="crimson"),
         )
         return fig
 
@@ -174,7 +174,7 @@ def create_prod_page_review_breakdown_figure(
     if col == "sentiment":
         marker_colors = ["green", "red"]
     else:
-        marker_colors = ["orange", "blue"]
+        marker_colors = ["orange", "#c09891"]
 
     fig = px.pie(
         df,
@@ -186,10 +186,10 @@ def create_prod_page_review_breakdown_figure(
         title=f"Review {col.title()} Breakdown",
     )
     fig.update_layout(
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
     )
@@ -223,7 +223,7 @@ def create_prod_page_review_timeseries_figure(
         marker_color = ["green", "red"]
         df.sort_values(by=[col, "review_date"], inplace=True, ascending=False)
     else:
-        marker_color = ["blue", "orange"]
+        marker_color = ["#c09891", "orange"]
         # if len(df[col].unique()) == 2:
         #     marker_color = ['orange', 'blue']
         # else:
@@ -243,10 +243,10 @@ def create_prod_page_review_timeseries_figure(
     fig.update_traces(connectgaps=True, mode="markers+lines")
     fig.update_layout(
         # keep the original annotations and add a list of new annotations:
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         hovermode="closest",
@@ -254,12 +254,12 @@ def create_prod_page_review_timeseries_figure(
         yaxis={"title": "Review Count"},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     return fig
 
@@ -296,10 +296,10 @@ def create_prod_page_reviews_by_user_attribute_figure(
         # title=f"Reviews by {plot_title}",
     )
     fig.update_layout(
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         hovermode="closest",
@@ -307,12 +307,12 @@ def create_prod_page_reviews_by_user_attribute_figure(
         yaxis={"categoryorder": "category descending", "title": user_attribute},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
 
     return fig
@@ -345,10 +345,10 @@ def create_prod_page_reviews_distribution_figure(
         # title=f"Reviews by Stars",
     )
     fig.update_layout(
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         hovermode="closest",
@@ -356,12 +356,12 @@ def create_prod_page_reviews_distribution_figure(
         yaxis={"categoryorder": "category descending", "title": "Stars"},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     return fig
 
@@ -391,10 +391,10 @@ def create_prod_page_item_price_figure(data: pd.DataFrame) -> go.Figure:
     fig.update_traces(connectgaps=True, mode="markers+lines")
     fig.update_layout(
         # keep the original annotations and add a list of new annotations:
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         hovermode="closest",
@@ -402,12 +402,12 @@ def create_prod_page_item_price_figure(data: pd.DataFrame) -> go.Figure:
         yaxis={"title": "Price"},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     return fig
 

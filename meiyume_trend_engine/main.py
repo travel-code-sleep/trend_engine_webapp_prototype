@@ -63,8 +63,7 @@ app = dash.Dash(
     external_stylesheets=external_stylesheets,
     # these meta_tags ensure content is scaled correctly on different devices
     # see: https://www.w3schools.com/css/css_rwd_viewport.asp for more
-    meta_tags=[{"name": "viewport",
-                "content": "width=device-width, initial-scale=1"}],
+    meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
 )
 
 auth = dash_auth.BasicAuth(app, USERNAME_PASSWORD_PAIRS)
@@ -113,7 +112,7 @@ navbar = dbc.Navbar(
                             "fontSize": 40,
                             "color": "white",
                             #    'backgroundColor': 'white',
-                            "fontFamily": "Gotham",
+                            "fontFamily": "GildaDisplay",
                             "fontWeight": "bold",
                             "textShadow": "#fc0 1px 0 10px",
                         },
@@ -200,12 +199,9 @@ sidebar = html.Div(
                     dbc.NavLink(
                         "Beauty Trend Engine", href="/page-1", id="page-1-link"
                     ),
-                    dbc.NavLink("Market Trend", href="/page-2",
-                                id="page-2-link"),
-                    dbc.NavLink("Category Insights",
-                                href="/page-3", id="page-3-link"),
-                    dbc.NavLink("Product Insights",
-                                href="/page-4", id="page-4-link"),
+                    dbc.NavLink("Market Trend", href="/page-2", id="page-2-link"),
+                    dbc.NavLink("Category Insights", href="/page-3", id="page-3-link"),
+                    dbc.NavLink("Product Insights", href="/page-4", id="page-4-link"),
                     dbc.NavLink(
                         "Ingredient Insights", href="/page-5", id="page-5-link"
                     ),
@@ -316,6 +312,9 @@ def landing_page_layout():
                                                     html.H2(
                                                         "Total Data Gathered",
                                                         className="mini_container",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay"
+                                                        },
                                                     ),
                                                 ],
                                                 style={
@@ -337,8 +336,16 @@ def landing_page_layout():
                                                                     )
                                                                 ],
                                                                 className="gildaDisplay22pt",
+                                                                style={
+                                                                    "fontFamily": "GildaDisplay",
+                                                                },
                                                             ),
-                                                            html.H6("Brands"),
+                                                            html.H6(
+                                                                "Brands",
+                                                                style={
+                                                                    "fontFamily": "GildaDisplay"
+                                                                },
+                                                            ),
                                                         ],
                                                         id="distinct_brands",
                                                         className="mini_container gothamBook15pt",
@@ -357,7 +364,11 @@ def landing_page_layout():
                                                                 className="gildaDisplay22pt",
                                                             ),
                                                             html.H6(
-                                                                "Products"),
+                                                                "Products",
+                                                                style={
+                                                                    "fontFamily": "GildaDisplay"
+                                                                },
+                                                            ),
                                                         ],
                                                         id="distinct_products",
                                                         className="mini_container gothamBook15pt",
@@ -376,7 +387,11 @@ def landing_page_layout():
                                                                 className="gildaDisplay22pt",
                                                             ),
                                                             html.H6(
-                                                                "Ingredients"),
+                                                                "Ingredients",
+                                                                style={
+                                                                    "fontFamily": "GildaDisplay"
+                                                                },
+                                                            ),
                                                         ],
                                                         id="distinct_ingredients",
                                                         className="mini_container gothamBook15pt",
@@ -394,7 +409,12 @@ def landing_page_layout():
                                                                 ],
                                                                 className="gildaDisplay22pt",
                                                             ),
-                                                            html.H6("Reviews"),
+                                                            html.H6(
+                                                                "Reviews",
+                                                                style={
+                                                                    "fontFamily": "GildaDisplay"
+                                                                },
+                                                            ),
                                                         ],
                                                         id="distinct_reviews",
                                                         className="mini_container gothamBook15pt",
@@ -412,7 +432,12 @@ def landing_page_layout():
                                                                 ],
                                                                 className="gildaDisplay22pt",
                                                             ),
-                                                            html.H6("Images"),
+                                                            html.H6(
+                                                                "Images",
+                                                                style={
+                                                                    "fontFamily": "GildaDisplay"
+                                                                },
+                                                            ),
                                                         ],
                                                         id="distinct_images",
                                                         className="mini_container gothamBook15pt",
@@ -445,7 +470,7 @@ def landing_page_layout():
                     "height": "100%",
                     "top": "0px",
                     "left": "0px",
-                    "fontFamily": "Gotham",
+                    "fontFamily": "GothamLight",
                     "display": "absolute",
                     "flex-direction": "column",
                 },
@@ -470,6 +495,7 @@ def market_trend_page_layout():
                     "color": "black",
                     #    'border': '0.5px grey dotted',
                     "width": "auto",
+                    "fontFamily": "GildaDisplay",
                 },
                 className="row pretty_container",
             ),
@@ -477,8 +503,13 @@ def market_trend_page_layout():
                 [
                     html.Div(
                         [
-                            html.H3("Geography", style={
-                                    "paddingRight": "15px"}),
+                            html.H3(
+                                "Geography",
+                                style={
+                                    "paddingRight": "15px",
+                                    "fontFamily": "GildaDisplay",
+                                },
+                            ),
                             dcc.Dropdown(
                                 id="source",
                                 options=market_trend_page_source_options,
@@ -497,8 +528,13 @@ def market_trend_page_layout():
                     ),
                     html.Div(
                         [
-                            html.H3("Date Range", style={
-                                    "paddingRight": "20px"}),
+                            html.H3(
+                                "Date Range",
+                                style={
+                                    "paddingRight": "20px",
+                                    "fontFamily": "GildaDisplay",
+                                },
+                            ),
                             dcc.DatePickerRange(
                                 id="review_month_range",
                                 min_date_allowed=dt(2008, 12, 1),
@@ -519,8 +555,13 @@ def market_trend_page_layout():
                     ),
                     html.Div(
                         [
-                            html.H3("Category", style={
-                                    "paddingRight": "30px"}),
+                            html.H3(
+                                "Category",
+                                style={
+                                    "paddingRight": "30px",
+                                    "fontFamily": "GildaDisplay",
+                                },
+                            ),
                             dcc.Dropdown(
                                 id="category",
                                 options=market_trend_page_category_options,
@@ -553,7 +594,11 @@ def market_trend_page_layout():
                             html.Div(
                                 [
                                     html.H2(
-                                        "Review Trend", style={"paddingRight": "30px"}
+                                        "Review Trend",
+                                        style={
+                                            "paddingRight": "30px",
+                                            "fontFamily": "GildaDisplay",
+                                        },
                                     ),
                                     # html.Hr(),
                                     html.Div(
@@ -569,13 +614,16 @@ def market_trend_page_layout():
                                         [
                                             html.H3(
                                                 "Review Subcategory Trend",
-                                                style={"paddingRight": "30px"},
+                                                style={
+                                                    "paddingRight": "30px",
+                                                    "fontFamily": "GildaDisplay",
+                                                },
                                             ),
                                             html.Div(
                                                 id="category_name",
                                                 style={
                                                     "fontSize": 24,
-                                                    "fontFamily": "Gotham",
+                                                    "fontFamily": "GothamLight",
                                                 },
                                             ),
                                             # html.Hr(),
@@ -598,7 +646,10 @@ def market_trend_page_layout():
                                 [
                                     html.H2(
                                         "Review Trend by Marketing Output",
-                                        style={"paddingRight": "30px"},
+                                        style={
+                                            "paddingRight": "30px",
+                                            "fontFamily": "GildaDisplay",
+                                        },
                                     ),
                                     # html.Hr(),
                                     html.Div(
@@ -614,13 +665,16 @@ def market_trend_page_layout():
                                         [
                                             html.H3(
                                                 "Review Subcategory Trend by Marketing Output",
-                                                style={"paddingRight": "30px"},
+                                                style={
+                                                    "paddingRight": "30px",
+                                                    "fontFamily": "GildaDisplay",
+                                                },
                                             ),
                                             html.Div(
                                                 id="influenced_category_name",
                                                 style={
                                                     "fontSize": 24,
-                                                    "fontFamily": "Gotham",
+                                                    "fontFamily": "GothamLight",
                                                 },
                                             ),
                                             # html.Hr(),
@@ -641,7 +695,10 @@ def market_trend_page_layout():
                         children=[
                             html.H2(
                                 "Product Launch Trends and Intensity by Category",
-                                style={"paddingRight": "30px"},
+                                style={
+                                    "paddingRight": "30px",
+                                    "fontFamily": "GildaDisplay",
+                                },
                             ),
                             # html.Hr(),
                             html.Div(
@@ -662,7 +719,7 @@ def market_trend_page_layout():
                                                 style={
                                                     "fontSize": 24,
                                                     "textAlign": "center",
-                                                    "fontFamily": "Gotham",
+                                                    "fontFamily": "GothamLight",
                                                     "verticalAlign": "top",
                                                 },
                                             ),
@@ -699,7 +756,10 @@ def market_trend_page_layout():
                         children=[
                             html.H2(
                                 "Ingredient Trends by Category",
-                                style={"paddingRight": "30px"},
+                                style={
+                                    "paddingRight": "30px",
+                                    "fontFamily": "GildaDisplay",
+                                },
                             ),
                             # html.Hr(),
                             html.Div(
@@ -718,7 +778,7 @@ def market_trend_page_layout():
                                         style={
                                             "fontSize": 24,
                                             "textAlign": "center",
-                                            "fontFamily": "Gotham",
+                                            "fontFamily": "GothamLight",
                                             "verticalAlign": "top",
                                         },
                                     ),
@@ -739,20 +799,20 @@ def market_trend_page_layout():
                     ),
                 ],
                 style=tabs_styles,
-                colors={"border": "white", "primary": "gold",
-                        "background": "cornsilk"},
+                colors={"border": "white", "primary": "gold", "background": "cornsilk"},
             ),
         ],
         id="mainContainer",
-        style={"fontFamily": "Gotham", "display": "flex",
-               "flex-direction": "column"},
+        style={
+            "fontFamily": "GothamLight",
+            "display": "flex",
+            "flex-direction": "column",
+        },
     )
 
 
 def category_page_layout():
-    packaging_filtered_df = cat_page_item_package_oz_df[
-        ["item_size", "product_count"]
-    ][
+    packaging_filtered_df = cat_page_item_package_oz_df[["item_size", "product_count"]][
         (cat_page_item_package_oz_df.source == "us")
         & (cat_page_item_package_oz_df.category == "travel-size-toiletries")
         & (cat_page_item_package_oz_df.product_type == "vitamins-for-hair-skin-nails")
@@ -811,6 +871,7 @@ def category_page_layout():
                             "color": "black",
                             #    'border': '0.5px grey dotted',
                             "width": "auto",
+                            "fontFamily": "GildaDisplay",
                         },
                         className="row pretty_container",
                     )
@@ -821,7 +882,12 @@ def category_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H3("Geography"),
+                                html.H3(
+                                    "Geography",
+                                    style={
+                                        "fontFamily": "GildaDisplay",
+                                    },
+                                ),
                                 dcc.Dropdown(
                                     id="cat_page_source",
                                     options=category_page_source_options,
@@ -838,8 +904,13 @@ def category_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H3("Category", style={
-                                        "paddingRight": "30px"}),
+                                html.H3(
+                                    "Category",
+                                    style={
+                                        "paddingRight": "30px",
+                                        "fontFamily": "GildaDisplay",
+                                    },
+                                ),
                                 dcc.Dropdown(
                                     id="cat_page_category",
                                     options=category_page_category_options,
@@ -856,8 +927,13 @@ def category_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H3("Subcategory", style={
-                                        "paddingRight": "30px"}),
+                                html.H3(
+                                    "Subcategory",
+                                    style={
+                                        "paddingRight": "30px",
+                                        "fontFamily": "GildaDisplay",
+                                    },
+                                ),
                                 dcc.Dropdown(
                                     id="cat_page_product_type",
                                     options=category_page_product_type_options,
@@ -882,7 +958,10 @@ def category_page_layout():
                                         [
                                             html.H3(
                                                 "Product Analysis",
-                                                style={"paddingRight": "30px"},
+                                                style={
+                                                    "paddingRight": "30px",
+                                                    "fontFamily": "GildaDisplay",
+                                                },
                                             )
                                         ]
                                     ),
@@ -891,7 +970,11 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="distinct_brands_text"),
+                                                        id="distinct_brands_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P("Unique Brands"),
                                                 ],
                                                 id="distinct_brands",
@@ -900,7 +983,10 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="distinct_products_text"
+                                                        id="distinct_products_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
                                                     ),
                                                     html.P("Unique Products"),
                                                 ],
@@ -910,10 +996,12 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="product_variations_text"
+                                                        id="product_variations_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
                                                     ),
-                                                    html.P(
-                                                        "Product Variations"),
+                                                    html.P("Product Variations"),
                                                 ],
                                                 id="product_variations",
                                                 className="mini_container",
@@ -921,9 +1009,12 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="new_products_text"),
-                                                    html.P(
-                                                        "New Products Launched"),
+                                                        id="new_products_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
+                                                    html.P("New Products Launched"),
                                                 ],
                                                 id="new_products",
                                                 className="mini_container",
@@ -944,7 +1035,10 @@ def category_page_layout():
                                         [
                                             html.H3(
                                                 "Pricing Analysis",
-                                                style={"paddingRight": "30px"},
+                                                style={
+                                                    "paddingRight": "30px",
+                                                    "fontFamily": "GildaDisplay",
+                                                },
                                             )
                                         ]
                                     ),
@@ -953,7 +1047,11 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="min_price_text"),
+                                                        id="min_price_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P("Min Price"),
                                                 ],
                                                 id="min_price",
@@ -962,7 +1060,11 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="max_price_text"),
+                                                        id="max_price_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P("Max Price"),
                                                 ],
                                                 id="max_price",
@@ -971,7 +1073,11 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="avg_low_price_text"),
+                                                        id="avg_low_price_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P("Avg Low Price"),
                                                 ],
                                                 id="avg_low_price",
@@ -980,7 +1086,11 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="avg_high_price_text"),
+                                                        id="avg_high_price_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P("Avg High Price"),
                                                 ],
                                                 id="avg_high_price",
@@ -989,7 +1099,11 @@ def category_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="avg_item_price_text"),
+                                                        id="avg_item_price_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P("Avg Item Price"),
                                                 ],
                                                 id="avg_item_price",
@@ -1010,7 +1124,16 @@ def category_page_layout():
                 [
                     dbc.Col(
                         [
-                            html.Div([html.H3("Packaging")]),
+                            html.Div(
+                                [
+                                    html.H3(
+                                        "Packaging",
+                                        style={
+                                            "fontFamily": "GildaDisplay",
+                                        },
+                                    )
+                                ]
+                            ),
                             dash_table.DataTable(
                                 id="product_package_data_table",
                                 columns=[
@@ -1045,7 +1168,7 @@ def category_page_layout():
                                     "maxWidth": 60,
                                     "width": 60,
                                     "fontSize": 13,
-                                    "font-family": "Gotham",
+                                    "font-family": "GothamLight",
                                 },
                                 style_data={  # overflow cells' content into multiple lines
                                     "whiteSpace": "normal",
@@ -1063,7 +1186,16 @@ def category_page_layout():
                     ),
                     dbc.Col(
                         [
-                            html.Div([html.H3("Top Rated Products")]),
+                            html.Div(
+                                [
+                                    html.H3(
+                                        "Top Rated Products",
+                                        style={
+                                            "fontFamily": "GildaDisplay",
+                                        },
+                                    )
+                                ]
+                            ),
                             dash_table.DataTable(
                                 id="top_products_data_table",
                                 columns=[
@@ -1098,15 +1230,14 @@ def category_page_layout():
                                     "width": 80,
                                     "maxWidth": 95,
                                     "fontSize": 13,
-                                    "fontFamily": "Gotham",
+                                    "fontFamily": "GothamLight",
                                 },
                                 style_cell_conditional=[  # align text columns to left. By default they are aligned to right
                                     {
                                         "if": {"column_id": "product_name"},
                                         "textAlign": "left",
                                     },
-                                    {"if": {"column_id": "brand"},
-                                        "textAlign": "left"},
+                                    {"if": {"column_id": "brand"}, "textAlign": "left"},
                                     {
                                         "if": {"column_id": "product_name"},
                                         "minWidth": 120,
@@ -1141,7 +1272,16 @@ def category_page_layout():
                 [
                     dbc.Col(
                         [
-                            html.Div([html.H3("New Products to Market")]),
+                            html.Div(
+                                [
+                                    html.H3(
+                                        "New Products to Market",
+                                        style={
+                                            "fontFamily": "GildaDisplay",
+                                        },
+                                    )
+                                ]
+                            ),
                             dash_table.DataTable(
                                 id="new_products_data_table",
                                 columns=[
@@ -1178,15 +1318,14 @@ def category_page_layout():
                                     "width": 80,
                                     "maxWidth": 80,
                                     "fontSize": 13,
-                                    "font-family": "Gotham",
+                                    "font-family": "GothamLight",
                                 },
                                 style_cell_conditional=[  # align text columns to left. By default they are aligned to right
                                     {
                                         "if": {"column_id": "product_name"},
                                         "textAlign": "left",
                                     },
-                                    {"if": {"column_id": "brand"},
-                                        "textAlign": "left"},
+                                    {"if": {"column_id": "brand"}, "textAlign": "left"},
                                     {
                                         "if": {"column_id": "product_name"},
                                         "minWidth": 120,
@@ -1216,7 +1355,16 @@ def category_page_layout():
                 [
                     dbc.Col(
                         [
-                            html.Div([html.H3("New Ingredients to Market")]),
+                            html.Div(
+                                [
+                                    html.H3(
+                                        "New Ingredients to Market",
+                                        style={
+                                            "fontFamily": "GildaDisplay",
+                                        },
+                                    )
+                                ]
+                            ),
                             # html.Hr(),
                             dash_table.DataTable(
                                 id="new_ingredients_data_table",
@@ -1255,7 +1403,7 @@ def category_page_layout():
                                     "width": 120,
                                     "textAlign": "left",
                                     "fontSize": 13,
-                                    "font-family": "Gotham",
+                                    "font-family": "GothamLight",
                                 },
                                 style_cell_conditional=[  # align text columns to left. By default they are aligned to right
                                     {
@@ -1291,10 +1439,20 @@ def category_page_layout():
             ),
             html.Div(
                 [
-                    html.H3("Reviewer's Demographics"),
+                    html.H3(
+                        "Reviewer's Demographics",
+                        style={
+                            "fontFamily": "GildaDisplay",
+                        },
+                    ),
                     html.Div(
                         [
-                            html.H5("User Attribute"),
+                            html.H5(
+                                "User Attribute",
+                                style={
+                                    "fontFamily": "GildaDisplay",
+                                },
+                            ),
                             dcc.Dropdown(
                                 id="cat_page_user_attribute",
                                 options=category_page_user_attribute_options,
@@ -1318,8 +1476,11 @@ def category_page_layout():
             ),
         ],
         id="mainContainer",
-        style={"fontFamily": "Gotham", "display": "flex",
-               "flex-direction": "column"},
+        style={
+            "fontFamily": "GothamLight",
+            "display": "flex",
+            "flex-direction": "column",
+        },
     )
 
 
@@ -1335,6 +1496,7 @@ def product_page_layout():
                                 "color": "black",
                                 #    'border': '0.5px grey dotted',
                                 "width": "auto",
+                                "fontFamily": "GildaDisplay",
                             },
                             className="row pretty_container",
                         )
@@ -1347,7 +1509,12 @@ def product_page_layout():
                         [
                             html.Div(
                                 [
-                                    html.H5("Geography"),
+                                    html.H5(
+                                        "Geography",
+                                        style={
+                                            "fontFamily": "GildaDisplay",
+                                        },
+                                    ),
                                     dcc.Dropdown(
                                         id="prod_page_source",
                                         options=product_page_source_options,
@@ -1361,14 +1528,12 @@ def product_page_layout():
                             ),
                             html.Div(
                                 [
-                                    html.H5("Product", style={
-                                            "paddingRight": "30px"}),
+                                    html.H5("Product", style={"paddingRight": "30px"}),
                                     dcc.Dropdown(
                                         id="prod_page_product",
                                         options=product_page_product_name_options,
                                         multi=False,
-                                        style={"fontSize": "16px",
-                                               "width": "100%"},
+                                        style={"fontSize": "16px", "width": "100%"},
                                         placeholder="Select Product",
                                     ),
                                 ],
@@ -1377,6 +1542,9 @@ def product_page_layout():
                                 [
                                     html.H5(
                                         "Date Range",
+                                        style={
+                                            "fontFamily": "GildaDisplay",
+                                        },
                                         # style={
                                         #     'paddingRight': '20px'}
                                     ),
@@ -1389,27 +1557,36 @@ def product_page_layout():
                                     ),
                                     dcc.Markdown(
                                         id="prod-page-output-container-date-picker-range",
-                                        style={"textAlign": "left",
-                                               "fontSize": "8"},
+                                        style={"textAlign": "left", "fontSize": "8"},
                                     ),
                                 ]
                             ),
                             html.Div(
                                 [
-                                    html.H5("Category", style={
-                                            "paddingRight": "30px"}),
+                                    html.H5(
+                                        "Category",
+                                        style={
+                                            "paddingRight": "30px",
+                                            "fontFamily": "GildaDisplay",
+                                        },
+                                    ),
                                     html.H5(
                                         id="prod_page_category",
                                         # style={'border': 'solid 1px',
                                         #        'border-color': 'lightgrey'},
                                         className="mini_container",
+                                        style={"fontFamily": "GildaDisplay"},
                                     ),
                                 ],
                             ),
                             html.Div(
                                 [
                                     html.H5(
-                                        "Subcategory", style={"paddingRight": "30px"}
+                                        "Subcategory",
+                                        style={
+                                            "paddingRight": "30px",
+                                            "fontFamily": "GildaDisplay",
+                                        },
                                     ),
                                     html.H5(
                                         id="prod_page_subcategory",
@@ -1542,7 +1719,11 @@ def product_page_layout():
                                             html.Div(
                                                 [
                                                     html.H4(
-                                                        "Positive Review Summary"),
+                                                        "Positive Review Summary",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P(
                                                         id="pos_review_sum",
                                                         children=[
@@ -1564,7 +1745,11 @@ def product_page_layout():
                                             html.Div(
                                                 [
                                                     html.H4(
-                                                        "Negative Review Summary"),
+                                                        "Negative Review Summary",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P(
                                                         id="neg_review_sum",
                                                         children=[
@@ -1590,7 +1775,10 @@ def product_page_layout():
                                         [
                                             html.H5(
                                                 "Review Overview",
-                                                style={"margin-left": "10px"},
+                                                style={
+                                                    "margin-left": "10px",
+                                                    "fontFamily": "GildaDisplay",
+                                                },
                                             ),
                                         ]
                                     )
@@ -1603,7 +1791,11 @@ def product_page_layout():
                                         [
                                             dbc.Row(
                                                 [
-                                                    html.H6(),
+                                                    html.H6(
+                                                        style={
+                                                            "fontFamily": "GildaDisplay"
+                                                        }
+                                                    ),
                                                     dcc.Graph(
                                                         id="review_sentiment_breakdown"
                                                     ),
@@ -1646,7 +1838,10 @@ def product_page_layout():
                                     dbc.Row(
                                         html.H5(
                                             "Review Keyphrases",
-                                            style={"margin-left": "10px"},
+                                            style={
+                                                "margin-left": "10px",
+                                                "fontFamily": "GildaDisplay",
+                                            },
                                         )
                                     ),
                                     dbc.Row(
@@ -1681,7 +1876,10 @@ def product_page_layout():
                                     dbc.Col(
                                         [
                                             html.H3(
-                                                "Review Distribution by User Attributes"
+                                                "Review Distribution by User Attributes",
+                                                style={
+                                                    "fontFamily": "GildaDisplay",
+                                                },
                                             ),
                                             dbc.Row(
                                                 [
@@ -1689,6 +1887,9 @@ def product_page_layout():
                                                         [
                                                             html.H5(
                                                                 "User Attribute:",
+                                                                style={
+                                                                    "fontFamily": "GildaDisplay"
+                                                                },
                                                             )
                                                         ],
                                                         width=5,
@@ -1699,8 +1900,7 @@ def product_page_layout():
                                                             options=prod_page_user_attribute_options,
                                                             multi=False,
                                                             value="age",
-                                                            style={
-                                                                "fontSize": 14},
+                                                            style={"fontSize": 14},
                                                             placeholder="Select User Attribute",
                                                             clearable=False,
                                                         ),
@@ -1720,10 +1920,13 @@ def product_page_layout():
                                     dbc.Col(
                                         [
                                             html.H3(
-                                                "Review Distribution by Stars"),
+                                                "Review Distribution by Stars",
+                                                style={
+                                                    "fontFamily": "GildaDisplay",
+                                                },
+                                            ),
                                             html.Div(),
-                                            dcc.Graph(
-                                                id="prod_page_reviews_by_stars"),
+                                            dcc.Graph(id="prod_page_reviews_by_stars"),
                                         ],
                                         style={
                                             "display": "flex",
@@ -1754,7 +1957,8 @@ def product_page_layout():
                                                                     html.H5(
                                                                         "Price Overview",
                                                                         style={
-                                                                            "paddingRight": "30px"
+                                                                            "paddingRight": "30px",
+                                                                            "fontFamily": "GildaDisplay",
                                                                         },
                                                                     )
                                                                 ]
@@ -1764,7 +1968,10 @@ def product_page_layout():
                                                                     html.Div(
                                                                         [
                                                                             html.H5(
-                                                                                id="prod_small_price_text"
+                                                                                id="prod_small_price_text",
+                                                                                style={
+                                                                                    "fontFamily": "GildaDisplay"
+                                                                                },
                                                                             ),
                                                                             html.P(
                                                                                 "Small Size Price"
@@ -1776,7 +1983,10 @@ def product_page_layout():
                                                                     html.Div(
                                                                         [
                                                                             html.H5(
-                                                                                id="prod_big_price_text"
+                                                                                id="prod_big_price_text",
+                                                                                style={
+                                                                                    "fontFamily": "GildaDisplay"
+                                                                                },
                                                                             ),
                                                                             html.P(
                                                                                 "Big Size Price"
@@ -1788,7 +1998,10 @@ def product_page_layout():
                                                                     html.Div(
                                                                         [
                                                                             html.H5(
-                                                                                id="prod_mrp_text"
+                                                                                id="prod_mrp_text",
+                                                                                style={
+                                                                                    "fontFamily": "GildaDisplay"
+                                                                                },
                                                                             ),
                                                                             html.P(
                                                                                 "MRP"
@@ -1815,7 +2028,8 @@ def product_page_layout():
                                                                     html.H5(
                                                                         "Product Overview",
                                                                         style={
-                                                                            "paddingRight": "30px"
+                                                                            "paddingRight": "30px",
+                                                                            "fontFamily": "GildaDisplay",
                                                                         },
                                                                     )
                                                                 ]
@@ -1825,7 +2039,10 @@ def product_page_layout():
                                                                     html.Div(
                                                                         [
                                                                             html.H5(
-                                                                                id="prod_new_flag"
+                                                                                id="prod_new_flag",
+                                                                                style={
+                                                                                    "fontFamily": "GildaDisplay"
+                                                                                },
                                                                             ),
                                                                             html.P(
                                                                                 "Status"
@@ -1837,7 +2054,10 @@ def product_page_layout():
                                                                     html.Div(
                                                                         [
                                                                             html.H5(
-                                                                                id="prod_dist_ing"
+                                                                                id="prod_dist_ing",
+                                                                                style={
+                                                                                    "fontFamily": "GildaDisplay"
+                                                                                },
                                                                             ),
                                                                             html.P(
                                                                                 "Distinct Ingredients"
@@ -1859,8 +2079,7 @@ def product_page_layout():
                                     ),
                                     dbc.Col(
                                         [
-                                            dcc.Graph(
-                                                "prod_page_price_variation"),
+                                            dcc.Graph("prod_page_price_variation"),
                                         ]
                                     ),
                                 ],
@@ -1873,7 +2092,10 @@ def product_page_layout():
                                             html.Div(
                                                 [
                                                     html.H3(
-                                                        "Product Variants by Size/Color"
+                                                        "Product Variants by Size/Color",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
                                                     )
                                                 ]
                                             ),
@@ -1913,7 +2135,7 @@ def product_page_layout():
                                                     "maxWidth": 80,
                                                     "width": 80,
                                                     "fontSize": 13,
-                                                    "font-family": "Gotham",
+                                                    "font-family": "GothamLight",
                                                 },
                                                 style_cell_conditional=[  # align text columns to left. By default they are aligned to right
                                                     {
@@ -1958,7 +2180,15 @@ def product_page_layout():
                                     dbc.Col(
                                         [
                                             html.Div(
-                                                [html.H3("Product Ingredients")]),
+                                                [
+                                                    html.H3(
+                                                        "Product Ingredients",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    )
+                                                ]
+                                            ),
                                             # html.Hr(),
                                             dash_table.DataTable(
                                                 id="prod_page_ingredients",
@@ -2000,7 +2230,7 @@ def product_page_layout():
                                                     "maxWidth": 80,
                                                     "width": 80,
                                                     "fontSize": 13,
-                                                    "font-family": "Gotham",
+                                                    "font-family": "GothamLight",
                                                 },
                                                 style_cell_conditional=[  # align text columns to left. By default they are aligned to right
                                                     {
@@ -2046,13 +2276,15 @@ def product_page_layout():
                     ),
                 ],
                 style=tabs_styles,
-                colors={"border": "white", "primary": "gold",
-                        "background": "cornsilk"},
+                colors={"border": "white", "primary": "gold", "background": "cornsilk"},
             ),
         ],
         id="mainContainer",
-        style={"fontFamily": "Gotham", "display": "flex",
-               "flex-direction": "column"},
+        style={
+            "fontFamily": "GothamLight",
+            "display": "flex",
+            "flex-direction": "column",
+        },
     )
 
 
@@ -2068,6 +2300,7 @@ def ingredient_page_layout():
                                 "color": "black",
                                 #    'border': '0.5px grey dotted',
                                 "width": "auto",
+                                "fontFamily": "GildaDisplay",
                             },
                             className="row pretty_container",
                         )
@@ -2076,11 +2309,21 @@ def ingredient_page_layout():
             ),
             html.Div(
                 [
-                    html.H3("Find Products by Ingredient"),
+                    html.H3(
+                        "Find Products by Ingredient",
+                        style={
+                            "fontFamily": "GildaDisplay",
+                        },
+                    ),
                     # # html.Hr(),
                     html.Div(
                         [
-                            html.H4("Search Ingredient"),
+                            html.H4(
+                                "Search Ingredient",
+                                style={
+                                    "fontFamily": "GildaDisplay",
+                                },
+                            ),
                             dcc.Dropdown(
                                 id="ing_page_ing",
                                 options=ing_page_ingredient_options,
@@ -2138,7 +2381,7 @@ def ingredient_page_layout():
                                             "maxWidth": 80,
                                             "width": 80,
                                             "fontSize": 13,
-                                            "font-family": "Gotham",
+                                            "font-family": "GothamLight",
                                             "textAlign": "left",
                                         },
                                         style_cell_conditional=[  # align text columns to left. By default they are aligned to right
@@ -2171,7 +2414,12 @@ def ingredient_page_layout():
                 className="pretty_container",
             ),
             dbc.Row(
-                html.H4("Ingredient Analysis by Category/Subcategory"),
+                html.H4(
+                    "Ingredient Analysis by Category/Subcategory",
+                    style={
+                        "fontFamily": "GildaDisplay",
+                    },
+                ),
                 className="mini_container",
             ),
             dbc.Row(
@@ -2179,7 +2427,12 @@ def ingredient_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H4("Geography"),
+                                html.H4(
+                                    "Geography",
+                                    style={
+                                        "fontFamily": "GildaDisplay",
+                                    },
+                                ),
                                 dcc.Dropdown(
                                     id="ing_page_source",
                                     options=ing_page_source_options,
@@ -2196,8 +2449,13 @@ def ingredient_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H4("Category", style={
-                                        "paddingRight": "30px"}),
+                                html.H4(
+                                    "Category",
+                                    style={
+                                        "paddingRight": "30px",
+                                        "fontFamily": "GildaDisplay",
+                                    },
+                                ),
                                 dcc.Dropdown(
                                     id="ing_page_category",
                                     options=ing_page_category_options,
@@ -2214,8 +2472,13 @@ def ingredient_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H4("Subcategory", style={
-                                        "paddingRight": "30px"}),
+                                html.H4(
+                                    "Subcategory",
+                                    style={
+                                        "paddingRight": "30px",
+                                        "fontFamily": "GildaDisplay",
+                                    },
+                                ),
                                 dcc.Dropdown(
                                     id="ing_page_product_type",
                                     options=ing_page_product_type_options,
@@ -2240,7 +2503,10 @@ def ingredient_page_layout():
                                         [
                                             html.H4(
                                                 "Ingredient Analysis",
-                                                style={"paddingRight": "30px"},
+                                                style={
+                                                    "paddingRight": "30px",
+                                                    "fontFamily": "GildaDisplay",
+                                                },
                                             )
                                         ]
                                     ),
@@ -2249,7 +2515,11 @@ def ingredient_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="new_ing_count_text"),
+                                                        id="new_ing_count_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P("New Ingredients"),
                                                 ],
                                                 id="new_ing",
@@ -2258,9 +2528,12 @@ def ingredient_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="distinct_ing_text"),
-                                                    html.P(
-                                                        "Distinct Ingredients"),
+                                                        id="distinct_ing_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
+                                                    html.P("Distinct Ingredients"),
                                                 ],
                                                 id="distinct_ing",
                                                 className="mini_container",
@@ -2268,7 +2541,11 @@ def ingredient_page_layout():
                                             html.Div(
                                                 [
                                                     html.H5(
-                                                        id="banned_ing_text"),
+                                                        id="banned_ing_text",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
                                                     html.P(
                                                         "Distinct Banned Ingredients"
                                                     ),
@@ -2285,8 +2562,7 @@ def ingredient_page_layout():
                         ],
                         width=5,
                     ),
-                    dbc.Col(
-                        [html.Div(dcc.Graph("ing_page_ing_type_fig"))], width=7),
+                    dbc.Col([html.Div(dcc.Graph("ing_page_ing_type_fig"))], width=7),
                 ],
                 className="pretty_container",
             ),
@@ -2294,7 +2570,10 @@ def ingredient_page_layout():
                 [
                     dbc.Col(
                         [
-                            html.H6("Banned Ingredients"),
+                            html.H6(
+                                "Banned Ingredients",
+                                style={"fontFamily": "GildaDisplay"},
+                            ),
                             dash_table.DataTable(
                                 id="ing_page_banned_ing_table",
                                 columns=[
@@ -2328,7 +2607,7 @@ def ingredient_page_layout():
                                     "maxWidth": 80,
                                     "width": 80,
                                     "fontSize": 13,
-                                    "font-family": "Gotham",
+                                    "font-family": "GothamLight",
                                     "textAlign": "left",
                                 },
                                 style_cell_conditional=[  # align text columns to left. By default they are aligned to right
@@ -2360,7 +2639,9 @@ def ingredient_page_layout():
                     ),
                     dbc.Col(
                         [
-                            html.H6("New Ingredients"),
+                            html.H6(
+                                "New Ingredients", style={"fontFamily": "GildaDisplay"}
+                            ),
                             dash_table.DataTable(
                                 id="ing_page_new_ing_table",
                                 columns=[
@@ -2398,7 +2679,7 @@ def ingredient_page_layout():
                                     "maxWidth": 60,
                                     "width": 60,
                                     "fontSize": 13,
-                                    "font-family": "Gotham",
+                                    "font-family": "GothamLight",
                                     "textAlign": "left",
                                 },
                                 style_cell_conditional=[  # align text columns to left. By default they are aligned to right
@@ -2434,7 +2715,7 @@ def ingredient_page_layout():
         ],
         id="mainContainer",
         style={
-            "fontFamily": "Gotham",
+            "fontFamily": "GothamLight",
             "display": "flex",
             "flex-direction": "column",
         },
@@ -2514,15 +2795,13 @@ def update_ing_page_banned_ing_table(
     ][["ingredient", "product_name"]].drop_duplicates()
     ban_ing.product_name = ban_ing.product_name.astype("str")
     ban_ing.reset_index(inplace=True, drop=True)
-    ban_ing = ban_ing.groupby("product_name").ingredient.apply(
-        ", ".join).reset_index()
+    ban_ing = ban_ing.groupby("product_name").ingredient.apply(", ".join).reset_index()
 
     return ban_ing.to_dict("records")
 
 
 @app.callback(
-    Output("ing_page_prod_search_table", "data"), [
-        Input("ing_page_ing", "value")]
+    Output("ing_page_prod_search_table", "data"), [Input("ing_page_ing", "value")]
 )
 def update_ing_page_product_table(ingredient: str) -> list:
     """update_ing_page_product_table [summary]
@@ -2560,8 +2839,7 @@ def update_ing_page_ingredient_type_figure(
         create_ing_page_ingredient_type_figure,
     )
 
-    fig = create_ing_page_ingredient_type_figure(
-        source, category, product_type)
+    fig = create_ing_page_ingredient_type_figure(source, category, product_type)
     return fig
 
 
@@ -2621,8 +2899,7 @@ def set_ing_page_product_type_options(source: str, category: str):
     return [
         {"label": i, "value": i}
         for i in ing_page_ing_df.product_type[
-            (ing_page_ing_df.source == source) & (
-                ing_page_ing_df.category == category)
+            (ing_page_ing_df.source == source) & (ing_page_ing_df.category == category)
         ]
         .unique()
         .tolist()
@@ -2839,8 +3116,7 @@ def update_prod_page_reviews_distribution_figure(
         & (prod_page_review_sentiment_influence_df.review_date <= end_date_string)
     ]
 
-    star_fig = create_prod_page_reviews_distribution_figure(
-        data=data, prod_id=prod_id)
+    star_fig = create_prod_page_reviews_distribution_figure(data=data, prod_id=prod_id)
     return star_fig
 
 
@@ -2929,10 +3205,8 @@ def update_prod_page_review_timeseries_figure(
         & (prod_page_review_sentiment_influence_df.review_date <= end_date_string)
     ]
 
-    sent_fig = create_prod_page_review_timeseries_figure(
-        data, prod_id, "sentiment")
-    inf_fig = create_prod_page_review_timeseries_figure(
-        data, prod_id, "is_influenced")
+    sent_fig = create_prod_page_review_timeseries_figure(data, prod_id, "sentiment")
+    inf_fig = create_prod_page_review_timeseries_figure(data, prod_id, "is_influenced")
     return sent_fig, inf_fig
 
 
@@ -2973,10 +3247,8 @@ def update_prod_page_review_breakdown_figure(
         & (prod_page_review_sentiment_influence_df.review_date <= end_date_string)
     ]
 
-    sent_fig = create_prod_page_review_breakdown_figure(
-        data, prod_id, "sentiment")
-    inf_fig = create_prod_page_review_breakdown_figure(
-        data, prod_id, "is_influenced")
+    sent_fig = create_prod_page_review_breakdown_figure(data, prod_id, "sentiment")
+    inf_fig = create_prod_page_review_breakdown_figure(data, prod_id, "is_influenced")
     return sent_fig, inf_fig
 
 
@@ -3003,8 +3275,7 @@ def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
 
 
 @app.callback(
-    [Output("pos_review_sum", "children"),
-     Output("neg_review_sum", "children")],
+    [Output("pos_review_sum", "children"), Output("neg_review_sum", "children")],
     [
         Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
@@ -3088,7 +3359,7 @@ def display_product_data_in_card(
         f"Product Name: {prod_name}",
         f"Product Reviews: {reviews}",
         f"Product Rating: {adjusted_rating}",
-        f"Date: {first_review_date}",
+        f"First Review Date: {first_review_date}",
     )
 
 
@@ -3112,8 +3383,7 @@ def display_product_page_category(source: str, prod_id: str):
 
 
 @app.callback(
-    Output("prod_page_product", "options"), [
-        Input("prod_page_source", "value")]
+    Output("prod_page_product", "options"), [Input("prod_page_source", "value")]
 )
 def set_product_page_product_options(source: str):
     return [
@@ -3126,8 +3396,7 @@ def set_product_page_product_options(source: str):
 
 @app.callback(
     Output("prod_page_product", "value"),
-    [Input("prod_page_source", "value"), Input(
-        "prod_page_product", "options")],
+    [Input("prod_page_source", "value"), Input("prod_page_product", "options")],
 )
 def set_product_page_product_value(source, available_options):
     return available_options[10]["value"]
@@ -3290,8 +3559,7 @@ def filter_top_products_data_table(
         & (cat_page_top_products_df.product_type == product_type)
     ]
 
-    top_products_df.sort_values(
-        by="adjusted_rating", inplace=True, ascending=False)
+    top_products_df.sort_values(by="adjusted_rating", inplace=True, ascending=False)
 
     return top_products_df.to_dict("records")
 
@@ -3327,8 +3595,7 @@ def filter_product_packaging_data_table(
         & (cat_page_item_package_oz_df.product_type == product_type)
     ]
 
-    packaging_filtered_df.sort_values(
-        by="product_count", inplace=True, ascending=False)
+    packaging_filtered_df.sort_values(by="product_count", inplace=True, ascending=False)
 
     return packaging_filtered_df.to_dict("records")
 
@@ -4145,7 +4412,11 @@ def render_page_content(pathname):
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
         [
-            html.H1("404: Not found", className="text-danger"),
+            html.H1(
+                "404: Not found",
+                className="text-danger",
+                style={"fontFamily": "GildaDisplay"},
+            ),
             # html.Hr(),
             html.P(f"The pathname {pathname} was not recognised..."),
         ]
