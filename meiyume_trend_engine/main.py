@@ -29,14 +29,20 @@ from settings import *
 # assign default values
 # px.defaults.template = "plotly_dark"
 # landing page data
-PACKAGING_SIZE = "Packaging Size"
-NUMBER_OF_PRODUCTS = "Number of Products"
-PRODUCT_DESCRIPTION = "Product Description"
-PRODUCT_RATING_ADJUSTED = "Product Rating (Adjusted)"
-DATE_FIRST_REVIEWED = "Date (First Reviewed)"
-PRICE_LOW = "Price (Low)"
-PRICE_HIGH = "Price (High)"
-
+# PACKAGING_SIZE = "Packaging Size"
+# NUMBER_OF_PRODUCTS = "Number of Products"
+# PRODUCT_DESCRIPTION = "Product Description"
+# PRODUCT_RATING_ADJUSTED = "Product Rating (Adjusted)"
+# DATE_FIRST_REVIEWED = "Date (First Reviewed)"
+# PRICE_LOW = "Price (Low)"
+# PRICE_HIGH = "Price (High)"
+PACKAGING_SIZE = "item_size"
+NUMBER_OF_PRODUCTS = "product_count"
+PRODUCT_DESCRIPTION = "product_name"
+PRODUCT_RATING_ADJUSTED = "adjusted_rating"
+DATE_FIRST_REVIEWED = "first_review_date"
+PRICE_LOW = "small_size_price"
+PRICE_HIGH = "big_size_price"
 
 lp_df = read_file_s3(filename="landing_page_data", file_type="feather")
 # pd.read_feather(dash_data_path/'landing_page_data')
@@ -734,7 +740,7 @@ def market_trend_page_layout():
 
 def category_page_layout():
     packaging_filtered_df = cat_page_item_package_oz_df[
-        [PACKAGING_SIZE, NUMBER_OF_PRODUCTS]
+        ["item_size", "product_count"]
     ][
         (cat_page_item_package_oz_df.source == "us")
         & (cat_page_item_package_oz_df.category == "travel-size-toiletries")
