@@ -135,22 +135,22 @@ def create_category_review_trend_figure(
                 yref="paper",
             )
         ],
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
         title_font_size=24,
-        title_font_color="blue",
+        title_font_color="#c09891",
         legend_title_font_color="green",
         hovermode="closest",
     )
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_layout(showlegend=False)
     return fig
@@ -213,24 +213,24 @@ def create_product_type_review_trend_figure(
                 yref="paper",
             )
         ],
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
         title_font_size=24,
-        title_font_color="blue",
+        title_font_color="#c09891",
         legend_title_font_color="green",
         hovermode="closest",
     )
     fig.for_each_annotation(lambda a: a.update(text=a.text.split("=")[-1]))
 
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
         showticklabels=True,
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_layout(showlegend=False)
 
@@ -276,10 +276,10 @@ def create_category_product_launch_figure(
 
     fig.update_layout(
         # keep the original annotations and add a list of new annotations:
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         hovermode="closest",
@@ -287,12 +287,12 @@ def create_category_product_launch_figure(
         yaxis={"title": "New Product Count"},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     return fig
 
@@ -336,10 +336,10 @@ def create_product_type_product_launch_figure(
     fig.update_traces(connectgaps=True, mode="markers+lines")
     fig.update_layout(
         # keep the original annotations and add a list of new annotations:
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         hovermode="closest",
@@ -347,12 +347,12 @@ def create_product_type_product_launch_figure(
         yaxis={"title": "New Product Count"},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
 
     return fig
@@ -394,10 +394,10 @@ def create_product_launch_intensity_figure(
 
     fig.update_layout(
         # keep the original annotations and add a list of new annotations:
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         hovermode="closest",
@@ -405,12 +405,12 @@ def create_product_launch_intensity_figure(
         yaxis={"title": "New Products Percentage within Category", "scaleratio": 1},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
 
     return fig
@@ -455,10 +455,10 @@ def create_category_new_ingredient_trend_figure(
 
     fig.update_layout(
         # keep the original annotations and add a list of new annotations:
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         hovermode="closest",
@@ -466,12 +466,12 @@ def create_category_new_ingredient_trend_figure(
         yaxis={"title": "New Ingredient Count"},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     return fig
 
@@ -515,10 +515,10 @@ def create_product_type_new_ingredient_trend_figure(
     fig.update_traces(connectgaps=True, mode="markers+lines")
     fig.update_layout(
         # keep the original annotations and add a list of new annotations:
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         hovermode="closest",
@@ -526,12 +526,12 @@ def create_product_type_new_ingredient_trend_figure(
         yaxis={"title": "New Ingredient Count"},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
 
     return fig

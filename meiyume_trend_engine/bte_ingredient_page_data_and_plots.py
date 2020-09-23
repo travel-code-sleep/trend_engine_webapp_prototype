@@ -75,10 +75,10 @@ def create_ing_page_ingredient_type_figure(
         title="Ingredient Type Distribution",
     )
     fig.update_layout(
-        font_family="Gotham",
-        font_color="blue",
-        title_font_family="Gotham",
-        title_font_color="blue",
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
         title_font_size=24,
         legend_title_font_color="green",
         #         hovermode='closest',
@@ -86,11 +86,11 @@ def create_ing_page_ingredient_type_figure(
         yaxis={"title": "Ingredeint Type"},
     )
     fig.update_xaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     fig.update_yaxes(
-        tickfont=dict(family="Gotham", color="crimson", size=14),
-        title_font=dict(size=20, family="Gotham", color="crimson"),
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
     return fig
