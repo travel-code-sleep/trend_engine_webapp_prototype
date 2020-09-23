@@ -63,7 +63,8 @@ app = dash.Dash(
     external_stylesheets=external_stylesheets,
     # these meta_tags ensure content is scaled correctly on different devices
     # see: https://www.w3schools.com/css/css_rwd_viewport.asp for more
-    meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
+    meta_tags=[{"name": "viewport",
+                "content": "width=device-width, initial-scale=1"}],
 )
 
 auth = dash_auth.BasicAuth(app, USERNAME_PASSWORD_PAIRS)
@@ -199,9 +200,12 @@ sidebar = html.Div(
                     dbc.NavLink(
                         "Beauty Trend Engine", href="/page-1", id="page-1-link"
                     ),
-                    dbc.NavLink("Market Trend", href="/page-2", id="page-2-link"),
-                    dbc.NavLink("Category Insights", href="/page-3", id="page-3-link"),
-                    dbc.NavLink("Product Insights", href="/page-4", id="page-4-link"),
+                    dbc.NavLink("Market Trend", href="/page-2",
+                                id="page-2-link"),
+                    dbc.NavLink("Category Insights",
+                                href="/page-3", id="page-3-link"),
+                    dbc.NavLink("Product Insights",
+                                href="/page-4", id="page-4-link"),
                     dbc.NavLink(
                         "Ingredient Insights", href="/page-5", id="page-5-link"
                     ),
@@ -352,7 +356,8 @@ def landing_page_layout():
                                                                 ],
                                                                 className="gildaDisplay22pt",
                                                             ),
-                                                            html.H6("Products"),
+                                                            html.H6(
+                                                                "Products"),
                                                         ],
                                                         id="distinct_products",
                                                         className="mini_container gothamBook15pt",
@@ -370,7 +375,8 @@ def landing_page_layout():
                                                                 ],
                                                                 className="gildaDisplay22pt",
                                                             ),
-                                                            html.H6("Ingredients"),
+                                                            html.H6(
+                                                                "Ingredients"),
                                                         ],
                                                         id="distinct_ingredients",
                                                         className="mini_container gothamBook15pt",
@@ -471,7 +477,8 @@ def market_trend_page_layout():
                 [
                     html.Div(
                         [
-                            html.H3("Geography", style={"paddingRight": "15px"}),
+                            html.H3("Geography", style={
+                                    "paddingRight": "15px"}),
                             dcc.Dropdown(
                                 id="source",
                                 options=market_trend_page_source_options,
@@ -490,7 +497,8 @@ def market_trend_page_layout():
                     ),
                     html.Div(
                         [
-                            html.H3("Date Range", style={"paddingRight": "20px"}),
+                            html.H3("Date Range", style={
+                                    "paddingRight": "20px"}),
                             dcc.DatePickerRange(
                                 id="review_month_range",
                                 min_date_allowed=dt(2008, 12, 1),
@@ -511,7 +519,8 @@ def market_trend_page_layout():
                     ),
                     html.Div(
                         [
-                            html.H3("Category", style={"paddingRight": "30px"}),
+                            html.H3("Category", style={
+                                    "paddingRight": "30px"}),
                             dcc.Dropdown(
                                 id="category",
                                 options=market_trend_page_category_options,
@@ -730,11 +739,13 @@ def market_trend_page_layout():
                     ),
                 ],
                 style=tabs_styles,
-                colors={"border": "white", "primary": "gold", "background": "cornsilk"},
+                colors={"border": "white", "primary": "gold",
+                        "background": "cornsilk"},
             ),
         ],
         id="mainContainer",
-        style={"fontFamily": "Gotham", "display": "flex", "flex-direction": "column"},
+        style={"fontFamily": "Gotham", "display": "flex",
+               "flex-direction": "column"},
     )
 
 
@@ -827,7 +838,8 @@ def category_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H3("Category", style={"paddingRight": "30px"}),
+                                html.H3("Category", style={
+                                        "paddingRight": "30px"}),
                                 dcc.Dropdown(
                                     id="cat_page_category",
                                     options=category_page_category_options,
@@ -844,7 +856,8 @@ def category_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H3("Subcategory", style={"paddingRight": "30px"}),
+                                html.H3("Subcategory", style={
+                                        "paddingRight": "30px"}),
                                 dcc.Dropdown(
                                     id="cat_page_product_type",
                                     options=category_page_product_type_options,
@@ -877,7 +890,8 @@ def category_page_layout():
                                         [
                                             html.Div(
                                                 [
-                                                    html.H5(id="distinct_brands_text"),
+                                                    html.H5(
+                                                        id="distinct_brands_text"),
                                                     html.P("Unique Brands"),
                                                 ],
                                                 id="distinct_brands",
@@ -898,15 +912,18 @@ def category_page_layout():
                                                     html.H5(
                                                         id="product_variations_text"
                                                     ),
-                                                    html.P("Product Variations"),
+                                                    html.P(
+                                                        "Product Variations"),
                                                 ],
                                                 id="product_variations",
                                                 className="mini_container",
                                             ),
                                             html.Div(
                                                 [
-                                                    html.H5(id="new_products_text"),
-                                                    html.P("New Products Launched"),
+                                                    html.H5(
+                                                        id="new_products_text"),
+                                                    html.P(
+                                                        "New Products Launched"),
                                                 ],
                                                 id="new_products",
                                                 className="mini_container",
@@ -935,7 +952,8 @@ def category_page_layout():
                                         [
                                             html.Div(
                                                 [
-                                                    html.H5(id="min_price_text"),
+                                                    html.H5(
+                                                        id="min_price_text"),
                                                     html.P("Min Price"),
                                                 ],
                                                 id="min_price",
@@ -943,7 +961,8 @@ def category_page_layout():
                                             ),
                                             html.Div(
                                                 [
-                                                    html.H5(id="max_price_text"),
+                                                    html.H5(
+                                                        id="max_price_text"),
                                                     html.P("Max Price"),
                                                 ],
                                                 id="max_price",
@@ -951,7 +970,8 @@ def category_page_layout():
                                             ),
                                             html.Div(
                                                 [
-                                                    html.H5(id="avg_low_price_text"),
+                                                    html.H5(
+                                                        id="avg_low_price_text"),
                                                     html.P("Avg Low Price"),
                                                 ],
                                                 id="avg_low_price",
@@ -959,7 +979,8 @@ def category_page_layout():
                                             ),
                                             html.Div(
                                                 [
-                                                    html.H5(id="avg_high_price_text"),
+                                                    html.H5(
+                                                        id="avg_high_price_text"),
                                                     html.P("Avg High Price"),
                                                 ],
                                                 id="avg_high_price",
@@ -967,7 +988,8 @@ def category_page_layout():
                                             ),
                                             html.Div(
                                                 [
-                                                    html.H5(id="avg_item_price_text"),
+                                                    html.H5(
+                                                        id="avg_item_price_text"),
                                                     html.P("Avg Item Price"),
                                                 ],
                                                 id="avg_item_price",
@@ -1083,7 +1105,8 @@ def category_page_layout():
                                         "if": {"column_id": "product_name"},
                                         "textAlign": "left",
                                     },
-                                    {"if": {"column_id": "brand"}, "textAlign": "left"},
+                                    {"if": {"column_id": "brand"},
+                                        "textAlign": "left"},
                                     {
                                         "if": {"column_id": "product_name"},
                                         "minWidth": 120,
@@ -1162,7 +1185,8 @@ def category_page_layout():
                                         "if": {"column_id": "product_name"},
                                         "textAlign": "left",
                                     },
-                                    {"if": {"column_id": "brand"}, "textAlign": "left"},
+                                    {"if": {"column_id": "brand"},
+                                        "textAlign": "left"},
                                     {
                                         "if": {"column_id": "product_name"},
                                         "minWidth": 120,
@@ -1294,7 +1318,8 @@ def category_page_layout():
             ),
         ],
         id="mainContainer",
-        style={"fontFamily": "Gotham", "display": "flex", "flex-direction": "column"},
+        style={"fontFamily": "Gotham", "display": "flex",
+               "flex-direction": "column"},
     )
 
 
@@ -1336,12 +1361,14 @@ def product_page_layout():
                             ),
                             html.Div(
                                 [
-                                    html.H5("Product", style={"paddingRight": "30px"}),
+                                    html.H5("Product", style={
+                                            "paddingRight": "30px"}),
                                     dcc.Dropdown(
                                         id="prod_page_product",
                                         options=product_page_product_name_options,
                                         multi=False,
-                                        style={"fontSize": "16px", "width": "100%"},
+                                        style={"fontSize": "16px",
+                                               "width": "100%"},
                                         placeholder="Select Product",
                                     ),
                                 ],
@@ -1362,13 +1389,15 @@ def product_page_layout():
                                     ),
                                     dcc.Markdown(
                                         id="prod-page-output-container-date-picker-range",
-                                        style={"textAlign": "left", "fontSize": "8"},
+                                        style={"textAlign": "left",
+                                               "fontSize": "8"},
                                     ),
                                 ]
                             ),
                             html.Div(
                                 [
-                                    html.H5("Category", style={"paddingRight": "30px"}),
+                                    html.H5("Category", style={
+                                            "paddingRight": "30px"}),
                                     html.H5(
                                         id="prod_page_category",
                                         # style={'border': 'solid 1px',
@@ -1512,7 +1541,8 @@ def product_page_layout():
                                         [
                                             html.Div(
                                                 [
-                                                    html.H4("Positive Review Summary"),
+                                                    html.H4(
+                                                        "Positive Review Summary"),
                                                     html.P(
                                                         id="pos_review_sum",
                                                         children=[
@@ -1533,7 +1563,8 @@ def product_page_layout():
                                         [
                                             html.Div(
                                                 [
-                                                    html.H4("Negative Review Summary"),
+                                                    html.H4(
+                                                        "Negative Review Summary"),
                                                     html.P(
                                                         id="neg_review_sum",
                                                         children=[
@@ -1668,7 +1699,8 @@ def product_page_layout():
                                                             options=prod_page_user_attribute_options,
                                                             multi=False,
                                                             value="age",
-                                                            style={"fontSize": 14},
+                                                            style={
+                                                                "fontSize": 14},
                                                             placeholder="Select User Attribute",
                                                             clearable=False,
                                                         ),
@@ -1687,9 +1719,11 @@ def product_page_layout():
                                     ),
                                     dbc.Col(
                                         [
-                                            html.H3("Review Distribution by Stars"),
+                                            html.H3(
+                                                "Review Distribution by Stars"),
                                             html.Div(),
-                                            dcc.Graph(id="prod_page_reviews_by_stars"),
+                                            dcc.Graph(
+                                                id="prod_page_reviews_by_stars"),
                                         ],
                                         style={
                                             "display": "flex",
@@ -1825,7 +1859,8 @@ def product_page_layout():
                                     ),
                                     dbc.Col(
                                         [
-                                            dcc.Graph("prod_page_price_variation"),
+                                            dcc.Graph(
+                                                "prod_page_price_variation"),
                                         ]
                                     ),
                                 ],
@@ -1922,7 +1957,8 @@ def product_page_layout():
                                 [
                                     dbc.Col(
                                         [
-                                            html.Div([html.H3("Product Ingredients")]),
+                                            html.Div(
+                                                [html.H3("Product Ingredients")]),
                                             # html.Hr(),
                                             dash_table.DataTable(
                                                 id="prod_page_ingredients",
@@ -2010,11 +2046,13 @@ def product_page_layout():
                     ),
                 ],
                 style=tabs_styles,
-                colors={"border": "white", "primary": "gold", "background": "cornsilk"},
+                colors={"border": "white", "primary": "gold",
+                        "background": "cornsilk"},
             ),
         ],
         id="mainContainer",
-        style={"fontFamily": "Gotham", "display": "flex", "flex-direction": "column"},
+        style={"fontFamily": "Gotham", "display": "flex",
+               "flex-direction": "column"},
     )
 
 
@@ -2158,7 +2196,8 @@ def ingredient_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H4("Category", style={"paddingRight": "30px"}),
+                                html.H4("Category", style={
+                                        "paddingRight": "30px"}),
                                 dcc.Dropdown(
                                     id="ing_page_category",
                                     options=ing_page_category_options,
@@ -2175,7 +2214,8 @@ def ingredient_page_layout():
                     dbc.Col(
                         html.Div(
                             [
-                                html.H4("Subcategory", style={"paddingRight": "30px"}),
+                                html.H4("Subcategory", style={
+                                        "paddingRight": "30px"}),
                                 dcc.Dropdown(
                                     id="ing_page_product_type",
                                     options=ing_page_product_type_options,
@@ -2208,7 +2248,8 @@ def ingredient_page_layout():
                                         [
                                             html.Div(
                                                 [
-                                                    html.H5(id="new_ing_count_text"),
+                                                    html.H5(
+                                                        id="new_ing_count_text"),
                                                     html.P("New Ingredients"),
                                                 ],
                                                 id="new_ing",
@@ -2216,15 +2257,18 @@ def ingredient_page_layout():
                                             ),
                                             html.Div(
                                                 [
-                                                    html.H5(id="distinct_ing_text"),
-                                                    html.P("Distinct Ingredients"),
+                                                    html.H5(
+                                                        id="distinct_ing_text"),
+                                                    html.P(
+                                                        "Distinct Ingredients"),
                                                 ],
                                                 id="distinct_ing",
                                                 className="mini_container",
                                             ),
                                             html.Div(
                                                 [
-                                                    html.H5(id="banned_ing_text"),
+                                                    html.H5(
+                                                        id="banned_ing_text"),
                                                     html.P(
                                                         "Distinct Banned Ingredients"
                                                     ),
@@ -2241,7 +2285,8 @@ def ingredient_page_layout():
                         ],
                         width=5,
                     ),
-                    dbc.Col([html.Div(dcc.Graph("ing_page_ing_type_fig"))], width=7),
+                    dbc.Col(
+                        [html.Div(dcc.Graph("ing_page_ing_type_fig"))], width=7),
                 ],
                 className="pretty_container",
             ),
@@ -2469,13 +2514,15 @@ def update_ing_page_banned_ing_table(
     ][["ingredient", "product_name"]].drop_duplicates()
     ban_ing.product_name = ban_ing.product_name.astype("str")
     ban_ing.reset_index(inplace=True, drop=True)
-    ban_ing = ban_ing.groupby("product_name").ingredient.apply(", ".join).reset_index()
+    ban_ing = ban_ing.groupby("product_name").ingredient.apply(
+        ", ".join).reset_index()
 
     return ban_ing.to_dict("records")
 
 
 @app.callback(
-    Output("ing_page_prod_search_table", "data"), [Input("ing_page_ing", "value")]
+    Output("ing_page_prod_search_table", "data"), [
+        Input("ing_page_ing", "value")]
 )
 def update_ing_page_product_table(ingredient: str) -> list:
     """update_ing_page_product_table [summary]
@@ -2513,7 +2560,8 @@ def update_ing_page_ingredient_type_figure(
         create_ing_page_ingredient_type_figure,
     )
 
-    fig = create_ing_page_ingredient_type_figure(source, category, product_type)
+    fig = create_ing_page_ingredient_type_figure(
+        source, category, product_type)
     return fig
 
 
@@ -2573,7 +2621,8 @@ def set_ing_page_product_type_options(source: str, category: str):
     return [
         {"label": i, "value": i}
         for i in ing_page_ing_df.product_type[
-            (ing_page_ing_df.source == source) & (ing_page_ing_df.category == category)
+            (ing_page_ing_df.source == source) & (
+                ing_page_ing_df.category == category)
         ]
         .unique()
         .tolist()
@@ -2790,7 +2839,8 @@ def update_prod_page_reviews_distribution_figure(
         & (prod_page_review_sentiment_influence_df.review_date <= end_date_string)
     ]
 
-    star_fig = create_prod_page_reviews_distribution_figure(data=data, prod_id=prod_id)
+    star_fig = create_prod_page_reviews_distribution_figure(
+        data=data, prod_id=prod_id)
     return star_fig
 
 
@@ -2879,8 +2929,10 @@ def update_prod_page_review_timeseries_figure(
         & (prod_page_review_sentiment_influence_df.review_date <= end_date_string)
     ]
 
-    sent_fig = create_prod_page_review_timeseries_figure(data, prod_id, "sentiment")
-    inf_fig = create_prod_page_review_timeseries_figure(data, prod_id, "is_influenced")
+    sent_fig = create_prod_page_review_timeseries_figure(
+        data, prod_id, "sentiment")
+    inf_fig = create_prod_page_review_timeseries_figure(
+        data, prod_id, "is_influenced")
     return sent_fig, inf_fig
 
 
@@ -2921,8 +2973,10 @@ def update_prod_page_review_breakdown_figure(
         & (prod_page_review_sentiment_influence_df.review_date <= end_date_string)
     ]
 
-    sent_fig = create_prod_page_review_breakdown_figure(data, prod_id, "sentiment")
-    inf_fig = create_prod_page_review_breakdown_figure(data, prod_id, "is_influenced")
+    sent_fig = create_prod_page_review_breakdown_figure(
+        data, prod_id, "sentiment")
+    inf_fig = create_prod_page_review_breakdown_figure(
+        data, prod_id, "is_influenced")
     return sent_fig, inf_fig
 
 
@@ -2949,7 +3003,8 @@ def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
 
 
 @app.callback(
-    [Output("pos_review_sum", "children"), Output("neg_review_sum", "children")],
+    [Output("pos_review_sum", "children"),
+     Output("neg_review_sum", "children")],
     [
         Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
@@ -3057,7 +3112,8 @@ def display_product_page_category(source: str, prod_id: str):
 
 
 @app.callback(
-    Output("prod_page_product", "options"), [Input("prod_page_source", "value")]
+    Output("prod_page_product", "options"), [
+        Input("prod_page_source", "value")]
 )
 def set_product_page_product_options(source: str):
     return [
@@ -3070,7 +3126,8 @@ def set_product_page_product_options(source: str):
 
 @app.callback(
     Output("prod_page_product", "value"),
-    [Input("prod_page_source", "value"), Input("prod_page_product", "options")],
+    [Input("prod_page_source", "value"), Input(
+        "prod_page_product", "options")],
 )
 def set_product_page_product_value(source, available_options):
     return available_options[10]["value"]
@@ -3233,7 +3290,8 @@ def filter_top_products_data_table(
         & (cat_page_top_products_df.product_type == product_type)
     ]
 
-    top_products_df.sort_values(by="adjusted_rating", inplace=True, ascending=False)
+    top_products_df.sort_values(
+        by="adjusted_rating", inplace=True, ascending=False)
 
     return top_products_df.to_dict("records")
 
@@ -3269,7 +3327,8 @@ def filter_product_packaging_data_table(
         & (cat_page_item_package_oz_df.product_type == product_type)
     ]
 
-    packaging_filtered_df.sort_values(by="product_count", inplace=True, ascending=False)
+    packaging_filtered_df.sort_values(
+        by="product_count", inplace=True, ascending=False)
 
     return packaging_filtered_df.to_dict("records")
 
@@ -4058,14 +4117,14 @@ def toggle_classname(n, classname):
 
 
 @app.callback(
-    [Output(f"page-{i}-link", "active") for i in range(1, 7)],
+    [Output(f"page-{i}-link", "active") for i in range(1, 6)],
     [Input("url", "pathname")],
 )
 def toggle_active_links(pathname):
     if pathname == "/":
         # Treat page 1 as the homepage / index
-        return True, False, False, False, False, False
-    return [pathname == f"/page-{i}" for i in range(1, 7)]
+        return True, False, False, False, False
+    return [pathname == f"/page-{i}" for i in range(1, 6)]
 
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
@@ -4081,8 +4140,8 @@ def render_page_content(pathname):
         return product_page_layout()
     elif pathname == "/page-5":
         return ingredient_page_layout()
-    elif pathname == "/page-6":
-        return "check this out. wip. yipee ki kay"
+    # elif pathname == "/page-6":
+    #     return "check this out. wip. yipee ki kay"
     # If the user tries to reach a different page, return a 404 message
     return dbc.Jumbotron(
         [
@@ -4094,5 +4153,5 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    # app.run_server()
-    app.run_server(debug=True)
+    app.run_server()
+    # app.run_server(debug=True)
