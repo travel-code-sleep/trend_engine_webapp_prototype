@@ -99,6 +99,7 @@ def create_category_review_trend_figure(
     Returns:
         go.Figure: [description]
     """
+    data.month = data.month.astype(str)
     data = data[(data.month >= start_date) & (data.month <= end_date)]
 
     fig = px.area(
@@ -179,6 +180,7 @@ def create_product_type_review_trend_figure(
     Returns:
         go.Figure: [description]
     """
+    data.month = data.month.astype(str)
     data = data[(data.month >= start_date) & (data.month <= end_date)]
     fig = px.area(
         data[(data.category == category) & (data.source == source)],
@@ -258,6 +260,7 @@ def create_category_product_launch_figure(
     Returns:
         go.Figure: [description]
     """
+    data.meta_date = data.meta_date.astype(str)
     data = data[(data.meta_date >= start_date) & (data.meta_date <= end_date)]
 
     fig = px.line(
@@ -318,6 +321,7 @@ def create_product_type_product_launch_figure(
     Returns:
         go.Figure: [description]
     """
+    data.meta_date = data.meta_date.astype(str)
     data = data[(data.meta_date >= start_date) & (data.meta_date <= end_date)]
 
     fig = px.line(
@@ -379,6 +383,7 @@ def create_product_launch_intensity_figure(
     Returns:
         go.Figure: [description]
     """
+    data.meta_date = data.meta_date.astype(str)
     data = data[(data.meta_date >= start_date) & (data.meta_date <= end_date)]
 
     fig = px.bar(
@@ -437,6 +442,7 @@ def create_category_new_ingredient_trend_figure(
     Returns:
         go.Figure: [description]
     """
+    data.meta_date = data.meta_date.astype(str)
     data = data[(data.meta_date >= start_date) & (data.meta_date <= end_date)]
 
     fig = px.line(
@@ -497,6 +503,7 @@ def create_product_type_new_ingredient_trend_figure(
     Returns:
         go.Figure: [description]
     """
+    data.meta_date = data.meta_date.astype(str)
     data = data[(data.meta_date >= start_date) & (data.meta_date <= end_date)]
 
     fig = px.line(
@@ -538,7 +545,8 @@ def create_product_type_new_ingredient_trend_figure(
 
 
 """ create initial figures/graphs. """
-category_trend_figure = create_category_review_trend_figure(review_trend_category_df)
+category_trend_figure = create_category_review_trend_figure(
+    review_trend_category_df)
 subcategory_trend_figure = create_product_type_review_trend_figure(
     review_trend_product_type_df
 )
