@@ -105,6 +105,8 @@ def create_prod_page_review_talking_points_figure(
             ).T.reset_index()
             tpdf.columns = ["keyphrase", "frequency"]
             tpdf.sort_values(by="frequency", ascending=True, inplace=True)
+        else:
+            tpdf = None
     except Exception as ex:
         tpdf = None
 
