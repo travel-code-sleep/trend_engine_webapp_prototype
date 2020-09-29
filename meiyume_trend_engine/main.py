@@ -3304,12 +3304,20 @@ def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
     ],
 )
 def display_product_page_category(source: str, prod_id: str):
-    pos_sum = prod_page_review_sum_df.pos_review_summary[
-        prod_page_review_sum_df.prod_id == prod_id
-    ].values[0]
-    neg_sum = prod_page_review_sum_df.neg_review_summary[
-        prod_page_review_sum_df.prod_id == prod_id
-    ].values[0]
+    if len(prod_page_review_sum_df.pos_review_summary[
+            prod_page_review_sum_df.prod_id == prod_id]) > 0:
+        pos_sum = prod_page_review_sum_df.pos_review_summary[
+            prod_page_review_sum_df.prod_id == prod_id
+        ].values[0]
+    else:
+        pos_sum = ''
+    if len(prod_page_review_sum_df.neg_review_summary[
+            prod_page_review_sum_df.prod_id == prod_id]) > 0:
+        neg_sum = prod_page_review_sum_df.neg_review_summary[
+            prod_page_review_sum_df.prod_id == prod_id
+        ].values[0]
+    else:
+        neg_sum = ''
     return pos_sum, neg_sum
 
 
