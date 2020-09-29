@@ -46,14 +46,16 @@ prod_page_reviews_attribute_df = read_file_s3(
 # pd.read_feather(
 #     dash_data_path/'prod_page_reviews_attribute')
 # item data
-prod_page_item_df = read_file_s3(filename="prod_page_item_data", file_type="feather")
+prod_page_item_df = read_file_s3(
+    filename="prod_page_item_data", file_type="feather")
 # pd.read_feather(dash_data_path/'prod_page_item_data')
 prod_page_item_price_df = prod_page_item_df[
     ["prod_id", "item_size", "meta_date", "item_price"]
 ].drop_duplicates(subset=["prod_id", "meta_date", "item_size"])
 prod_page_item_price_df.reset_index(inplace=True, drop=True)
 # ingredient data
-prod_page_ing_df = read_file_s3(filename="prod_page_ing_data", file_type="feather")
+prod_page_ing_df = read_file_s3(
+    filename="prod_page_ing_data", file_type="feather")
 # pd.read_feather(dash_data_path/'prod_page_ing_data')
 
 """ create dropdown options """
@@ -97,12 +99,13 @@ def create_prod_page_review_talking_points_figure(
         go.Figure: [description]
     """
     try:
-        tpdf = pd.DataFrame(
-            data[col][data.prod_id == prod_id].values[0], index=range(0, 1)
-        ).T.reset_index()
-        tpdf.columns = ["keyphrase", "frequency"]
-        tpdf.sort_values(by="frequency", ascending=True, inplace=True)
-    except ValueError:
+        if len(data[col][data.prod_id == prod_id].values[0]) > 0:
+            tpdf = pd.DataFrame(
+                data[col][data.prod_id == prod_id].values[0], index=range(0, 1)
+            ).T.reset_index()
+            tpdf.columns = ["keyphrase", "frequency"]
+            tpdf.sort_values(by="frequency", ascending=True, inplace=True)
+    except Exception as ex:
         tpdf = None
 
     if tpdf is not None:
@@ -150,6 +153,8 @@ def create_prod_page_review_talking_points_figure(
             title_font=dict(size=20, family="GothamLight", color="crimson"),
         )
         return fig
+    else:
+        return None
 
 
 def create_prod_page_review_breakdown_figure(
@@ -167,7 +172,8 @@ def create_prod_page_review_breakdown_figure(
     Returns:
         go.Figure: [description]
     """
-    df = pd.DataFrame(data[col][data.prod_id == prod_id].value_counts()).reset_index()
+    df = pd.DataFrame(
+        data[col][data.prod_id == prod_id].value_counts()).reset_index()
     df.columns = [col, "review_count"]
     df.sort_values(by=[col], inplace=True, ascending=False)
 
@@ -212,56 +218,60 @@ def create_prod_page_review_timeseries_figure(
     Returns:
         go.Figure: [description]
     """
-    # data =
-    df = pd.DataFrame(
-        data[data.prod_id == prod_id].groupby(by=["review_date"])[col].value_counts()
-    )
-    df.columns = ["review_count"]
-    df.reset_index(inplace=True)
+    if len(data[data.prod_id == prod_id]) > 0:
+        df = pd.DataFrame(
+            data[data.prod_id == prod_id].groupby(by=["review_date"])[
+                col].value_counts()
+        )
+        df.columns = ["review_count"]
+        df.reset_index(inplace=True)
 
-    if col == "sentiment":
-        marker_color = ["green", "red"]
-        df.sort_values(by=[col, "review_date"], inplace=True, ascending=False)
+        if col == "sentiment":
+            marker_color = ["green", "red"]
+            df.sort_values(by=[col, "review_date"],
+                           inplace=True, ascending=False)
+        else:
+            marker_color = ["#c09891", "orange"]
+            # if len(df[col].unique()) == 2:
+            #     marker_color = ['orange', 'blue']
+            # else:
+            #     marker_color = ['blue']
+
+        fig = px.line(
+            df,
+            x="review_date",
+            y="review_count",
+            color=col,
+            line_shape="spline",
+            height=400,
+            width=1000,
+            color_discrete_sequence=marker_color,
+            title=f"Reviews {col.title()} Over Time",
+        )
+        fig.update_traces(connectgaps=True, mode="markers+lines")
+        fig.update_layout(
+            # keep the original annotations and add a list of new annotations:
+            font_family="GothamLight",
+            font_color="#c09891",
+            title_font_family="GildaDisplay",
+            title_font_color="#c09891",
+            title_font_size=24,
+            legend_title_font_color="green",
+            hovermode="closest",
+            xaxis={"title": "Month"},
+            yaxis={"title": "Review Count"},
+        )
+        fig.update_xaxes(
+            tickfont=dict(family="GothamLight", color="crimson", size=14),
+            title_font=dict(size=20, family="GothamLight", color="crimson"),
+        )
+        fig.update_yaxes(
+            tickfont=dict(family="GothamLight", color="crimson", size=14),
+            title_font=dict(size=20, family="GothamLight", color="crimson"),
+        )
+        return fig
     else:
-        marker_color = ["#c09891", "orange"]
-        # if len(df[col].unique()) == 2:
-        #     marker_color = ['orange', 'blue']
-        # else:
-        #     marker_color = ['blue']
-
-    fig = px.line(
-        df,
-        x="review_date",
-        y="review_count",
-        color=col,
-        line_shape="spline",
-        height=400,
-        width=1000,
-        color_discrete_sequence=marker_color,
-        title=f"Reviews {col.title()} Over Time",
-    )
-    fig.update_traces(connectgaps=True, mode="markers+lines")
-    fig.update_layout(
-        # keep the original annotations and add a list of new annotations:
-        font_family="GothamLight",
-        font_color="#c09891",
-        title_font_family="GildaDisplay",
-        title_font_color="#c09891",
-        title_font_size=24,
-        legend_title_font_color="green",
-        hovermode="closest",
-        xaxis={"title": "Month"},
-        yaxis={"title": "Review Count"},
-    )
-    fig.update_xaxes(
-        tickfont=dict(family="GothamLight", color="crimson", size=14),
-        title_font=dict(size=20, family="GothamLight", color="crimson"),
-    )
-    fig.update_yaxes(
-        tickfont=dict(family="GothamLight", color="crimson", size=14),
-        title_font=dict(size=20, family="GothamLight", color="crimson"),
-    )
-    return fig
+        return None
 
 
 def create_prod_page_reviews_by_user_attribute_figure(
