@@ -156,7 +156,7 @@ def create_prod_page_review_talking_points_figure(
         )
         return fig
     else:
-        return None
+        return {}
 
 
 def create_prod_page_review_breakdown_figure(
@@ -273,7 +273,7 @@ def create_prod_page_review_timeseries_figure(
         )
         return fig
     else:
-        return None
+        return {}
 
 
 def create_prod_page_reviews_by_user_attribute_figure(
