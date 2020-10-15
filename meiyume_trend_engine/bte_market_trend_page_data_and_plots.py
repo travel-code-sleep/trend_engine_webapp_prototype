@@ -545,8 +545,7 @@ def create_product_type_new_ingredient_trend_figure(
 
 
 """ create initial figures/graphs. """
-category_trend_figure = create_category_review_trend_figure(
-    review_trend_category_df)
+category_trend_figure = create_category_review_trend_figure(review_trend_category_df)
 subcategory_trend_figure = create_product_type_review_trend_figure(
     review_trend_product_type_df
 )
