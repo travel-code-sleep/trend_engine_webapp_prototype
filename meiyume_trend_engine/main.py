@@ -57,9 +57,13 @@ external_stylesheets = [
     dbc.themes.LUX,
     "https://codepen.io/chriddyp/pen/bWLwgP.css",
 ]
+external_scripts = [
+    "https://www.googletagmanager.com/gtag/js?id=UA-180588565-1",
+]
 
 app = dash.Dash(
     __name__,
+    external_scripts=external_scripts,
     external_stylesheets=external_stylesheets,
     # these meta_tags ensure content is scaled correctly on different devices
     # see: https://www.w3schools.com/css/css_rwd_viewport.asp for more
