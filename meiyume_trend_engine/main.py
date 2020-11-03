@@ -23,6 +23,9 @@ from bte_category_page_data_and_plots import *
 from bte_ingredient_page_data_and_plots import *
 from bte_market_trend_page_data_and_plots import *
 from bte_product_page_data_and_plots import *
+from bte_product_page_data_and_plots import (
+    create_prod_page_review_timeseries_figure,
+)
 from bte_utils import read_file_s3, read_image_s3
 from settings import *
 
@@ -135,7 +138,9 @@ navbar = dbc.Navbar(
                         "More pages", header=True, style={"fontSize": "18px"}
                     ),
                     dbc.DropdownMenuItem(
-                        "Market Trends", href="/page-2", style={"fontSize": "18px"}
+                        "Market Trends",
+                        href="/page-2",
+                        style={"fontSize": "18px"},
                     ),
                     dbc.DropdownMenuItem(
                         "Develop New Products",
@@ -810,7 +815,11 @@ def market_trend_page_layout():
                     ),
                 ],
                 style=tabs_styles,
-                colors={"border": "white", "primary": "gold", "background": "cornsilk"},
+                colors={
+                    "border": "white",
+                    "primary": "gold",
+                    "background": "cornsilk",
+                },
             ),
         ],
         id="mainContainer",
@@ -867,7 +876,13 @@ def category_page_layout():
             & (cat_page_new_ingredients_df.product_type == "setting-powder-face-powder")
         ]
         .sort_values(by="adjusted_rating", ascending=False)[
-            ["brand", "product_name", "ingredient", "ingredient_type", "ban_flag"]
+            [
+                "brand",
+                "product_name",
+                "ingredient",
+                "ingredient_type",
+                "ban_flag",
+            ]
         ]
         .reset_index(drop=True)
     )
@@ -1248,7 +1263,10 @@ def category_page_layout():
                                         "if": {"column_id": "product_name"},
                                         "textAlign": "left",
                                     },
-                                    {"if": {"column_id": "brand"}, "textAlign": "left"},
+                                    {
+                                        "if": {"column_id": "brand"},
+                                        "textAlign": "left",
+                                    },
                                     {
                                         "if": {"column_id": "product_name"},
                                         "minWidth": 120,
@@ -1336,7 +1354,10 @@ def category_page_layout():
                                         "if": {"column_id": "product_name"},
                                         "textAlign": "left",
                                     },
-                                    {"if": {"column_id": "brand"}, "textAlign": "left"},
+                                    {
+                                        "if": {"column_id": "brand"},
+                                        "textAlign": "left",
+                                    },
                                     {
                                         "if": {"column_id": "product_name"},
                                         "minWidth": 120,
@@ -1539,12 +1560,18 @@ def product_page_layout():
                             ),
                             html.Div(
                                 [
-                                    html.H5("Product", style={"paddingRight": "30px"}),
+                                    html.H5(
+                                        "Product",
+                                        style={"paddingRight": "30px"},
+                                    ),
                                     dcc.Dropdown(
                                         id="prod_page_product",
                                         options=product_page_product_name_options,
                                         multi=False,
-                                        style={"fontSize": "16px", "width": "100%"},
+                                        style={
+                                            "fontSize": "16px",
+                                            "width": "100%",
+                                        },
                                         placeholder="Select Product",
                                     ),
                                 ],
@@ -1568,7 +1595,10 @@ def product_page_layout():
                                     ),
                                     dcc.Markdown(
                                         id="prod-page-output-container-date-picker-range",
-                                        style={"textAlign": "left", "fontSize": "8"},
+                                        style={
+                                            "textAlign": "left",
+                                            "fontSize": "8",
+                                        },
                                     ),
                                 ]
                             ),
@@ -2287,7 +2317,11 @@ def product_page_layout():
                     ),
                 ],
                 style=tabs_styles,
-                colors={"border": "white", "primary": "gold", "background": "cornsilk"},
+                colors={
+                    "border": "white",
+                    "primary": "gold",
+                    "background": "cornsilk",
+                },
             ),
         ],
         id="mainContainer",
@@ -2651,7 +2685,8 @@ def ingredient_page_layout():
                     dbc.Col(
                         [
                             html.H6(
-                                "New Ingredients", style={"fontFamily": "GildaDisplay"}
+                                "New Ingredients",
+                                style={"fontFamily": "GildaDisplay"},
                             ),
                             dash_table.DataTable(
                                 id="ing_page_new_ing_table",
@@ -2812,7 +2847,8 @@ def update_ing_page_banned_ing_table(
 
 
 @app.callback(
-    Output("ing_page_prod_search_table", "data"), [Input("ing_page_ing", "value")]
+    Output("ing_page_prod_search_table", "data"),
+    [Input("ing_page_ing", "value")],
 )
 def update_ing_page_product_table(ingredient: str) -> list:
     """update_ing_page_product_table [summary]
@@ -3237,8 +3273,8 @@ def update_prod_page_review_breakdown_figure(
     source: str, prod_id: str, start_date: str, end_date: str
 ) -> Tuple[go.Figure, go.Figure]:
     from bte_product_page_data_and_plots import (
-        prod_page_review_sentiment_influence_df,
         create_prod_page_review_breakdown_figure,
+        prod_page_review_sentiment_influence_df,
     )
 
     if start_date is not None:
@@ -3286,7 +3322,10 @@ def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
 
 
 @app.callback(
-    [Output("pos_review_sum", "children"), Output("neg_review_sum", "children")],
+    [
+        Output("pos_review_sum", "children"),
+        Output("neg_review_sum", "children"),
+    ],
     [
         Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
@@ -3498,7 +3537,13 @@ def filter_top_products_data_table(
             & (cat_page_new_ingredients_df.product_type == product_type)
         ]
         .sort_values(by="adjusted_rating", ascending=False)[
-            ["brand", "product_name", "ingredient", "ingredient_type", "ban_flag"]
+            [
+                "brand",
+                "product_name",
+                "ingredient",
+                "ingredient_type",
+                "ban_flag",
+            ]
         ]
         .reset_index(drop=True)
     )

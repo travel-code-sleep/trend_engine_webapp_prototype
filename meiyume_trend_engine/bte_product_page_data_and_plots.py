@@ -217,6 +217,8 @@ def create_prod_page_review_timeseries_figure(
     Returns:
         go.Figure: [description]
     """
+    if col == "is_influenced":
+        data = data[data[col] == "yes"]
     if len(data[data.prod_id == prod_id]) > 0:
         df = pd.DataFrame(
             data[data.prod_id == prod_id]
@@ -231,10 +233,6 @@ def create_prod_page_review_timeseries_figure(
             df.sort_values(by=[col, "review_date"], inplace=True, ascending=False)
         else:
             marker_color = ["#c09891", "orange"]
-            # if len(df[col].unique()) == 2:
-            #     marker_color = ['orange', 'blue']
-            # else:
-            #     marker_color = ['blue']
 
         fig = px.line(
             df,
