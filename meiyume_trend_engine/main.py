@@ -816,16 +816,11 @@ def market_trend_page_layout():
                     ),
                 ],
                 style=tabs_styles,
-                << << << < HEAD
-                colors={"border": "white", "primary": "gold",
-                        "background": "cornsilk"},
-                == == == =
                 colors={
                     "border": "white",
                     "primary": "gold",
                     "background": "cornsilk",
                 },
-                >>>>>> > 0364f15908439c97b4cd3b6e7336cb67df3e71cd
             ),
         ],
         id="mainContainer",
@@ -1271,15 +1266,10 @@ def category_page_layout():
                                         "if": {"column_id": "product_name"},
                                         "textAlign": "left",
                                     },
-                                    << << << < HEAD
-                                    {"if": {"column_id": "brand"},
-                                        "textAlign": "left"},
-                                    == == == =
                                     {
                                         "if": {"column_id": "brand"},
                                         "textAlign": "left",
                                     },
-                                    >>>>>> > 0364f15908439c97b4cd3b6e7336cb67df3e71cd
                                     {
                                         "if": {"column_id": "product_name"},
                                         "minWidth": 120,
@@ -1367,15 +1357,10 @@ def category_page_layout():
                                         "if": {"column_id": "product_name"},
                                         "textAlign": "left",
                                     },
-                                    << << << < HEAD
-                                    {"if": {"column_id": "brand"},
-                                        "textAlign": "left"},
-                                    == == == =
                                     {
                                         "if": {"column_id": "brand"},
                                         "textAlign": "left",
                                     },
-                                    >>>>>> > 0364f15908439c97b4cd3b6e7336cb67df3e71cd
                                     {
                                         "if": {"column_id": "product_name"},
                                         "minWidth": 120,
@@ -1578,28 +1563,18 @@ def product_page_layout():
                             ),
                             html.Div(
                                 [
-                                    << << << < HEAD
-                                    html.H5("Product", style={
-                                            "paddingRight": "30px"}),
-                                    == == == =
                                     html.H5(
                                         "Product",
                                         style={"paddingRight": "30px"},
                                     ),
-                                    >>>>>> > 0364f15908439c97b4cd3b6e7336cb67df3e71cd
                                     dcc.Dropdown(
                                         id="prod_page_product",
                                         options=product_page_product_name_options,
                                         multi=False,
-                                        << << << < HEAD
-                                        style={"fontSize": "16px",
-                                               "width": "100%"},
-                                        == == == =
                                         style={
                                             "fontSize": "16px",
                                             "width": "100%",
                                         },
-                                        >>>>>> > 0364f15908439c97b4cd3b6e7336cb67df3e71cd
                                         placeholder="Select Product",
                                     ),
                                 ],
@@ -1623,15 +1598,12 @@ def product_page_layout():
                                     ),
                                     dcc.Markdown(
                                         id="prod-page-output-container-date-picker-range",
-                                        << << << < HEAD
-                                        style={"textAlign": "left",
-                                               "fontSize": "8"},
-                                        == == == =
+
                                         style={
                                             "textAlign": "left",
                                             "fontSize": "8",
                                         },
-                                        >>>>>> > 0364f15908439c97b4cd3b6e7336cb67df3e71cd
+
                                     ),
                                 ]
                             ),
@@ -2353,16 +2325,11 @@ def product_page_layout():
                     ),
                 ],
                 style=tabs_styles,
-                << << << < HEAD
-                colors={"border": "white", "primary": "gold",
-                        "background": "cornsilk"},
-                == == == =
                 colors={
                     "border": "white",
                     "primary": "gold",
                     "background": "cornsilk",
                 },
-                >>>>>> > 0364f15908439c97b4cd3b6e7336cb67df3e71cd
             ),
         ],
         id="mainContainer",
@@ -2893,13 +2860,8 @@ def update_ing_page_banned_ing_table(
 
 
 @app.callback(
-    << << << < HEAD
-    Output("ing_page_prod_search_table", "data"), [
-        Input("ing_page_ing", "value")]
-    == == == =
     Output("ing_page_prod_search_table", "data"),
     [Input("ing_page_ing", "value")],
-    >>>>>> > 0364f15908439c97b4cd3b6e7336cb67df3e71cd
 )
 def update_ing_page_product_table(ingredient: str) -> list:
     """update_ing_page_product_table [summary]
@@ -2931,8 +2893,7 @@ def update_ing_page_product_table(ingredient: str) -> list:
     ],
 )
 def update_ing_page_ingredient_type_figure(
-    source: str, category: str, product_type: str
-) -> go.Figure:
+        source: str, category: str, product_type: str)-> go.Figure:
     from bte_ingredient_page_data_and_plots import (
         create_ing_page_ingredient_type_figure,
     )
@@ -2955,8 +2916,7 @@ def update_ing_page_ingredient_type_figure(
     ],
 )
 def update_ing_page_ing_analysis_text(
-    source: str, category: str, product_type: str
-) -> Tuple[str, str, str, str]:
+        source: str, category: str, product_type: str) -> Tuple[str, str, str, str]:
     """update_text [summary]
 
     [extended_summary]
@@ -3106,8 +3066,7 @@ def update_prod_page_product_variants_table(
     ],
 )
 def update_prod_page_item_price_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, prod_id: str, start_date: str, end_date: str) -> go.Figure:
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3198,8 +3157,7 @@ def display_prod_page_price_data(source: str, prod_id: str) -> Tuple[str, str, s
     ],
 )
 def update_prod_page_reviews_distribution_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
-) -> Tuple[go.Figure, go.Figure]:
+        source: str, prod_id: str, start_date: str, end_date: str) -> Tuple[go.Figure, go.Figure]:
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3231,8 +3189,7 @@ def update_prod_page_reviews_distribution_figure(
     ],
 )
 def update_prod_page_reviews_by_user_attribute_figure(
-    source: str, prod_id: str, user_attribute: str
-) -> go.Figure:
+        source: str, prod_id: str, user_attribute: str) -> go.Figure:
     """update_prod_page_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
@@ -3288,8 +3245,7 @@ def date_selection_text(start_date: str, end_date: str) -> str:
     ],
 )
 def update_prod_page_review_timeseries_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
-) -> Tuple[go.Figure, go.Figure]:
+        source: str, prod_id: str, start_date: str, end_date: str) -> Tuple[go.Figure, go.Figure]:
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3327,8 +3283,7 @@ def update_prod_page_review_timeseries_figure(
     ],
 )
 def update_prod_page_review_breakdown_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
-) -> Tuple[go.Figure, go.Figure]:
+        source: str, prod_id: str, start_date: str, end_date: str) -> Tuple[go.Figure, go.Figure]:
     from bte_product_page_data_and_plots import (
         create_prod_page_review_breakdown_figure,
         prod_page_review_sentiment_influence_df,
@@ -3381,15 +3336,10 @@ def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
 
 
 @app.callback(
-    << << << < HEAD
-    [Output("pos_review_sum", "children"),
-     Output("neg_review_sum", "children")],
-    == == == =
     [
         Output("pos_review_sum", "children"),
         Output("neg_review_sum", "children"),
     ],
-    >>>>>> > 0364f15908439c97b4cd3b6e7336cb67df3e71cd
     [
         Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
@@ -3454,8 +3404,7 @@ def update_prod_page_img_src(source: str, prod_id: str):
     ],
 )
 def display_product_data_in_card(
-    source: str, prod_id: str, start_date: str, end_date: str
-):
+        source: str, prod_id: str, start_date: str, end_date: str):
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3521,12 +3470,14 @@ def display_product_page_category(source: str, prod_id: str):
         Input("prod_page_source", "value")]
 )
 def set_product_page_product_options(source: str):
-    return [
-        {"label": i[0], "value": i[1]}
-        for i in prod_page_metadetail_data_df[["product_name", "prod_id"]][
-            prod_page_metadetail_data_df.source == source
-        ].values.tolist()
-    ]
+    return sorted(
+        [
+            {"label": i[0], "value": i[1]}
+            for i in prod_page_metadetail_data_df[["product_name", "prod_id"]][
+                prod_page_metadetail_data_df.source == source
+            ].values.tolist()
+        ],  key=lambda k: k['label']
+    )
 
 
 @app.callback(
@@ -3550,8 +3501,7 @@ def set_product_page_product_value(source, available_options):
     ],
 )
 def update_reviews_by_user_attribute_figure(
-    source: str, category: str, product_type: str, user_attribute: str
-) -> go.Figure:
+        source: str, category: str, product_type: str, user_attribute: str) -> go.Figure:
     """update_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
@@ -4553,5 +4503,5 @@ def render_page_content(pathname):
 
 
 if __name__ == "__main__":
-    app.run_server()
-    # app.run_server(debug=True)
+    # app.run_server()
+    app.run_server(debug=True)

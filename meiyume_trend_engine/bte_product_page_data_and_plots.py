@@ -19,6 +19,8 @@ Read all the data from flat files.
 prod_page_metadetail_data_df = read_file_s3(
     filename="product_page_metadetail_data", file_type="feather"
 )
+prod_page_metadetail_data_df.product_name = \
+    prod_page_metadetail_data_df.product_name.str.replace('"', '')
 # pd.read_feather(
 #     dash_data_path/'product_page_metadetail_data')
 # review summary data

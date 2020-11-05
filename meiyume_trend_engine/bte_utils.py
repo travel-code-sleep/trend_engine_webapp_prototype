@@ -36,11 +36,11 @@ def get_s3_client(region: str, access_key_id: str, secret_access_key: str):
 
 
 def read_file_s3(
-    filename: str,
-    prefix: str = f"{S3_PREFIX}/WebAppData",
-    bucket: str = S3_BUCKET,
-    file_type: str = "feather",
-) -> pd.DataFrame:
+        filename: str,
+        # ,
+        prefix: str = f"{S3_PREFIX}/WebAppData",
+        bucket: str = S3_BUCKET,
+        file_type: str = "feather") -> pd.DataFrame:
     """read_file_s3 [summary]
 
     [extended_summary]
@@ -65,8 +65,8 @@ def read_file_s3(
 
 
 def read_image_s3(
-    prod_id: str, prefix: str = f"{S3_PREFIX}/Image/Staging", bucket: str = S3_BUCKET
-) -> str:
+        prod_id: str, prefix: str = f"{S3_PREFIX}/Image/Staging",
+        bucket: str = S3_BUCKET) -> str:
     """read_image_s3 [summary]
 
     [extended_summary]

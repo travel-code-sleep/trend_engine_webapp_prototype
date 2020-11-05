@@ -35,13 +35,13 @@ cat_page_new_products_count_df = read_file_s3(
 cat_page_new_products_details_df = read_file_s3(
     filename="category_page_new_products_details", file_type="feather"
 )
-renaming_cat_page_new_products_details_df_columns = {
-    "product_name": PRODUCT_DESCRIPTION,
-    "adjusted_rating": PRODUCT_RATING_ADJUSTED,
-    "first_review_date": DATE_FIRST_REVIEWED,
-    "small_size_price": PRICE_LOW,
-    "big_size_price": PRICE_HIGH,
-}
+# renaming_cat_page_new_products_details_df_columns = {
+#     "product_name": PRODUCT_DESCRIPTION,
+#     "adjusted_rating": PRODUCT_RATING_ADJUSTED,
+#     "first_review_date": DATE_FIRST_REVIEWED,
+#     "small_size_price": PRICE_LOW,
+#     "big_size_price": PRICE_HIGH,
+# }
 # cat_page_new_products_details_df.rename(
 #     columns=renaming_cat_page_new_products_details_df_columns, inplace=True
 # )
@@ -76,13 +76,13 @@ renaming_cat_page_item_package_oz_df_columns = {
 cat_page_top_products_df = read_file_s3(
     filename="category_page_top_products", file_type="feather"
 )
-renaming_cat_page_top_products_df_columns = {
-    "product_name": PRODUCT_DESCRIPTION,
-    "adjusted_rating": PRODUCT_RATING_ADJUSTED,
-    "first_review_date": DATE_FIRST_REVIEWED,
-    "small_size_price": PRICE_LOW,
-    "big_size_price": PRICE_HIGH,
-}
+# renaming_cat_page_top_products_df_columns = {
+#     "product_name": PRODUCT_DESCRIPTION,
+#     "adjusted_rating": PRODUCT_RATING_ADJUSTED,
+#     "first_review_date": DATE_FIRST_REVIEWED,
+#     "small_size_price": PRICE_LOW,
+#     "big_size_price": PRICE_HIGH,
+# }
 # cat_page_top_products_df.rename(
 #     columns=renaming_cat_page_top_products_df_columns, inplace=True
 # )
@@ -92,12 +92,12 @@ renaming_cat_page_top_products_df_columns = {
 cat_page_new_ingredients_df = read_file_s3(
     filename="category_page_new_ingredients", file_type="feather"
 )
-renaming_cat_page_new_ingredients_df_columns = {
-    "product_name": PRODUCT_DESCRIPTION,
-    "ingredient_type": INGREDIENT_TYPE,
-    "adjusted_rating": PRODUCT_RATING_ADJUSTED,
-    "ban_flag": BANNED,
-}
+# renaming_cat_page_new_ingredients_df_columns = {
+#     "product_name": PRODUCT_DESCRIPTION,
+#     "ingredient_type": INGREDIENT_TYPE,
+#     "adjusted_rating": PRODUCT_RATING_ADJUSTED,
+#     "ban_flag": BANNED,
+# }
 # cat_page_new_ingredients_df.rename(
 #     columns=renaming_cat_page_new_ingredients_df_columns, inplace=True
 # )
