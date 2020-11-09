@@ -17,7 +17,8 @@ Read all the data from flat files.
 """
 # ingredient data
 # prod_page_ing_df = pd.read_feather(dash_data_path/'prod_page_ing_data')
-ing_page_ing_df = read_file_s3(filename="ing_page_ing_data", file_type="feather")
+ing_page_ing_df = read_file_s3(
+    filename="ing_page_ing_data", file_type="feather")
 # pd.read_feather(dash_data_path/'ing_page_ing_data')
 
 """ create dropdown options """
@@ -30,16 +31,17 @@ ing_page_category_options = [
 ing_page_product_type_options = [
     {"label": i, "value": i} for i in ing_page_ing_df.product_type.unique()
 ]
-ing_page_ingredient_options = [
-    {"label": i, "value": i} for i in ing_page_ing_df.ingredient.unique()
-]
+ing_page_ingredient_options = sorted(
+    [
+        {"label": i, "value": i} for i in ing_page_ing_df.ingredient.unique()
+    ], key=lambda k: k['label']
+)
 
 """ create graph figure functions"""
 
 
 def create_ing_page_ingredient_type_figure(
-    source: str, category: str, product_type: str
-) -> go.Figure:
+        source: str, category: str, product_type: str) -> go.Figure:
     """create_ing_page_ingredient_type_figure [summary]
 
     [extended_summary]

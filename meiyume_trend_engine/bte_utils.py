@@ -37,8 +37,8 @@ def get_s3_client(region: str, access_key_id: str, secret_access_key: str):
 
 def read_file_s3(
     filename: str,
-    # ,
-    prefix: str = f"{S3_PREFIX}/WebAppData",
+    # f"{S3_PREFIX}/WebAppData",
+    prefix: str = "Feeds/BeautyTrendEngine/WebAppDevelopmentData/Test",
     bucket: str = S3_BUCKET,
     file_type: str = "feather",
 ) -> pd.DataFrame:
@@ -66,7 +66,9 @@ def read_file_s3(
 
 
 def read_image_s3(
-    prod_id: str, prefix: str = f"{S3_PREFIX}/Image/Staging", bucket: str = S3_BUCKET
+    prod_id: str,
+    prefix: str = f"{S3_PREFIX}/Image/Staging",
+    bucket: str = S3_BUCKET,
 ) -> str:
     """read_image_s3 [summary]
 
@@ -99,15 +101,15 @@ def read_image_s3(
 
 def set_default_start_and_end_dates():
     three_yrs_ago = dt.now() - relativedelta(years=3)
-    default_start_date = str(pd.to_datetime(three_yrs_ago.strftime("%m/%d/%Y")))[
-        :10
-    ].split("-")
+    default_start_date = str(
+        pd.to_datetime(three_yrs_ago.strftime("%m/%d/%Y"))
+    )[:10].split("-")
     default_start_date[-1] = "01"
     default_start_date = ("-").join(default_start_date)
 
-    default_end_date = str(pd.to_datetime(dt.today().strftime("%m/%d/%Y")))[:10].split(
-        "-"
-    )
+    default_end_date = str(pd.to_datetime(dt.today().strftime("%m/%d/%Y")))[
+        :10
+    ].split("-")
     default_end_date[-1] = "01"
     default_end_date = ("-").join(default_end_date)
     return default_start_date, default_end_date
