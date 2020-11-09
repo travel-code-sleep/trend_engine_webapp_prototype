@@ -633,7 +633,7 @@ def market_trend_page_layout():
                                         },
                                     ),
                                     html.H4(
-                                        "Click on the line of the figure below to visualize trend at subcategory level for selected category",
+                                        "Click on the line of a category to visualize trends of subcategories under it",
                                         style={
                                             "fontFamily": "GildaDisplay",
                                         },
@@ -687,7 +687,7 @@ def market_trend_page_layout():
                                         },
                                     ),
                                     html.H4(
-                                        "Click on the line of figure below to visualize trend at subcategory level for selected category",
+                                        "Click on the line of a category to visualize trends of subcategories under it",
                                         style={
                                             "fontFamily": "GildaDisplay",
                                         },
@@ -4051,7 +4051,7 @@ def influenced_display_click_data(clickData) -> str:
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
     else:
-        return "Click on the line of figure in the above graphs"
+        return ""
 
 
 @app.callback(
@@ -4074,7 +4074,7 @@ def display_click_data(clickData) -> str:
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
     else:
-        return "Click on the line of figure in the above graphs"
+        return ""
 
 
 @app.callback(
