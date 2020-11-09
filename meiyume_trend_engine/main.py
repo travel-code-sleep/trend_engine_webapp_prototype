@@ -2394,6 +2394,14 @@ def ingredient_page_layout():
                         [
                             dbc.Col(
                                 [
+                                ]
+                            )
+                        ]
+                    ),
+                    dbc.Row(
+                        [
+                            dbc.Col(
+                                [
                                     dash_table.DataTable(
                                         id="ing_page_prod_search_table",
                                         columns=[
@@ -2793,8 +2801,7 @@ def mark_digit(d):
     ],
 )
 def update_ing_page_new_ing_table(
-    source: str, category: str, product_type: str
-) -> list:
+        source: str, category: str, product_type: str) -> list:
     """update_ing_page_new_ing_table [summary]
 
     [extended_summary]
@@ -2832,8 +2839,7 @@ def update_ing_page_new_ing_table(
     ],
 )
 def update_ing_page_banned_ing_table(
-    source: str, category: str, product_type: str
-) -> list:
+        source: str, category: str, product_type: str) -> list:
     """update_ing_page_banned_ing_table [summary]
 
     [extended_summary]
