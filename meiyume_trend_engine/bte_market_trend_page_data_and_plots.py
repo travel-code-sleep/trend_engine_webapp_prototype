@@ -152,6 +152,9 @@ def create_category_review_trend_figure(
     fig.update_yaxes(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
         title_font=dict(size=20, family="GothamLight", color="crimson"),
+        matches=None,
+        visible=True,
+        showticklabels=True,
     )
     fig.update_layout(showlegend=False)
     return fig
@@ -233,6 +236,9 @@ def create_product_type_review_trend_figure(
     fig.update_yaxes(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
         title_font=dict(size=20, family="GothamLight", color="crimson"),
+        showticklabels=True,
+        visible=True,
+        matches=None,
     )
     fig.update_layout(showlegend=False)
 
@@ -406,7 +412,10 @@ def create_product_launch_intensity_figure(
         legend_title_font_color="green",
         hovermode="closest",
         xaxis={"title": "Month"},
-        yaxis={"title": "New Products Percentage within Category", "scaleratio": 1},
+        yaxis={
+            "title": "New Products Percentage within Category",
+            "scaleratio": 1,
+        },
     )
     fig.update_xaxes(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
