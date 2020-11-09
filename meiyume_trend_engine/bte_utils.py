@@ -97,6 +97,13 @@ def read_image_s3(
 
 
 def set_default_start_and_end_dates():
+    """set_default_start_and_end_dates [summary]
+
+    [extended_summary]
+
+    Returns:
+        [type]: [description]
+    """
     three_yrs_ago = dt.now() - relativedelta(years=3)
     default_start_date = str(pd.to_datetime(three_yrs_ago.strftime("%m/%d/%Y")))[
         :10
