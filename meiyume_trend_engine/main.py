@@ -56,6 +56,7 @@ logo_url = f"https://{S3_BUCKET}.s3-{S3_REGION}.amazonaws.com/{S3_PREFIX}/static
 external_stylesheets = [
     dbc.themes.LUX,
     "https://codepen.io/chriddyp/pen/bWLwgP.css",
+    "https://use.fontawesome.com/releases/v5.10.2/css/all.css",
 ]
 external_scripts = [
     "https://www.googletagmanager.com/gtag/js?id=UA-180588565-1",
@@ -613,7 +614,6 @@ def market_trend_page_layout():
                                             "fontFamily": "GildaDisplay",
                                         },
                                     ),
-                                    # html.Hr(),
                                     html.Div(
                                         [
                                             dcc.Graph(
@@ -625,11 +625,26 @@ def market_trend_page_layout():
                                     ),
                                     html.Div(
                                         [
-                                            html.H3(
-                                                "Review Subcategory Trend",
+                                            html.Div(
+                                                [
+                                                    html.H3(
+                                                        "Review Subcategory Trend",
+                                                        style={
+                                                            "fontFamily": "GildaDisplay",
+                                                        },
+                                                    ),
+                                                    html.I(
+                                                        className="fas fa-question-circle fa-lg",
+                                                        id="catgory_target",
+                                                    ),
+                                                    dbc.Tooltip(
+                                                        "Click the figure in the Category graphs area above to select the subcategory",
+                                                        target="category_target",
+                                                    ),
+                                                ],
                                                 style={
-                                                    "paddingRight": "30px",
-                                                    "fontFamily": "GildaDisplay",
+                                                    "display": "flex",
+                                                    "flexDirection": "row",
                                                 },
                                             ),
                                             html.Div(
@@ -639,7 +654,6 @@ def market_trend_page_layout():
                                                     "fontFamily": "GothamLight",
                                                 },
                                             ),
-                                            # html.Hr(),
                                             dcc.Graph(
                                                 id="subcategory_trend",
                                             ),
@@ -3968,7 +3982,7 @@ def display_click_data(clickData) -> str:
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
     else:
-        return ""
+        return "CLick the figure in the above graphs to select the sub category."
 
 
 @app.callback(

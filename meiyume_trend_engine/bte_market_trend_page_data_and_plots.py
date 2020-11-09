@@ -236,6 +236,9 @@ def create_product_type_review_trend_figure(
     fig.update_yaxes(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
         title_font=dict(size=20, family="GothamLight", color="crimson"),
+        showticklabels=True,
+        visible=True,
+        matches=None,
     )
     fig.update_layout(showlegend=False)
 
