@@ -19,6 +19,8 @@ Read all the data from flat files.
 # prod_page_ing_df = pd.read_feather(dash_data_path/'prod_page_ing_data')
 ing_page_ing_df = read_file_s3(
     filename="ing_page_ing_data", file_type="feather")
+ing_page_ing_df.category = ing_page_ing_df.category.astype(str)
+
 # pd.read_feather(dash_data_path/'ing_page_ing_data')
 
 """ create dropdown options """
@@ -31,11 +33,9 @@ ing_page_category_options = [
 ing_page_product_type_options = [
     {"label": i, "value": i} for i in ing_page_ing_df.product_type.unique()
 ]
-ing_page_ingredient_options = sorted(
-    [
-        {"label": i, "value": i} for i in ing_page_ing_df.ingredient.unique()
-    ], key=lambda k: k['label']
-)
+ing_page_ingredient_options = [
+    {"label": i, "value": i} for i in ing_page_ing_df.ingredient.unique()
+]
 
 """ create graph figure functions"""
 
@@ -86,6 +86,53 @@ def create_ing_page_ingredient_type_figure(
         #         hovermode='closest',
         xaxis={"title": "Count", "categoryorder": "category descending"},
         yaxis={"title": "Ingredeint Type"},
+    )
+    fig.update_xaxes(
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
+    )
+    fig.update_yaxes(
+        tickfont=dict(family="GothamLight", color="crimson", size=14),
+        title_font=dict(size=20, family="GothamLight", color="crimson"),
+    )
+    return fig
+
+
+def create_ing_page_category_count_figure(data: pd.DataFrame, group: str,
+                                          ingredient: str) -> go.Figure:
+    """create_ing_page_ingredient_type_figure [summary]
+
+    [extended_summary]
+
+    Args:
+        source (str): [description]
+        category (str): [description]
+        product_type (str): [description]
+
+    Returns:
+        go.Figure: [description]
+    """
+    fig = px.bar(
+        data,
+        x="product_count",
+        y=group,
+        width=750,
+        height=350,
+        orientation="h",
+        title=f'Products Containing "{ingredient.title()}" by {group.replace("_", " ").title()}',
+        hover_data=[group],
+        hover_name=group,
+    )
+    fig.update_layout(
+        font_family="GothamLight",
+        font_color="#c09891",
+        title_font_family="GildaDisplay",
+        title_font_color="#c09891",
+        title_font_size=24,
+        legend_title_font_color="green",
+        hovermode='closest',
+        xaxis={"title": "Product Count"},
+        yaxis={"title": group.title(), 'categoryorder': 'total ascending'},
     )
     fig.update_xaxes(
         tickfont=dict(family="GothamLight", color="crimson", size=14),

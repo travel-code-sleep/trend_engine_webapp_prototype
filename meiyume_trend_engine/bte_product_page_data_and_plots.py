@@ -49,14 +49,16 @@ prod_page_reviews_attribute_df = read_file_s3(
 # pd.read_feather(
 #     dash_data_path/'prod_page_reviews_attribute')
 # item data
-prod_page_item_df = read_file_s3(filename="prod_page_item_data", file_type="feather")
+prod_page_item_df = read_file_s3(
+    filename="prod_page_item_data", file_type="feather")
 # pd.read_feather(dash_data_path/'prod_page_item_data')
 prod_page_item_price_df = prod_page_item_df[
     ["prod_id", "item_size", "meta_date", "item_price"]
 ].drop_duplicates(subset=["prod_id", "meta_date", "item_size"])
 prod_page_item_price_df.reset_index(inplace=True, drop=True)
 # ingredient data
-prod_page_ing_df = read_file_s3(filename="prod_page_ing_data", file_type="feather")
+prod_page_ing_df = read_file_s3(
+    filename="prod_page_ing_data", file_type="feather")
 # pd.read_feather(dash_data_path/'prod_page_ing_data')
 
 """ create dropdown options """
@@ -94,8 +96,7 @@ prod_page_user_attribute_options = sorted(
 
 
 def create_prod_page_review_talking_points_figure(
-    data: pd.DataFrame, prod_id: str, col: str
-) -> go.Figure:
+        data: pd.DataFrame, prod_id: str, col: str) -> go.Figure:
     """create_prod_page_review_talking_points_figure [summary]
 
     [extended_summary]
@@ -134,8 +135,8 @@ def create_prod_page_review_talking_points_figure(
             y="keyphrase",
             orientation="h",
             title=title,
-            width=750,
-            height=500,
+            width=1000,
+            height=600,
         )
         fig.update_traces(
             marker_color=marker_color,
@@ -157,11 +158,11 @@ def create_prod_page_review_talking_points_figure(
             margin=go.layout.Margin(l=200),
         )
         fig.update_xaxes(
-            tickfont=dict(family="GothamLight", color="crimson", size=14),
+            tickfont=dict(family="GothamLight", color="crimson", size=12.5),
             title_font=dict(size=20, family="GothamLight", color="crimson"),
         )
         fig.update_yaxes(
-            tickfont=dict(family="GothamLight", color="crimson", size=14),
+            tickfont=dict(family="GothamLight", color="crimson", size=12.5),
             title_font=dict(size=20, family="GothamLight", color="crimson"),
         )
         return fig
@@ -170,8 +171,7 @@ def create_prod_page_review_talking_points_figure(
 
 
 def create_prod_page_review_breakdown_figure(
-    data: pd.DataFrame, prod_id: str, col: str
-) -> go.Figure:
+        data: pd.DataFrame, prod_id: str, col: str) -> go.Figure:
     """create_prod_page_review_breakdown_figure [summary]
 
     [extended_summary]
@@ -184,7 +184,8 @@ def create_prod_page_review_breakdown_figure(
     Returns:
         go.Figure: [description]
     """
-    df = pd.DataFrame(data[col][data.prod_id == prod_id].value_counts()).reset_index()
+    df = pd.DataFrame(
+        data[col][data.prod_id == prod_id].value_counts()).reset_index()
     df.columns = [col, "review_count"]
     df.sort_values(by=[col], inplace=True, ascending=False)
 
@@ -200,7 +201,7 @@ def create_prod_page_review_breakdown_figure(
         hole=0.4,
         height=400,
         width=400,
-        title=f"Review {col.title()} Breakdown",
+        title=f'Review {col.replace("_", " ").title()} Breakdown',
     )
     fig.update_layout(
         font_family="GothamLight",
@@ -242,7 +243,8 @@ def create_prod_page_review_timeseries_figure(
 
         if col == "sentiment":
             marker_color = ["green", "red"]
-            df.sort_values(by=[col, "review_date"], inplace=True, ascending=False)
+            df.sort_values(by=[col, "review_date"],
+                           inplace=True, ascending=False)
         else:
             marker_color = ["#c09891", "orange"]
 

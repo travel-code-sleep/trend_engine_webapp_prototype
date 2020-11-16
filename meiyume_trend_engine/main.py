@@ -872,6 +872,7 @@ def category_page_layout():
             "product_name",
             "adjusted_rating",
             "first_review_date",
+            "reviews",
             "positive_reviews",
             "negative_reviews",
         ]
@@ -890,9 +891,9 @@ def category_page_layout():
             "product_name",
             "adjusted_rating",
             "first_review_date",
+            "reviews",
             "positive_reviews",
             "negative_reviews",
-            "reviews",
         ]
     ][
         (cat_page_new_products_details_df.source == "us")
@@ -2420,7 +2421,6 @@ def ingredient_page_layout():
                                 id="ing_page_ing",
                                 options=ing_page_ingredient_options,
                                 multi=False,
-                                value="us",
                                 style={"fontSize": 14},
                                 placeholder="Select Ingredient",
                                 clearable=False,
@@ -2429,7 +2429,22 @@ def ingredient_page_layout():
                         style={"width": "60%"},
                         className="pretty_container",
                     ),
-                    dbc.Row([dbc.Col([])]),
+                    dbc.Row(
+                        [
+                            dbc.Col(
+                                [
+                                    dcc.Graph(id='ing_page_ing_cat_presence')
+                                ]
+                            ),
+                            dbc.Col(
+                                [
+                                    dcc.Graph(
+                                        id='ing_page_ing_subcat_presence')
+                                ]
+                            )
+                        ],
+                        className="pretty_container"
+                    ),
                     dbc.Row(
                         [
                             dbc.Col(
@@ -2828,7 +2843,30 @@ def mark_digit(d):
     return format(d, ",d")
 
 
-# Ingrediet Page Callbacks
+# Ingredient Page Callbacks
+@app.callback(Output("ing_page_ing_cat_presence", 'figure'),
+              [Input("ing_page_ing", "value")])
+def update_ing_page_category_count_figure(ingredient: str):
+    """update_ing_page_category_count_figure [summary]
+
+    [extended_summary]
+
+    Args:
+        ingredient (str): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    data = (ing_page_ing_df[["product_name", 'category']][
+        ing_page_ing_df.ingredient == ingredient
+    ].groupby(by=['category']).product_name.size().reset_index())
+    data.columns = ['category', "product_count"]
+    data.category = data.category.astype(str)
+
+    fig = create_ing_page_category_count_figure(
+        data, 'category', ingredient)
+
+    return fig
 
 
 @app.callback(
@@ -2840,8 +2878,7 @@ def mark_digit(d):
     ],
 )
 def update_ing_page_new_ing_table(
-    source: str, category: str, product_type: str
-) -> list:
+        source: str, category: str, product_type: str) -> list:
     """update_ing_page_new_ing_table [summary]
 
     [extended_summary]
@@ -2879,8 +2916,7 @@ def update_ing_page_new_ing_table(
     ],
 )
 def update_ing_page_banned_ing_table(
-    source: str, category: str, product_type: str
-) -> list:
+        source: str, category: str, product_type: str) -> list:
     """update_ing_page_banned_ing_table [summary]
 
     [extended_summary]
@@ -2943,13 +2979,13 @@ def update_ing_page_product_table(ingredient: str) -> list:
     ],
 )
 def update_ing_page_ingredient_type_figure(
-    source: str, category: str, product_type: str
-) -> go.Figure:
+        source: str, category: str, product_type: str) -> go.Figure:
     from bte_ingredient_page_data_and_plots import (
         create_ing_page_ingredient_type_figure,
     )
 
-    fig = create_ing_page_ingredient_type_figure(source, category, product_type)
+    fig = create_ing_page_ingredient_type_figure(
+        source, category, product_type)
     return fig
 
 
@@ -2966,8 +3002,7 @@ def update_ing_page_ingredient_type_figure(
     ],
 )
 def update_ing_page_ing_analysis_text(
-    source: str, category: str, product_type: str
-) -> Tuple[str, str, str, str]:
+        source: str, category: str, product_type: str) -> Tuple[str, str, str, str]:
     """update_text [summary]
 
     [extended_summary]
@@ -3038,8 +3073,7 @@ def set_ing_page_product_type_value(source, category, available_options):
     ],
 )
 def update_prod_page_product_ingredients_table(
-    source: str, prod_id: str
-) -> list:
+        source: str, prod_id: str) -> list:
     """update_prod_page_product_ingredients_table [summary]
 
     [extended_summary]
@@ -3070,8 +3104,7 @@ def update_prod_page_product_ingredients_table(
     ],
 )
 def update_prod_page_product_variants_table(
-    source: str, prod_id: str, start_date: str, end_date: str
-) -> list:
+        source: str, prod_id: str, start_date: str, end_date: str) -> list:
     """update_prod_page_product_variants_table [summary]
 
     [extended_summary]
@@ -3121,8 +3154,7 @@ def update_prod_page_product_variants_table(
     ],
 )
 def update_prod_page_item_price_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, prod_id: str, start_date: str, end_date: str) -> go.Figure:
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3160,8 +3192,7 @@ def update_prod_page_item_price_figure(
     ],
 )
 def display_prod_page_price_data(
-    source: str, prod_id: str
-) -> Tuple[str, str, str]:
+        source: str, prod_id: str) -> Tuple[str, str, str]:
     """display_prod_page_price_data [summary]
 
     [extended_summary]
@@ -3215,8 +3246,7 @@ def display_prod_page_price_data(
     ],
 )
 def update_prod_page_reviews_distribution_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
-) -> Tuple[go.Figure, go.Figure]:
+        source: str, prod_id: str, start_date: str, end_date: str) -> Tuple[go.Figure, go.Figure]:
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3255,8 +3285,7 @@ def update_prod_page_reviews_distribution_figure(
     ],
 )
 def update_prod_page_reviews_by_user_attribute_figure(
-    source: str, prod_id: str, user_attribute: str
-) -> go.Figure:
+        source: str, prod_id: str, user_attribute: str) -> go.Figure:
     """update_prod_page_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
@@ -3312,8 +3341,7 @@ def date_selection_text(start_date: str, end_date: str) -> str:
     ],
 )
 def update_prod_page_review_timeseries_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
-) -> Tuple[go.Figure, go.Figure]:
+        source: str, prod_id: str, start_date: str, end_date: str) -> Tuple[go.Figure, go.Figure]:
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3359,8 +3387,7 @@ def update_prod_page_review_timeseries_figure(
     ],
 )
 def update_prod_page_review_breakdown_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
-) -> Tuple[go.Figure, go.Figure]:
+        source: str, prod_id: str, start_date: str, end_date: str) -> Tuple[go.Figure, go.Figure]:
     from bte_product_page_data_and_plots import (
         create_prod_page_review_breakdown_figure,
         prod_page_review_sentiment_influence_df,
@@ -3489,8 +3516,7 @@ def update_prod_page_img_src(source: str, prod_id: str):
     ],
 )
 def display_product_data_in_card(
-    source: str, prod_id: str, start_date: str, end_date: str
-):
+        source: str, prod_id: str, start_date: str, end_date: str):
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3558,7 +3584,8 @@ def display_product_page_category(source: str, prod_id: str):
 
 
 @app.callback(
-    Output("prod_page_product", "options"), [Input("prod_page_source", "value")]
+    Output("prod_page_product", "options"), [
+        Input("prod_page_source", "value")]
 )
 def set_product_page_product_options(source: str):
     return sorted(
@@ -3574,7 +3601,8 @@ def set_product_page_product_options(source: str):
 
 @app.callback(
     Output("prod_page_product", "value"),
-    [Input("prod_page_source", "value"), Input("prod_page_product", "options")],
+    [Input("prod_page_source", "value"), Input(
+        "prod_page_product", "options")],
 )
 def set_product_page_product_value(source, available_options):
     return available_options[10]["value"]
@@ -3593,8 +3621,7 @@ def set_product_page_product_value(source, available_options):
     ],
 )
 def update_reviews_by_user_attribute_figure(
-    source: str, category: str, product_type: str, user_attribute: str
-) -> go.Figure:
+        source: str, category: str, product_type: str, user_attribute: str) -> go.Figure:
     """update_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
@@ -3627,8 +3654,7 @@ def update_reviews_by_user_attribute_figure(
     ],
 )
 def filter_new_ingredients_data_table(
-    source: str, category: str, product_type: str
-) -> pd.DataFrame:
+        source: str, category: str, product_type: str) -> pd.DataFrame:
     """filter_new_ingredients_data_table [summary]
 
     [extended_summary]
@@ -3671,8 +3697,7 @@ def filter_new_ingredients_data_table(
     ],
 )
 def filter_new_products_data_table(
-    source: str, category: str, product_type: str
-) -> pd.DataFrame:
+        source: str, category: str, product_type: str) -> pd.DataFrame:
     """filter_new_products_data_table [summary]
 
     [extended_summary]
@@ -3691,9 +3716,9 @@ def filter_new_products_data_table(
             "product_name",
             "adjusted_rating",
             "first_review_date",
+            "reviews",
             "positive_reviews",
             "negative_reviews",
-            "reviews",
         ]
     ][
         (cat_page_new_products_details_df.source == source)
@@ -3717,8 +3742,7 @@ def filter_new_products_data_table(
     ],
 )
 def filter_top_products_data_table(
-    source: str, category: str, product_type: str
-) -> pd.DataFrame:
+        source: str, category: str, product_type: str) -> pd.DataFrame:
     """filter_product_packaging_data_table [summary]
 
     [extended_summary]
@@ -3737,6 +3761,7 @@ def filter_top_products_data_table(
             "product_name",
             "adjusted_rating",
             "first_review_date",
+            "reviews",
             "positive_reviews",
             "negative_reviews",
         ]
@@ -3762,8 +3787,7 @@ def filter_top_products_data_table(
     ],
 )
 def filter_product_packaging_data_table(
-    source: str, category: str, product_type: str
-) -> pd.DataFrame:
+        source: str, category: str, product_type: str) -> pd.DataFrame:
     """filter_product_packaging_data_table [summary]
 
     [extended_summary]
@@ -3831,8 +3855,7 @@ def set_category_page_product_type_value(source, category, available_options):
     ],
 )
 def update_product_analysis_text(
-    source: str, category: str, product_type: str
-) -> Tuple[str, str, str, str]:
+        source: str, category: str, product_type: str) -> Tuple[str, str, str, str]:
     """update_text [summary]
 
     [extended_summary]
@@ -3889,8 +3912,7 @@ def update_product_analysis_text(
     ],
 )
 def update_pricing_analysis_text(
-    source: str, category: str, product_type: str
-) -> Tuple[str, str, str, str]:
+        source: str, category: str, product_type: str) -> Tuple[str, str, str, str]:
     """update_text [summary]
 
     [extended_summary]
@@ -3944,8 +3966,7 @@ def update_pricing_analysis_text(
     ],
 )
 def update_category_review_trend_figure(
-    source: str, category: list, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_category_review_trend_figure [summary]
 
     [extended_summary]
@@ -3993,8 +4014,7 @@ def update_category_review_trend_figure(
     ],
 )
 def update_category_influenced_review_trend_figure(
-    source: str, category: list, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_category_influenced_review_trend_figure [summary]
 
     [extended_summary]
@@ -4087,8 +4107,7 @@ def display_click_data(clickData) -> str:
     ],
 )
 def update_product_type_review_trend_figure(
-    source: str, clickData, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, clickData, start_date: str, end_date: str) -> go.Figure:
     """update_product_type_review_trend_figure [summary]
 
     [extended_summary]
@@ -4160,8 +4179,7 @@ def update_product_type_review_trend_figure(
     ],
 )
 def update_product_type_influenced_review_trend_figure(
-    source: str, clickData, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, clickData, start_date: str, end_date: str) -> go.Figure:
     """update_product_type_influenced_review_trend_figure
 
     [extended_summary]
@@ -4255,8 +4273,7 @@ def date_selection_text(start_date: str, end_date: str) -> str:
     ],
 )
 def update_category_product_launch_figure(
-    source: str, category: list, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_category_product_launch_figure [summary]
 
     [extended_summary]
@@ -4326,8 +4343,7 @@ def display_click_data_product_trend(clickData) -> str:
     ],
 )
 def update_product_type_product_launch_figure(
-    source: str, clickData, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, clickData, start_date: str, end_date: str) -> go.Figure:
     """update_product_type_product_launch_figure [summary]
 
     [extended_summary]
@@ -4379,8 +4395,7 @@ def update_product_type_product_launch_figure(
     ],
 )
 def update_product_launch_intensity_figure(
-    source: str, category: list, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_product_launch_intensity_figure [summary]
 
     [extended_summary]
@@ -4427,8 +4442,7 @@ def update_product_launch_intensity_figure(
     ],
 )
 def update_category_new_ingredient_trend_figure(
-    source: str, category: list, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, category: list, start_date: str, end_date: str) -> go.Figure:
     """update_category_new_ingredient_trend_figure [summary]
 
     [extended_summary]
@@ -4498,8 +4512,7 @@ def display_click_data_ingredient_trend(clickData) -> str:
     ],
 )
 def update_product_type_new_ingredient_trend_figure(
-    source: str, clickData, start_date: str, end_date: str
-) -> go.Figure:
+        source: str, clickData, start_date: str, end_date: str) -> go.Figure:
     """update_product_type_new_ingredient_trend_figure [summary]
 
     [extended_summary]
