@@ -112,10 +112,12 @@ cat_page_reviews_by_user_attributes_df = read_file_s3(
 
 """ create dropdown options """
 category_page_category_options = [
-    {"label": i, "value": i} for i in cat_page_pricing_analytics_df.category.unique()
+    {"label": i, "value": i}
+    for i in cat_page_pricing_analytics_df.category.unique()
 ]
 category_page_source_options = [
-    {"label": i, "value": i} for i in cat_page_pricing_analytics_df.source.unique()
+    {"label": i, "value": i}
+    for i in cat_page_pricing_analytics_df.source.unique()
 ]
 category_page_product_type_options = [
     {"label": i, "value": i}
@@ -156,7 +158,10 @@ def create_reviews_by_user_attribute_figure(
         cat_page_reviews_by_user_attributes_df[
             (cat_page_reviews_by_user_attributes_df.source == source)
             & (cat_page_reviews_by_user_attributes_df.category == category)
-            & (cat_page_reviews_by_user_attributes_df.product_type == product_type)
+            & (
+                cat_page_reviews_by_user_attributes_df.product_type
+                == product_type
+            )
         ][user_attribute].value_counts()
     ).reset_index()
     data.columns = [user_attribute, "review_count"]
@@ -181,8 +186,12 @@ def create_reviews_by_user_attribute_figure(
         legend_title_font_color="green",
         hovermode="closest",
         xaxis={"title": "Review Count"},
-        yaxis={"categoryorder": "category descending", "title": user_attribute},
+        yaxis={"title": user_attribute},
     )
+    if user_attribute == "age":
+        fig.update_layout(yaxis={"categoryorder": "category descending"})
+    else:
+        fig.update_layout(yaxis={"categoryorder": "total ascending"})
     fig.update_xaxes(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
         title_font=dict(size=20, family="GothamLight", color="crimson"),

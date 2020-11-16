@@ -41,7 +41,8 @@ ing_page_ingredient_options = [
 
 
 def create_ing_page_ingredient_type_figure(
-        source: str, category: str, product_type: str) -> go.Figure:
+    source: str, category: str, product_type: str
+) -> go.Figure:
     """create_ing_page_ingredient_type_figure [summary]
 
     [extended_summary]
@@ -84,8 +85,14 @@ def create_ing_page_ingredient_type_figure(
         title_font_size=24,
         legend_title_font_color="green",
         #         hovermode='closest',
-        xaxis={"title": "Count", "categoryorder": "category descending"},
-        yaxis={"title": "Ingredeint Type"},
+        xaxis={
+            "title": "Count",
+            "categoryorder": "category descending",
+        },
+        yaxis={
+            "title": "Ingredeint Type",
+            "categoryorder": "total ascending",
+        },
     )
     fig.update_xaxes(
         tickfont=dict(family="GothamLight", color="crimson", size=14),

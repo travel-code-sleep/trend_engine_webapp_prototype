@@ -63,7 +63,8 @@ prod_page_ing_df = read_file_s3(
 
 """ create dropdown options """
 product_page_source_options = [
-    {"label": i, "value": i} for i in prod_page_metadetail_data_df.source.unique()
+    {"label": i, "value": i}
+    for i in prod_page_metadetail_data_df.source.unique()
 ]
 # product_page_category_options = [{'label': i, 'value': i}
 #                                  for i in prod_page_metadetail_data_df.category.unique()]
@@ -82,7 +83,9 @@ product_page_product_name_options = sorted(
 prod_page_user_attribute_options = sorted(
     [
         {"label": i, "value": i}
-        for i in list(prod_page_reviews_attribute_df.columns.difference(["prod_id"]))
+        for i in list(
+            prod_page_reviews_attribute_df.columns.difference(["prod_id"])
+        )
     ],
     key=lambda k: k["label"],
 )
@@ -216,8 +219,7 @@ def create_prod_page_review_breakdown_figure(
 
 
 def create_prod_page_review_timeseries_figure(
-    data: pd.DataFrame, prod_id: str, col: str
-) -> go.Figure:
+        data: pd.DataFrame, prod_id: str, col: str) -> go.Figure:
     """create_prod_page_review_timeseries_figure [summary]
 
     [extended_summary]
@@ -335,6 +337,10 @@ def create_prod_page_reviews_by_user_attribute_figure(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
         title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
+    if user_attribute == "age":
+        fig.update_layout(yaxis={"categoryorder": "category descending"})
+    else:
+        fig.update_layout(yaxis={"categoryorder": "total ascending"})
 
     return fig
 
@@ -384,6 +390,10 @@ def create_prod_page_reviews_distribution_figure(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
         title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
+    if user_attribute == "age":
+        fig.update_layout(yaxis={"categoryorder": "category descending"})
+    else:
+        fig.update_layout(yaxis={"categoryorder": "total ascending"})
     return fig
 
 
