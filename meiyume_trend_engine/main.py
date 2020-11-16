@@ -1230,7 +1230,7 @@ def category_page_layout():
                                 selected_columns=[],  # ids of columns that user selects
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
-                                page_action="native",
+                                page_action="none",
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 60,
                                     "maxWidth": 60,
@@ -1292,7 +1292,7 @@ def category_page_layout():
                                 selected_columns=[],  # ids of columns that user selects
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
-                                page_action="native",
+                                page_action="none",
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 60,
                                     "width": 80,
@@ -2078,21 +2078,21 @@ def product_page_layout():
                                                                         id="prod_max_price",
                                                                         className="mini_container",
                                                                     ),
-                                                                    html.Div(
-                                                                        [
-                                                                            html.H5(
-                                                                                id="prod_mrp_text",
-                                                                                style={
-                                                                                    "fontFamily": "GildaDisplay"
-                                                                                },
-                                                                            ),
-                                                                            html.P(
-                                                                                "MRP"
-                                                                            ),
-                                                                        ],
-                                                                        id="prod_mrp",
-                                                                        className="mini_container",
-                                                                    ),
+                                                                    # html.Div(
+                                                                    #     [
+                                                                    #         html.H5(
+                                                                    #             id="prod_mrp_text",
+                                                                    #             style={
+                                                                    #                 "fontFamily": "GildaDisplay"
+                                                                    #             },
+                                                                    #         ),
+                                                                    #         html.P(
+                                                                    #             "MRP"
+                                                                    #         ),
+                                                                    #     ],
+                                                                    #     id="prod_mrp",
+                                                                    #     className="mini_container",
+                                                                    # ),
                                                                 ],
                                                                 id="info-container",
                                                                 className="container-display",
@@ -2212,7 +2212,7 @@ def product_page_layout():
                                                 selected_columns=[],  # ids of columns that user selects
                                                 selected_rows=[],  # indices of rows that user selects
                                                 # all data is passed to the table up-front or not ('none')
-                                                page_action="native",
+                                                page_action="none",
                                                 page_current=0,  # page number that user is on
                                                 page_size=10,  # number of rows visible per page
                                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
@@ -2252,6 +2252,9 @@ def product_page_layout():
                                                     "whiteSpace": "normal",
                                                     "height": "auto",
                                                 },
+                                                fixed_rows={"headers": True},
+                                                style_table={
+                                                    "overflow": "auto"}
                                             ),
                                         ],
                                         width=12,
@@ -2307,9 +2310,9 @@ def product_page_layout():
                                                 selected_columns=[],  # ids of columns that user selects
                                                 selected_rows=[],  # indices of rows that user selects
                                                 # all data is passed to the table up-front or not ('none')
-                                                page_action="native",
-                                                page_current=0,  # page number that user is on
-                                                page_size=15,  # number of rows visible per page
+                                                page_action="none",
+                                                # page_current=0,  # page number that user is on
+                                                # page_size=15,  # number of rows visible per page
                                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                                     "minWidth": 80,
                                                     "maxWidth": 80,
@@ -2346,6 +2349,11 @@ def product_page_layout():
                                                 style_data={  # overflow cells' content into multiple lines
                                                     "whiteSpace": "normal",
                                                     "height": "auto",
+                                                },
+                                                fixed_rows={"headers": True},
+                                                style_table={
+                                                    "height": 500,
+                                                    "overflow": "auto",
                                                 },
                                             ),
                                         ],
@@ -2489,8 +2497,8 @@ def ingredient_page_layout():
                                         selected_rows=[],  # indices of rows that user selects
                                         # all data is passed to the table up-front or not ('none')
                                         page_action="native",
-                                        page_current=0,  # page number that user is on
-                                        page_size=15,  # number of rows visible per page
+                                        # page_current=0,  # page number that user is on
+                                        # page_size=0,  # number of rows visible per page
                                         style_cell={  # ensure adequate header width when text is shorter than cell's text
                                             "minWidth": 80,
                                             "maxWidth": 80,
@@ -2521,6 +2529,11 @@ def ingredient_page_layout():
                                         style_data={  # overflow cells' content into multiple lines
                                             "whiteSpace": "normal",
                                             "height": "auto",
+                                        },
+                                        fixed_rows={"headers": True},
+                                        style_table={
+
+                                            "overflow": "auto",
                                         },
                                     )
                                 ],
@@ -2724,7 +2737,7 @@ def ingredient_page_layout():
                                 selected_columns=[],  # ids of columns that user selects
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
-                                page_action="native",
+                                page_action="none",
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 80,
                                     "maxWidth": 80,
@@ -2753,7 +2766,6 @@ def ingredient_page_layout():
                                 },
                                 fixed_rows={"headers": True},
                                 style_table={
-                                    "height": 500,
                                     "overflow": "auto",
                                 },
                             ),
@@ -2797,7 +2809,7 @@ def ingredient_page_layout():
                                 selected_columns=[],  # ids of columns that user selects
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
-                                page_action="native",
+                                page_action="none",
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 60,
                                     "maxWidth": 60,
@@ -2826,7 +2838,6 @@ def ingredient_page_layout():
                                 },
                                 fixed_rows={"headers": True},
                                 style_table={
-                                    "height": 500,
                                     "overflow": "auto",
                                 },
                             ),
@@ -3249,7 +3260,7 @@ def update_prod_page_item_price_figure(
     [
         Output("prod_small_price_text", "children"),
         Output("prod_big_price_text", "children"),
-        Output("prod_mrp_text", "children"),
+        # Output("prod_mrp_text", "children"),
         Output("prod_new_flag", "children"),
         Output("prod_dist_ing", "children"),
     ],
@@ -3271,33 +3282,26 @@ def display_prod_page_price_data(
     Returns:
         Tuple[str, str, str]: [description]
     """
-    smp = prod_page_metadetail_data_df.small_size_price[
-        (prod_page_metadetail_data_df.source == source)
-        & (prod_page_metadetail_data_df.prod_id == prod_id)
-    ].values[0]
-    bgp = prod_page_metadetail_data_df.big_size_price[
-        (prod_page_metadetail_data_df.source == source)
-        & (prod_page_metadetail_data_df.prod_id == prod_id)
-    ].values[0]
-    mrp = prod_page_metadetail_data_df.mrp[
-        (prod_page_metadetail_data_df.source == source)
-        & (prod_page_metadetail_data_df.prod_id == prod_id)
-    ].values[0]
+    prices = prod_page_item_price_df[(prod_page_item_price_df.meta_date == prod_page_item_price_df.meta_date.max())
+                                     & (prod_page_item_price_df.prod_id == prod_id)].item_price.astype(str).tolist()
+
     status = prod_page_metadetail_data_df.new_flag[
         (prod_page_metadetail_data_df.source == source)
         & (prod_page_metadetail_data_df.prod_id == prod_id)
     ].values[0]
+
     dist_ing = prod_page_ing_df[
         prod_page_ing_df.prod_id == prod_id
     ].ingredient.nunique()
+
     if source == "us":
         currency = "$"
     else:
         currency = "£"
+
     return (
-        f"{currency}{smp}",
-        f"{currency}{bgp}",
-        f"{currency}{mrp}",
+        f"{currency}{min(prices)}",
+        f"{currency}{max(prices)}",
         status.title(),
         dist_ing,
     )

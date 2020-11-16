@@ -40,12 +40,14 @@ prod_page_review_talking_points_df = read_file_s3(
 prod_page_review_sentiment_influence_df = read_file_s3(
     filename="prod_page_review_sentiment_influence", file_type="feather"
 )
+
 # pd.read_feather(
 #     dash_data_path/'prod_page_review_sentiment_influence')
 # review attribute data
 prod_page_reviews_attribute_df = read_file_s3(
     filename="prod_page_reviews_attribute", file_type="feather"
 )
+
 # pd.read_feather(
 #     dash_data_path/'prod_page_reviews_attribute')
 # item data
@@ -390,10 +392,7 @@ def create_prod_page_reviews_distribution_figure(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
         title_font=dict(size=20, family="GothamLight", color="crimson"),
     )
-    if user_attribute == "age":
-        fig.update_layout(yaxis={"categoryorder": "category descending"})
-    else:
-        fig.update_layout(yaxis={"categoryorder": "total ascending"})
+
     return fig
 
 
