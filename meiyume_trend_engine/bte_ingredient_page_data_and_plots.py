@@ -18,7 +18,8 @@ Read all the data from flat files.
 # ingredient data
 # prod_page_ing_df = pd.read_feather(dash_data_path/'prod_page_ing_data')
 ing_page_ing_df = read_file_s3(
-    filename="ing_page_ing_data", file_type="feather")
+    filename="ing_page_ing_data", file_type="feather"
+)
 # pd.read_feather(dash_data_path/'ing_page_ing_data')
 
 """ create dropdown options """
@@ -32,16 +33,16 @@ ing_page_product_type_options = [
     {"label": i, "value": i} for i in ing_page_ing_df.product_type.unique()
 ]
 ing_page_ingredient_options = sorted(
-    [
-        {"label": i, "value": i} for i in ing_page_ing_df.ingredient.unique()
-    ], key=lambda k: k['label']
+    [{"label": i, "value": i} for i in ing_page_ing_df.ingredient.unique()],
+    key=lambda k: k["label"],
 )
 
 """ create graph figure functions"""
 
 
 def create_ing_page_ingredient_type_figure(
-        source: str, category: str, product_type: str) -> go.Figure:
+    source: str, category: str, product_type: str
+) -> go.Figure:
     """create_ing_page_ingredient_type_figure [summary]
 
     [extended_summary]
@@ -84,8 +85,14 @@ def create_ing_page_ingredient_type_figure(
         title_font_size=24,
         legend_title_font_color="green",
         #         hovermode='closest',
-        xaxis={"title": "Count", "categoryorder": "category descending"},
-        yaxis={"title": "Ingredeint Type"},
+        xaxis={
+            "title": "Count",
+            "categoryorder": "category descending",
+        },
+        yaxis={
+            "title": "Ingredeint Type",
+            "categoryorder": "total ascending",
+        },
     )
     fig.update_xaxes(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
