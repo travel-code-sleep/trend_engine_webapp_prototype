@@ -2386,6 +2386,7 @@ def product_page_layout():
             "fontFamily": "GothamLight",
             "display": "flex",
             "flex-direction": "column",
+            "overflow": "scroll"
         },
     )
 

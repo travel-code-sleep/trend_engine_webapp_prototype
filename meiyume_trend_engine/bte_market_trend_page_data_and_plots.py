@@ -400,6 +400,7 @@ def create_product_launch_intensity_figure(
         hover_data=["category", "launch_intensity", "new", "old"],
         width=1200,
         height=800,
+        # text="launch_intensity"
     )
 
     fig.update_layout(

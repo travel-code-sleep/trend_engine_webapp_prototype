@@ -76,6 +76,7 @@ def create_ing_page_ingredient_type_figure(
         height=300,
         orientation="h",
         title="Ingredient Type Distribution",
+        text="count"
     )
     fig.update_layout(
         font_family="GothamLight",

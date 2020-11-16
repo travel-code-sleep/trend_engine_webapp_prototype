@@ -136,11 +136,10 @@ category_page_user_attribute_options = [
 
 
 def create_reviews_by_user_attribute_figure(
-    source: str = "us",
-    category: str = "skincare",
-    product_type: str = "acne-products-acne-cream",
-    user_attribute: str = "age",
-) -> go.Figure:
+        source: str = "us",
+        category: str = "skincare",
+        product_type: str = "acne-products-acne-cream",
+        user_attribute: str = "age") -> go.Figure:
     """create_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
@@ -176,6 +175,7 @@ def create_reviews_by_user_attribute_figure(
         hover_data=[user_attribute, "review_count"],
         height=400,
         # title=f"Reviews by {plot_title}",
+        text="review_count"
     )
     fig.update_layout(
         font_family="GothamLight",

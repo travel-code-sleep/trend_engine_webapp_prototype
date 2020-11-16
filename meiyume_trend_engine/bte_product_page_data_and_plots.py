@@ -208,7 +208,7 @@ def create_prod_page_review_breakdown_figure(
         names=col,
         hole=0.4,
         height=400,
-        width=400,
+        width=450,
         title=f'Review {col.replace("_", " ").title()} Breakdown',
     )
     fig.update_layout(
@@ -293,8 +293,7 @@ def create_prod_page_review_timeseries_figure(
 
 
 def create_prod_page_reviews_by_user_attribute_figure(
-    prod_id: str, user_attribute: str = "age"
-) -> go.Figure:
+        prod_id: str, user_attribute: str = "age") -> go.Figure:
     """create_prod_page_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
@@ -322,6 +321,7 @@ def create_prod_page_reviews_by_user_attribute_figure(
         orientation="h",
         height=400,
         # title=f"Reviews by {plot_title}",
+        text="review_count"
     )
     fig.update_layout(
         font_family="GothamLight",
@@ -374,6 +374,7 @@ def create_prod_page_reviews_distribution_figure(
         orientation="h",
         height=400,
         # title=f"Reviews by Stars",
+        text="review_count"
     )
     fig.update_layout(
         font_family="GothamLight",
