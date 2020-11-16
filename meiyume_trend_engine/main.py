@@ -3287,9 +3287,11 @@ def display_prod_page_price_data(
     Returns:
         Tuple[str, str, str]: [description]
     """
-    prices = prod_page_item_price_df[(prod_page_item_price_df.meta_date == prod_page_item_price_df[prod_page_item_price_df.source == source].meta_date.max())
+    prices = prod_page_item_price_df[(prod_page_item_price_df.meta_date ==
+                                      prod_page_item_price_df[prod_page_item_price_df.source == source].meta_date.max())
                                      & (prod_page_item_price_df.source == source)
-                                     & (prod_page_item_price_df.prod_id == prod_id)].item_price.astype(str).tolist()
+                                     & (prod_page_item_price_df.prod_id == prod_id)
+                                     ].item_price.astype(str).tolist()
 
     status = prod_page_metadetail_data_df.new_flag[
         (prod_page_metadetail_data_df.source == source)
