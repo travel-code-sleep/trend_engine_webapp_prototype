@@ -2434,8 +2434,19 @@ def ingredient_page_layout():
                             ),
                             dbc.Col(
                                 [
-                                    dcc.Graph(
-                                        id='ing_page_ing_subcat_presence')
+                                    dbc.Row(
+                                        [
+                                            html.H5(
+                                                id='ing_page_click_data_text'
+                                            )
+                                        ]
+                                    ),
+                                    html.Div(
+                                        dcc.Graph(
+                                            id='ing_page_ing_subcat_presence'),
+                                        style={'overflowX': 'scroll',
+                                               'width': 1000}
+                                    )
                                 ]
                             )
                         ],
@@ -2840,6 +2851,64 @@ def mark_digit(d):
 
 
 # Ingredient Page Callbacks
+
+@app.callback(
+    Output("ing_page_click_data_text", "children"),
+    [
+        Input("ing_page_ing_cat_presence", "clickData"),
+    ],
+)
+def display_click_data_ing_page(clickData) -> str:
+    """display_click_data_product_trend [summary]
+
+    [extended_summary]
+
+    Args:
+        clickData ([type]): [description]
+
+    Returns:
+        str: [description]
+    """
+    if clickData is not None:
+        return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
+    else:
+        return "Click on the bar of a Category to display ingredient distribution over Subcategories under it."
+
+
+@app.callback(Output("ing_page_ing_subcat_presence", 'figure'),
+              [
+                  Input("ing_page_ing", "value"),
+    Input("ing_page_ing_cat_presence", "clickData")
+]
+)
+def update_ing_page_category_count_figure(ingredient: str, clickData):
+    """update_ing_page_category_count_figure [summary]
+
+    [extended_summary]
+
+    Args:
+        ingredient (str): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    if clickData is not None:
+        category = clickData["points"][0]["customdata"][0]
+
+        data = (ing_page_ing_df[(ing_page_ing_df.category == category)
+                                & (ing_page_ing_df.ingredient == ingredient)
+                                ][["product_name", 'product_type']
+                                  ].groupby(by=['product_type']).product_name.size().reset_index())
+        data.columns = ['product_type', "product_count"]
+        data.category = data.product_type.astype(str)
+
+        fig = create_ing_page_category_count_figure(
+            data, 'product_type', ingredient, orientation="v")
+
+        return fig
+    return {}
+
+
 @app.callback(Output("ing_page_ing_cat_presence", 'figure'),
               [Input("ing_page_ing", "value")])
 def update_ing_page_category_count_figure(ingredient: str):
@@ -2853,16 +2922,18 @@ def update_ing_page_category_count_figure(ingredient: str):
     Returns:
         [type]: [description]
     """
-    data = (ing_page_ing_df[["product_name", 'category']][
-        ing_page_ing_df.ingredient == ingredient
-    ].groupby(by=['category']).product_name.size().reset_index())
-    data.columns = ['category', "product_count"]
-    data.category = data.category.astype(str)
+    if ingredient:
+        data = (ing_page_ing_df[["product_name", 'category']][
+            ing_page_ing_df.ingredient == ingredient
+        ].groupby(by=['category']).product_name.size().reset_index())
+        data.columns = ['category', "product_count"]
+        data.category = data.category.astype(str)
 
-    fig = create_ing_page_category_count_figure(
-        data, 'category', ingredient)
+        fig = create_ing_page_category_count_figure(
+            data, 'category', ingredient)
 
-    return fig
+        return fig
+    return {}
 
 
 @app.callback(
@@ -4623,4 +4694,4 @@ def render_page_content(pathname):
 
 if __name__ == "__main__":
     app.run_server()
-    # app.run_server(debug=True, host="127.0.0.5")
+    # app.run_server(debug=True)

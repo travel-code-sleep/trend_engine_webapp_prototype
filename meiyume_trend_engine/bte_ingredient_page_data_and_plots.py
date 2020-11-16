@@ -20,6 +20,7 @@ Read all the data from flat files.
 ing_page_ing_df = read_file_s3(
     filename="ing_page_ing_data", file_type="feather")
 ing_page_ing_df.category = ing_page_ing_df.category.astype(str)
+ing_page_ing_df.product_type = ing_page_ing_df.product_type.astype(str)
 
 # pd.read_feather(dash_data_path/'ing_page_ing_data')
 
@@ -41,8 +42,7 @@ ing_page_ingredient_options = [
 
 
 def create_ing_page_ingredient_type_figure(
-    source: str, category: str, product_type: str
-) -> go.Figure:
+        source: str, category: str, product_type: str) -> go.Figure:
     """create_ing_page_ingredient_type_figure [summary]
 
     [extended_summary]
@@ -106,7 +106,7 @@ def create_ing_page_ingredient_type_figure(
 
 
 def create_ing_page_category_count_figure(data: pd.DataFrame, group: str,
-                                          ingredient: str) -> go.Figure:
+                                          ingredient: str, orientation: str = "h") -> go.Figure:
     """create_ing_page_ingredient_type_figure [summary]
 
     [extended_summary]
@@ -119,17 +119,33 @@ def create_ing_page_category_count_figure(data: pd.DataFrame, group: str,
     Returns:
         go.Figure: [description]
     """
+    if orientation == "h":
+        x = "product_count"
+        y = group
+        width = 750
+        text = x
+    else:
+        x = group
+        y = "product_count"
+        if data.product_type.nunique() < 10:
+            width = 1000
+        else:
+            width = 2000
+        text = y
+
     fig = px.bar(
         data,
-        x="product_count",
-        y=group,
-        width=750,
-        height=350,
-        orientation="h",
+        x=x,
+        y=y,
+        width=width,
+        height=500,
+        orientation=orientation,
         title=f'Products Containing "{ingredient.title()}" by {group.replace("_", " ").title()}',
         hover_data=[group],
         hover_name=group,
+        text=text
     )
+
     fig.update_layout(
         font_family="GothamLight",
         font_color="#c09891",
@@ -138,9 +154,15 @@ def create_ing_page_category_count_figure(data: pd.DataFrame, group: str,
         title_font_size=24,
         legend_title_font_color="green",
         hovermode='closest',
-        xaxis={"title": "Product Count"},
-        yaxis={"title": group.title(), 'categoryorder': 'total ascending'},
+        xaxis={"title": x.title()},
+        yaxis={"title": y.title()},
     )
+
+    if orientation == "h":
+        fig.update_yaxes({'categoryorder': 'total ascending'})
+    else:
+        fig.update_xaxes({'categoryorder': 'total descending'})
+
     fig.update_xaxes(
         tickfont=dict(family="GothamLight", color="crimson", size=14),
         title_font=dict(size=20, family="GothamLight", color="crimson"),
