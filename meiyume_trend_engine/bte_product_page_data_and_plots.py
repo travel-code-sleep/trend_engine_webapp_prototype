@@ -56,8 +56,11 @@ prod_page_item_df = read_file_s3(
 # pd.read_feather(dash_data_path/'prod_page_item_data')
 prod_page_item_price_df = prod_page_item_df[
     ["prod_id", "item_size", "meta_date", "item_price"]
-].drop_duplicates(subset=["prod_id", "meta_date", "item_size"])
+]
+prod_page_item_price_df['source'] = prod_page_item_price_df.prod_id.apply(
+    lambda x: 'us' if 'sph' in x else 'uk')
 prod_page_item_price_df.reset_index(inplace=True, drop=True)
+
 # ingredient data
 prod_page_ing_df = read_file_s3(
     filename="prod_page_ing_data", file_type="feather")
@@ -348,8 +351,7 @@ def create_prod_page_reviews_by_user_attribute_figure(
 
 
 def create_prod_page_reviews_distribution_figure(
-    data: pd.DataFrame, prod_id: str
-) -> go.Figure:
+        data: pd.DataFrame, prod_id: str) -> go.Figure:
     """create_prod_page_reviews_distribution_figure [summary]
 
     [extended_summary]
@@ -413,7 +415,7 @@ def create_prod_page_item_price_figure(data: pd.DataFrame) -> go.Figure:
         y="item_price",
         color="item_size",
         line_shape="spline",
-        height=500,
+        height=600,
         width=1000,
         #               color_discrete_sequence=marker_color,
         title=f"Price Over Time",
