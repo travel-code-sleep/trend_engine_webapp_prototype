@@ -1380,9 +1380,6 @@ def category_page_layout():
                                 selected_columns=[],  # ids of columns that user selects
                                 selected_rows=[],  # indices of rows that user selects
                                 # all data is passed to the table up-front or not ('none')
-                                page_action="native",
-                                page_current=0,  # page number that user is on
-                                page_size=10,  # number of rows visible per page
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 60,
                                     "width": 80,
@@ -1416,6 +1413,10 @@ def category_page_layout():
                                     "whiteSpace": "normal",
                                     "height": "auto",
                                 },
+                                style_table={
+                                    "overflow": "auto",
+                                    "height": 200,
+                                },
                             ),
                         ],
                         width=12,
@@ -1438,7 +1439,6 @@ def category_page_layout():
                                     )
                                 ]
                             ),
-                            # html.Hr(),
                             dash_table.DataTable(
                                 id="new_ingredients_data_table",
                                 columns=[
@@ -1455,21 +1455,12 @@ def category_page_layout():
                                     "records"
                                 ),  # the contents of the table
                                 editable=False,  # allow editing of data inside all cells
-                                # allow filtering of data by user ('native') or not ('none')
                                 filter_action="native",
-                                # enables data to be sorted per-column by user or not ('none')
                                 sort_action="native",
                                 sort_mode="single",  # sort across 'multi' or 'single' columns
-                                # column_selectable="multi",  # allow users to select 'multi' or 'single' columns
-                                # row_selectable="multi",     # allow users to select 'multi' or 'single' rows
-                                # choose if user can delete a row (True) or not (False)
                                 row_deletable=False,
                                 selected_columns=[],  # ids of columns that user selects
                                 selected_rows=[],  # indices of rows that user selects
-                                # all data is passed to the table up-front or not ('none')
-                                page_action="native",
-                                page_current=0,  # page number that user is on
-                                page_size=10,  # number of rows visible per page
                                 style_cell={  # ensure adequate header width when text is shorter than cell's text
                                     "minWidth": 120,
                                     "maxWidth": 120,
@@ -1498,9 +1489,14 @@ def category_page_layout():
                                         "width": 160,
                                     },
                                 ],
-                                style_data={  # overflow cells' content into multiple lines
+                                style_data={
                                     "whiteSpace": "normal",
                                     "height": "auto",
+                                },
+                                fixed_rows={"headers": True},
+                                style_table={
+                                    "height": 400,
+                                    "overflow": "auto",
                                 },
                             ),
                         ],
@@ -4614,4 +4610,4 @@ def render_page_content(pathname):
 
 if __name__ == "__main__":
     app.run_server()
-    # app.run_server(debug=True)
+    # app.run_server(debug=True, host="127.0.0.5")
