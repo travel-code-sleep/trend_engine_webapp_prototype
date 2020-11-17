@@ -108,15 +108,15 @@ def set_default_start_and_end_dates():
         [type]: [description]
     """
     three_yrs_ago = dt.now() - relativedelta(years=3)
-    default_start_date = str(
-        pd.to_datetime(three_yrs_ago.strftime("%m/%d/%Y"))
-    )[:10].split("-")
+    default_start_date = str(pd.to_datetime(three_yrs_ago.strftime("%m/%d/%Y")))[
+        :10
+    ].split("-")
     default_start_date[-1] = "01"
     default_start_date = ("-").join(default_start_date)
 
-    default_end_date = str(pd.to_datetime(dt.today().strftime("%m/%d/%Y")))[
-        :10
-    ].split("-")
+    default_end_date = str(pd.to_datetime(dt.today().strftime("%m/%d/%Y")))[:10].split(
+        "-"
+    )
     default_end_date[-1] = "01"
     default_end_date = ("-").join(default_end_date)
     return default_start_date, default_end_date
