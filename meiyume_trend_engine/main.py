@@ -196,9 +196,7 @@ sidebar_header = html.Div(
     ],
 )
 
-last_scraped_date = pd.to_datetime(
-    lp_df["latest_scraped_date"].values[0]
-).strftime("%d %B %Y")
+last_scraped_date = pd.to_datetime(lp_df["latest_scraped_date"].values[0]).strftime("%d %B %Y")
 
 sidebar = html.Div(
     [
