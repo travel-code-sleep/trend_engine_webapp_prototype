@@ -258,7 +258,7 @@ def create_prod_page_review_timeseries_figure(
             y="review_count",
             color=col,
             line_shape="spline",
-            height=400,
+            height=500,
             width=1000,
             color_discrete_sequence=marker_color,
             title=f"Reviews {col.title()} Over Time",

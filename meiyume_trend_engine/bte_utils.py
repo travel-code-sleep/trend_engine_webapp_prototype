@@ -38,7 +38,8 @@ def get_s3_client(region: str, access_key_id: str, secret_access_key: str):
 def read_file_s3(
     filename: str,
     # f"{S3_PREFIX}/WebAppData",
-    prefix: str = "Feeds/BeautyTrendEngine/WebAppDevelopmentData/Test",
+    # "Feeds/BeautyTrendEngine/WebAppDevelopmentData/Test"
+    prefix: str = f"{S3_PREFIX}/WebAppData",
     bucket: str = S3_BUCKET,
     file_type: str = "feather",
 ) -> pd.DataFrame:
