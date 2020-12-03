@@ -409,6 +409,7 @@ def create_prod_page_item_price_figure(data: pd.DataFrame) -> go.Figure:
     Returns:
         go.Figure: [description]
     """
+    data = data.sort_values(by="meta_date")
     fig = px.line(
         data,
         x="meta_date",

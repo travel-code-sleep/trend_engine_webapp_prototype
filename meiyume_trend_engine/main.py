@@ -3230,19 +3230,16 @@ def display_prod_page_price_data(source: str, prod_id: str) -> Tuple[str, str, s
     Returns:
         Tuple[str, str, str]: [description]
     """
-    prices = (
-        prod_page_item_price_df[
-            (
-                prod_page_item_price_df.meta_date
-                == prod_page_item_price_df[
-                    prod_page_item_price_df.source == source
-                ].meta_date.max()
-            )
-            & (prod_page_item_price_df.source == source)
-            & (prod_page_item_price_df.prod_id == prod_id)
-        ]
-        .item_price.tolist()
-    )
+    prices = prod_page_item_price_df[
+        (
+            prod_page_item_price_df.meta_date
+            == prod_page_item_price_df[
+                prod_page_item_price_df.source == source
+            ].meta_date.max()
+        )
+        & (prod_page_item_price_df.source == source)
+        & (prod_page_item_price_df.prod_id == prod_id)
+    ].item_price.tolist()
 
     status = prod_page_metadetail_data_df.new_flag[
         (prod_page_metadetail_data_df.source == source)
@@ -4638,4 +4635,4 @@ def render_page_content(pathname):
 
 if __name__ == "__main__":
     app.run_server()
-    # app.run_server(debug=True)
+    # app.run_server(debug=True,port=2000)
