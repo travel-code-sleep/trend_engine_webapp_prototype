@@ -3241,7 +3241,7 @@ def display_prod_page_price_data(source: str, prod_id: str) -> Tuple[str, str, s
             & (prod_page_item_price_df.source == source)
             & (prod_page_item_price_df.prod_id == prod_id)
         ]
-        .item_price.astype(str)
+        .item_price
         .tolist()
     )
 
