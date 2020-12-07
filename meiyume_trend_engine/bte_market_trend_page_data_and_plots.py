@@ -307,11 +307,12 @@ def create_category_product_launch_figure(
 
 
 def create_product_type_product_launch_figure(
-        data: pd.DataFrame,
-        source: str = "us",
-        category: str = "bath-body",
-        start_date: str = default_start_date,
-        end_date: str = default_end_date) -> go.Figure:
+    data: pd.DataFrame,
+    source: str = "us",
+    category: str = "bath-body",
+    start_date: str = default_start_date,
+    end_date: str = default_end_date,
+) -> go.Figure:
     """create_product_type_product_launch_figure [summary]
 
     [extended_summary]
@@ -554,8 +555,7 @@ def create_product_type_new_ingredient_trend_figure(
 
 
 """ create initial figures/graphs. """
-category_trend_figure = create_category_review_trend_figure(
-    review_trend_category_df)
+category_trend_figure = create_category_review_trend_figure(review_trend_category_df)
 subcategory_trend_figure = create_product_type_review_trend_figure(
     review_trend_product_type_df
 )

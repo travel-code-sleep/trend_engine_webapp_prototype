@@ -112,12 +112,10 @@ cat_page_reviews_by_user_attributes_df = read_file_s3(
 
 """ create dropdown options """
 category_page_category_options = [
-    {"label": i, "value": i}
-    for i in cat_page_pricing_analytics_df.category.unique()
+    {"label": i, "value": i} for i in cat_page_pricing_analytics_df.category.unique()
 ]
 category_page_source_options = [
-    {"label": i, "value": i}
-    for i in cat_page_pricing_analytics_df.source.unique()
+    {"label": i, "value": i} for i in cat_page_pricing_analytics_df.source.unique()
 ]
 category_page_product_type_options = [
     {"label": i, "value": i}
@@ -136,10 +134,11 @@ category_page_user_attribute_options = [
 
 
 def create_reviews_by_user_attribute_figure(
-        source: str = "us",
-        category: str = "skincare",
-        product_type: str = "acne-products-acne-cream",
-        user_attribute: str = "age") -> go.Figure:
+    source: str = "us",
+    category: str = "skincare",
+    product_type: str = "acne-products-acne-cream",
+    user_attribute: str = "age",
+) -> go.Figure:
     """create_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
@@ -157,10 +156,7 @@ def create_reviews_by_user_attribute_figure(
         cat_page_reviews_by_user_attributes_df[
             (cat_page_reviews_by_user_attributes_df.source == source)
             & (cat_page_reviews_by_user_attributes_df.category == category)
-            & (
-                cat_page_reviews_by_user_attributes_df.product_type
-                == product_type
-            )
+            & (cat_page_reviews_by_user_attributes_df.product_type == product_type)
         ][user_attribute].value_counts()
     ).reset_index()
     data.columns = [user_attribute, "review_count"]
@@ -175,7 +171,7 @@ def create_reviews_by_user_attribute_figure(
         hover_data=[user_attribute, "review_count"],
         height=400,
         # title=f"Reviews by {plot_title}",
-        text="review_count"
+        text="review_count",
     )
     fig.update_layout(
         font_family="GothamLight",
