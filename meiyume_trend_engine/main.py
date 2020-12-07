@@ -47,7 +47,13 @@ PRICE_HIGH = "big_size_price"
 lp_df = read_file_s3(filename="landing_page_data", file_type="feather")
 # pd.read_feather(dash_data_path/'landing_page_data')
 
-USERNAME_PASSWORD_PAIRS = [["user", "pwd123"], ["meiyume", "pwd123"]]
+USERNAME_PASSWORD_PAIRS = [
+    ["user", "pwd123"],
+    ["meiyume", "pwd123"],
+    ['digitsense', 'h4VUBm'],
+    ['mentalstack', 'mBUV4h'],
+]
+
 
 # read and encode logo image
 logo_url = f"https://{S3_BUCKET}.s3-{S3_REGION}.amazonaws.com/{S3_PREFIX}/static/assets/bte_logo.png"
