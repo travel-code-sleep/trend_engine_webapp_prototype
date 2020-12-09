@@ -52,6 +52,7 @@ USERNAME_PASSWORD_PAIRS = [
     ["meiyume", "pwd123"],
     ['digitsense', 'h4VUBm'],
     ['mentalstack', 'mBUV4h'],
+    ['rpg57', '4hyBzX'],
 ]
 
 
