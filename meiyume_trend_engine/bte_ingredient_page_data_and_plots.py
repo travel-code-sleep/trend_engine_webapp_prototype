@@ -116,11 +116,11 @@ def create_ing_page_category_count_figure(
     Args:
         data:
         group:
-        ingredient:
-        orientation:
+        ingredient: ingreditent of analysis
+        orientation: default is "h"
 
     Returns:
-        go.Figure: [description]
+        go.Figure: html element
     """
     if orientation == "h":
         x = "product_count"

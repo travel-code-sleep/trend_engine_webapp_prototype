@@ -2386,7 +2386,7 @@ def product_page_layout():
 def ingredient_page_layout():
     """
 
-    Returns:
+    Returns: ingredient page html element
 
     """
     return html.Div(
@@ -2849,7 +2849,7 @@ def mark_digit(d):
     """
 
     Args:
-        d:
+        d: a digit
 
     Returns: digit formatted with comma
 
@@ -3071,9 +3071,9 @@ def update_ing_page_ingredient_type_figure(
     """
 
     Args:
-        source:
-        category:
-        product_type:
+        source: ingredient source
+        category: ingredient category
+        product_type: ingredient product type
 
     Returns:
         html figure element
@@ -3142,8 +3142,8 @@ def set_ing_page_product_type_options(source: str, category: str):
     """
 
     Args:
-        source:
-        category:
+        source: ingredient page source
+        category: ingredient category
 
     Returns:
         html element
@@ -3162,18 +3162,14 @@ def set_ing_page_product_type_options(source: str, category: str):
 @app.callback(
     Output("ing_page_product_type", "value"),
     [
-        Input("ing_page_source", "value"),
-        Input("ing_page_category", "value"),
         Input("ing_page_product_type", "options"),
     ],
 )
-def set_ing_page_product_type_value(source, category, available_options):
+def set_ing_page_product_type_value(available_options):
     """
 
     Args:
-        source:
-        category:
-        available_options:
+        available_options: ingredient product types
 
     Returns:
         html element
@@ -3185,17 +3181,15 @@ def set_ing_page_product_type_value(source, category, available_options):
 @app.callback(
     Output("prod_page_ingredients", "data"),
     [
-        Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
     ],
 )
-def update_prod_page_product_ingredients_table(source: str, prod_id: str) -> list:
+def update_prod_page_product_ingredients_table(prod_id: str) -> list:
     """update_prod_page_product_ingredients_table [summary]
 
     [extended_summary]
 
     Args:
-        source (str): [description]
         prod_id (str): [description]
 
     Returns:
@@ -3220,14 +3214,13 @@ def update_prod_page_product_ingredients_table(source: str, prod_id: str) -> lis
     ],
 )
 def update_prod_page_product_variants_table(
-    source: str, prod_id: str, start_date: str, end_date: str
+    prod_id: str, start_date: str, end_date: str
 ) -> list:
     """update_prod_page_product_variants_table [summary]
 
     [extended_summary]
 
     Args:
-        source (str): [description]
         prod_id (str): [description]
         start_date (str): [description]
         end_date (str): [description]
@@ -3262,19 +3255,17 @@ def update_prod_page_product_variants_table(
 @app.callback(
     Output("prod_page_price_variation", "figure"),
     [
-        Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
         Input("prod_page_review_month_range", "start_date"),
         Input("prod_page_review_month_range", "end_date"),
     ],
 )
 def update_prod_page_item_price_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
+    prod_id: str, start_date: str, end_date: str
 ) -> go.Figure:
     """
 
     Args:
-        source:
         prod_id:
         start_date:
         end_date:
@@ -3367,19 +3358,17 @@ def display_prod_page_price_data(source: str, prod_id: str) -> Tuple[str, str, s
 @app.callback(
     Output("prod_page_reviews_by_stars", "figure"),
     [
-        Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
         Input("prod_page_review_month_range", "start_date"),
         Input("prod_page_review_month_range", "end_date"),
     ],
 )
 def update_prod_page_reviews_distribution_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
+    prod_id: str, start_date: str, end_date: str
 ) -> Tuple[go.Figure, go.Figure]:
     """
 
     Args:
-        source:
         prod_id:
         start_date:
         end_date:
@@ -3413,20 +3402,18 @@ def update_prod_page_reviews_distribution_figure(
 @app.callback(
     Output("prod_page_reviews_by_attribute", "figure"),
     [
-        Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
         Input("prod_page_user_attribute", "value"),
     ],
 )
 def update_prod_page_reviews_by_user_attribute_figure(
-    source: str, prod_id: str, user_attribute: str
+    prod_id: str, user_attribute: str
 ) -> go.Figure:
     """update_prod_page_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
 
     Args:
-        source (str): [description]
         prod_id (str): [description]
         user_attribute (str): [description]
 
@@ -3469,19 +3456,17 @@ def date_selection_text(start_date: str, end_date: str) -> str:
         Output("review_influenced_timeseries", "figure"),
     ],
     [
-        Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
         Input("prod_page_review_month_range", "start_date"),
         Input("prod_page_review_month_range", "end_date"),
     ],
 )
 def update_prod_page_review_timeseries_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
+    prod_id: str, start_date: str, end_date: str
 ) -> Tuple[go.Figure, go.Figure]:
     """
 
     Args:
-        source:
         prod_id:
         start_date:
         end_date:
@@ -3520,19 +3505,17 @@ def update_prod_page_review_timeseries_figure(
         Output("review_influenced_breakdown", "figure"),
     ],
     [
-        Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
         Input("prod_page_review_month_range", "start_date"),
         Input("prod_page_review_month_range", "end_date"),
     ],
 )
 def update_prod_page_review_breakdown_figure(
-    source: str, prod_id: str, start_date: str, end_date: str
+    prod_id: str, start_date: str, end_date: str
 ) -> Tuple[go.Figure, go.Figure]:
     """
 
     Args:
-        source:
         prod_id:
         start_date:
         end_date:
@@ -3574,13 +3557,12 @@ def update_prod_page_review_breakdown_figure(
         Output("pos_talking_points_fig", "figure"),
         Output("neg_talking_points_fig", "figure"),
     ],
-    [Input("prod_page_source", "value"), Input("prod_page_product", "value")],
+    [Input("prod_page_product", "value")],
 )
-def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
+def update_prod_page_review_talking_points_figure(prod_id: str):
     """
 
     Args:
-        source:
         prod_id:
 
     Returns:
@@ -3606,15 +3588,13 @@ def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
         Output("neg_review_sum", "children"),
     ],
     [
-        Input("prod_page_source", "value"),
         Input("prod_page_product", "value"),
     ],
 )
-def display_product_page_category(source: str, prod_id: str):
+def display_product_page_category(prod_id: str):
     """
 
     Args:
-        source:
         prod_id:
 
     Returns:
@@ -3652,13 +3632,12 @@ def display_product_page_category(source: str, prod_id: str):
 
 @app.callback(
     Output("prod_page_product_image", "src"),
-    [Input("prod_page_source", "value"), Input("prod_page_product", "value")],
+    [Input("prod_page_product", "value")],
 )
-def update_prod_page_img_src(source: str, prod_id: str):
+def update_prod_page_img_src(prod_id: str):
     """
 
     Args:
-        source:
         prod_id:
 
     Returns:
@@ -3800,14 +3779,13 @@ def set_product_page_product_options(source: str):
 
 @app.callback(
     Output("prod_page_product", "value"),
-    [Input("prod_page_source", "value"), Input(
+    [Input(
         "prod_page_product", "options")],
 )
-def set_product_page_product_value(source, available_options):
+def set_product_page_product_value(available_options):
     """
 
     Args:
-        source:
         available_options:
 
     Returns:
@@ -4054,17 +4032,13 @@ def set_category_page_product_type_options(source: str, category: str):
 @app.callback(
     Output("cat_page_product_type", "value"),
     [
-        Input("cat_page_source", "value"),
-        Input("cat_page_category", "value"),
         Input("cat_page_product_type", "options"),
     ],
 )
-def set_category_page_product_type_value(source, category, available_options):
+def set_category_page_product_type_value(available_options):
     """
 
     Args:
-        source:
-        category:
         available_options:
 
     Returns:
