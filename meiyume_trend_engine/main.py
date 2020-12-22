@@ -3266,9 +3266,9 @@ def update_prod_page_item_price_figure(
     """
 
     Args:
-        prod_id:
-        start_date:
-        end_date:
+        prod_id: product ID
+        start_date: start date range
+        end_date: end date range
 
     Returns:
         html element
@@ -3311,16 +3311,14 @@ def update_prod_page_item_price_figure(
     ],
 )
 def display_prod_page_price_data(source: str, prod_id: str) -> Tuple[str, str, str]:
-    """display_prod_page_price_data [summary]
-
-    [extended_summary]
+    """display_prod_page_price_data
 
     Args:
-        source (str): [description]
-        prod_id (str): [description]
+        source (str): product source
+        prod_id (str): product ID
 
     Returns:
-        Tuple[str, str, str]: [description]
+        Tuple[str, str, str]: multiple html elements
     """
     prices = prod_page_item_price_df[
         (
@@ -3369,9 +3367,9 @@ def update_prod_page_reviews_distribution_figure(
     """
 
     Args:
-        prod_id:
-        start_date:
-        end_date:
+        prod_id: product ID
+        start_date: start date
+        end_date: end date
 
     Returns:
         html element
@@ -3467,9 +3465,9 @@ def update_prod_page_review_timeseries_figure(
     """
 
     Args:
-        prod_id:
-        start_date:
-        end_date:
+        prod_id: product ID
+        start_date: start date
+        end_date: end date
 
     Returns:
         html element
@@ -3516,9 +3514,9 @@ def update_prod_page_review_breakdown_figure(
     """
 
     Args:
-        prod_id:
-        start_date:
-        end_date:
+        prod_id: product ID
+        start_date: start date
+        end_date: end date
 
     Returns:
         html element
@@ -3563,7 +3561,7 @@ def update_prod_page_review_talking_points_figure(prod_id: str):
     """
 
     Args:
-        prod_id:
+        prod_id: product ID
 
     Returns:
         html element
@@ -3595,7 +3593,7 @@ def display_product_page_category(prod_id: str):
     """
 
     Args:
-        prod_id:
+        prod_id: product ID
 
     Returns:
         html element
@@ -3638,7 +3636,7 @@ def update_prod_page_img_src(prod_id: str):
     """
 
     Args:
-        prod_id:
+        prod_id: product ID
 
     Returns:
         html element
@@ -3673,10 +3671,10 @@ def display_product_data_in_card(
     """
 
     Args:
-        source:
-        prod_id:
-        start_date:
-        end_date:
+        source: product source
+        prod_id: product ID
+        start_date: start date
+        end_date: end date
 
     Returns:
         html element
@@ -3734,8 +3732,8 @@ def display_product_page_category(source: str, prod_id: str):
     """
 
     Args:
-        source:
-        prod_id:
+        source: product source
+        prod_id: product ID
 
     Returns:
         html element
@@ -3760,7 +3758,7 @@ def set_product_page_product_options(source: str):
     """
 
     Args:
-        source:
+        source: product source
 
     Returns:
         html element
@@ -3786,7 +3784,7 @@ def set_product_page_product_value(available_options):
     """
 
     Args:
-        available_options:
+        available_options: products
 
     Returns:
         html element
@@ -3815,13 +3813,13 @@ def update_reviews_by_user_attribute_figure(
     [extended_summary]
 
     Args:
-        source (str): [description]
-        category (str): [description]
-        product_type (str): [description]
-        user_attribute (str): [description]
+        source (str): product source
+        category (str): product category
+        product_type (str): product type
+        user_attribute (str): user attribute
 
     Returns:
-        go.Figure: [description]
+        go.Figure: html element
     """
     fig = create_reviews_by_user_attribute_figure(
         source=source,
@@ -3844,17 +3842,15 @@ def update_reviews_by_user_attribute_figure(
 def filter_new_ingredients_data_table(
     source: str, category: str, product_type: str
 ) -> pd.DataFrame:
-    """filter_new_ingredients_data_table [summary]
-
-    [extended_summary]
+    """filter_new_ingredients_data_table
 
     Args:
-        source (str): [description]
-        category (str): [description]
-        product_type (str): [description]
+        source (str): product source
+        category (str): product category
+        product_type (str): product type
 
     Returns:
-        pd.DataFrame: [description]
+        pd.DataFrame: filtered ingredients data table
     """
     new_ingredients_df = (
         cat_page_new_ingredients_df[
@@ -3888,17 +3884,15 @@ def filter_new_ingredients_data_table(
 def filter_new_products_data_table(
     source: str, category: str, product_type: str
 ) -> pd.DataFrame:
-    """filter_new_products_data_table [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        category (str): [description]
-        product_type (str): [description]
+        source (str): product source
+        category (str): product category
+        product_type (str): product type
 
     Returns:
-        pd.DataFrame: [description]
+        pd.DataFrame: new product data table
     """
     new_products_detail_df = cat_page_new_products_details_df[
         [
@@ -3934,17 +3928,15 @@ def filter_new_products_data_table(
 def filter_top_products_data_table(
     source: str, category: str, product_type: str
 ) -> pd.DataFrame:
-    """filter_product_packaging_data_table [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        category (str): [description]
-        product_type (str): [description]
+        source (str): product source
+        category (str): product category
+        product_type (str): product type
 
     Returns:
-        pd.DataFrame: [description]
+        pd.DataFrame: filtered top product data table
     """
     top_products_df = cat_page_top_products_df[
         [
@@ -3979,17 +3971,15 @@ def filter_top_products_data_table(
 def filter_product_packaging_data_table(
     source: str, category: str, product_type: str
 ) -> pd.DataFrame:
-    """filter_product_packaging_data_table [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        category (str): [description]
-        product_type (str): [description]
+        source (str): product source
+        category (str): product category
+        product_type (str): product type
 
     Returns:
-        pd.DataFrame: [description]
+        pd.DataFrame: filtered product package data table
     """
     packaging_filtered_df = cat_page_item_package_oz_df[
         ["item_size", "product_count", "avg_price"]
@@ -4013,8 +4003,8 @@ def set_category_page_product_type_options(source: str, category: str):
     """
 
     Args:
-        source:
-        category:
+        source: product source
+        category: product category
 
     Returns:
         html element
@@ -4064,17 +4054,15 @@ def set_category_page_product_type_value(available_options):
 def update_product_analysis_text(
     source: str, category: str, product_type: str
 ) -> Tuple[str, str, str, str]:
-    """update_text [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        category (str): [description]
-        product_type (str): [description]
+        source (str): product source
+        category (str): product category
+        product_type (str): product type
 
     Returns:
-        Tuple[str, str, str, str]: [description]
+        Tuple[str, str, str, str]: html elements
     """
     dist_list = cat_page_distinct_brands_products_df[
         ["distinct_brands", "distinct_products"]
@@ -4122,17 +4110,15 @@ def update_product_analysis_text(
 def update_pricing_analysis_text(
     source: str, category: str, product_type: str
 ) -> Tuple[str, str, str, str]:
-    """update_text [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        category (str): [description]
-        product_type (str): [description]
+        source (str): product source
+        category (str): product category
+        product_type (str): product type
 
     Returns:
-        Tuple[str, str, str, str]: [description]
+        Tuple[str, str, str, str]: html elements
     """
     pricing_data = [
         f"${p}" if source == "us" else f"£{p}"
@@ -4177,18 +4163,16 @@ def update_pricing_analysis_text(
 def update_category_review_trend_figure(
     source: str, category: list, start_date: str, end_date: str
 ) -> go.Figure:
-    """update_category_review_trend_figure [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        category (list): [description]
-        start_date (str): [description]
-        end_date (str): [description]
+        source (str): product source
+        category (list): product category
+        start_date (str): start date
+        end_date (str): end date
 
     Returns:
-        go.Figure: [description]
+        go.Figure: category review trend figure
     """
 
     if start_date is not None:
@@ -4226,18 +4210,16 @@ def update_category_review_trend_figure(
 def update_category_influenced_review_trend_figure(
     source: str, category: list, start_date: str, end_date: str
 ) -> go.Figure:
-    """update_category_influenced_review_trend_figure [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        category (list): [description]
-        start_date (str): [description]
-        end_date (str): [description]
+        source (str): product source
+        category (list): product category
+        start_date (str): start date
+        end_date (str): end date
 
     Returns:
-        go.Figure: [description]
+        go.Figure: category influenced review trend figure
     """
 
     if start_date is not None:
@@ -4269,15 +4251,14 @@ def update_category_influenced_review_trend_figure(
     ],
 )
 def influenced_display_click_data(clickData) -> str:
-    """influenced_display_click_data [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        clickData ([type]): [description]
+        clickData ([type]): clickData
 
     Returns:
-        str: [description]
+        str: the category name being clicked on
+
     """
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
@@ -4292,15 +4273,14 @@ def influenced_display_click_data(clickData) -> str:
     ],
 )
 def display_click_data(clickData) -> str:
-    """display_click_data [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        clickData ([type]): [description]
+        clickData ([type]): clickdata
 
     Returns:
-        str: [description]
+        str: the category name being clicked on
+
     """
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
@@ -4320,18 +4300,15 @@ def display_click_data(clickData) -> str:
 def update_product_type_review_trend_figure(
     source: str, clickData, start_date: str, end_date: str
 ) -> go.Figure:
-    """update_product_type_review_trend_figure [summary]
-
-    [extended_summary]
-
+    """
     Args:
-        source (str): [description]
-        clickData ([type]): [description]
-        start_date (str): [description]
-        end_date (str): [description]
+        source (str): product source
+        clickData ([type]): click data
+        start_date (str): start date
+        end_date (str): end date
 
     Returns:
-        go.Figure: [description]
+        go.Figure: subcategory trend figure
     """
 
     if start_date is not None:
@@ -4393,18 +4370,16 @@ def update_product_type_review_trend_figure(
 def update_product_type_influenced_review_trend_figure(
     source: str, clickData, start_date: str, end_date: str
 ) -> go.Figure:
-    """update_product_type_influenced_review_trend_figure
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        clickData ([type]): [description]
-        start_date (str): [description]
-        end_date (str): [description]
+        source (str): product source
+        clickData ([type]): click data
+        start_date (str): start date
+        end_date (str): end date
 
     Returns:
-        go.Figure: [description]
+        go.Figure: influence subcategory trend figure
     """
 
     if start_date is not None:
@@ -4462,16 +4437,14 @@ def update_product_type_influenced_review_trend_figure(
     ],
 )
 def date_selection_text(start_date: str, end_date: str) -> str:
-    """date_selection_text [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        start_date (str): [description]
-        end_date (str): [description]
+        start_date (str)
+        end_date (str)
 
     Returns:
-        str: [description]
+        str: date range result
     """
     return "Minimum start date is 12/01/2008. \n You can write in MM/DD/YYYY format in the date box to filter."
 
@@ -4488,18 +4461,16 @@ def date_selection_text(start_date: str, end_date: str) -> str:
 def update_category_product_launch_figure(
     source: str, category: list, start_date: str, end_date: str
 ) -> go.Figure:
-    """update_category_product_launch_figure [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        category (list): [description]
-        start_date (str): [description]
-        end_date (str): [description]
+        source (str): product source
+        category (list): product category
+        start_date (str)
+        end_date (str)
 
     Returns:
-        go.Figure: [description]
+        go.Figure: product launch trend category
     """
 
     if start_date is not None:
@@ -4531,15 +4502,13 @@ def update_category_product_launch_figure(
     ],
 )
 def display_click_data_product_trend(clickData) -> str:
-    """display_click_data_product_trend [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        clickData ([type]): [description]
+        clickData ([type]): click data
 
     Returns:
-        str: [description]
+        str: product trend category name
     """
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
@@ -4559,18 +4528,16 @@ def display_click_data_product_trend(clickData) -> str:
 def update_product_type_product_launch_figure(
     source: str, clickData, start_date: str, end_date: str
 ) -> go.Figure:
-    """update_product_type_product_launch_figure [summary]
-
-    [extended_summary]
+    """
 
     Args:
         source:
-        clickData ([type]): [description]
-        start_date (str): [description]
-        end_date (str): [description]
+        clickData ([type]): click data information
+        start_date (str)
+        end_date (str)
 
     Returns:
-        go.Figure: [description]
+        go.Figure: product launch trend category figure
     """
 
     if start_date is not None:
@@ -4612,18 +4579,16 @@ def update_product_type_product_launch_figure(
 def update_product_launch_intensity_figure(
     source: str, category: list, start_date: str, end_date: str
 ) -> go.Figure:
-    """update_product_launch_intensity_figure [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        category (list): [description]
-        start_date (str): [description]
-        end_date (str): [description]
+        source (str): product source
+        category (list): product category
+        start_date (str)
+        end_date (str)
 
     Returns:
-        go.Figure: [description]
+        go.Figure: product launch intensity category figure
     """
 
     if start_date is not None:
