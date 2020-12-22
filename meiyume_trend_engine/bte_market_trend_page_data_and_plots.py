@@ -374,19 +374,19 @@ def create_product_launch_intensity_figure(
     start_date: str = default_start_date,
     end_date: str = default_end_date,
 ) -> go.Figure:
-    """create_product_launch_intensity_figure [summary]
-
-    [extended_summary]
+    """create_product_launch_intensity_figure function creates a plot for product launch intensity which is shown on market trends page.
 
     Args:
-        data (pd.DataFrame): [description]
-        source (str, optional): [description]. Defaults to 'us'.
-        category (list, optional): [description]. Defaults to product_launch_intensity_category_df.category.unique().tolist().
+        data (pd.DataFrame): product launch data
+        source (str, optional): market region. Defaults to 'us'.
+        category (list, optional): category of the product(e.g.-'Skincare').
+                                   Defaults to product_launch_intensity_category_df.category.unique().tolist().
         start_date (str, optional): [description]. Defaults to default_start_date.
         end_date (str, optional): [description]. Defaults to default_end_date.
 
     Returns:
-        go.Figure: [description]
+        go.Figure: plotly figure for product launch intensity
+
     """
     data.meta_date = data.meta_date.astype(str)
     data = data[(data.meta_date >= start_date) & (data.meta_date <= end_date)]

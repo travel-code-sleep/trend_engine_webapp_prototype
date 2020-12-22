@@ -283,6 +283,13 @@ app.layout = html.Div(
 
 
 def landing_page_layout():
+    """landing_page_layout [summary]
+
+    [extended_summary]
+
+    Returns:
+        [type]: [description]
+    """
     return html.Div(
         children=[
             html.Div(
@@ -1553,6 +1560,13 @@ def category_page_layout():
 
 
 def product_page_layout():
+    """product_page_layout [summary]
+
+    [extended_summary]
+
+    Returns:
+        html: product page layout.
+    """
     return html.Div(
         [
             dbc.Row(
@@ -2879,10 +2893,10 @@ def display_click_data_ing_page(clickData) -> str:
     [extended_summary]
 
     Args:
-        clickData ([type]): [description]
+        clickData (json): clicked web element information
 
     Returns:
-        str: [description]
+        str: Category Name
     """
     if clickData is not None:
         return f"Selected Category: {clickData['points'][0]['customdata'][0]}"
