@@ -2894,6 +2894,7 @@ def update_ing_page_category_count_figure(ingredient: str, clickData):
     [extended_summary]
 
     Args:
+        clickData:
         ingredient (str): [description]
 
     Returns:
@@ -4589,7 +4590,7 @@ def update_product_type_product_launch_figure(
     [extended_summary]
 
     Args:
-        sourc (str): [description]
+        source:
         clickData ([type]): [description]
         start_date (str): [description]
         end_date (str): [description]

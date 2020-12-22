@@ -114,9 +114,10 @@ def create_ing_page_category_count_figure(
     [extended_summary]
 
     Args:
-        source (str): [description]
-        category (str): [description]
-        product_type (str): [description]
+        data:
+        group:
+        ingredient:
+        orientation:
 
     Returns:
         go.Figure: [description]
