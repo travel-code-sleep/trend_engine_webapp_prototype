@@ -29,6 +29,12 @@ def read_feather_s3(self, filename: str, prefix: str, bucket: str = 'meiyume-dat
 
 
 def set_default_start_and_end_dates():
+    """
+
+    Returns:
+        default start date and default end date
+
+    """
     three_yrs_ago = dt.now() - relativedelta(years=3)
     default_start_date = str(pd.to_datetime(
         three_yrs_ago.strftime('%m/%d/%Y')))[:10].split('-')

@@ -851,6 +851,11 @@ def market_trend_page_layout():
 
 
 def category_page_layout():
+    """
+
+    Returns: category page layout
+
+    """
     packaging_filtered_df = cat_page_item_package_oz_df[
         ["item_size", "product_count", "avg_price"]
     ][
@@ -2370,6 +2375,11 @@ def product_page_layout():
 
 
 def ingredient_page_layout():
+    """
+
+    Returns:
+
+    """
     return html.Div(
         [
             dbc.Row(
@@ -2821,6 +2831,14 @@ def ingredient_page_layout():
 
 
 def mark_digit(d):
+    """
+
+    Args:
+        d:
+
+    Returns: digit formatted with comma
+
+    """
     return format(d, ",d")
 
 
@@ -3030,6 +3048,16 @@ def update_ing_page_product_table(ingredient: str) -> list:
 def update_ing_page_ingredient_type_figure(
     source: str, category: str, product_type: str
 ) -> go.Figure:
+    """
+
+    Args:
+        source:
+        category:
+        product_type:
+
+    Returns:
+        html figure element
+    """
     from bte_ingredient_page_data_and_plots import (
         create_ing_page_ingredient_type_figure,
     )
@@ -3091,6 +3119,15 @@ def update_ing_page_ing_analysis_text(
     [Input("ing_page_source", "value"), Input("ing_page_category", "value")],
 )
 def set_ing_page_product_type_options(source: str, category: str):
+    """
+
+    Args:
+        source:
+        category:
+
+    Returns:
+        html element
+    """
     return [
         {"label": i, "value": i}
         for i in ing_page_ing_df.product_type[
@@ -3110,6 +3147,16 @@ def set_ing_page_product_type_options(source: str, category: str):
     ],
 )
 def set_ing_page_product_type_value(source, category, available_options):
+    """
+
+    Args:
+        source:
+        category:
+        available_options:
+
+    Returns:
+        html element
+    """
     return available_options[0]["value"]
 
 
@@ -3203,6 +3250,18 @@ def update_prod_page_product_variants_table(
 def update_prod_page_item_price_figure(
     source: str, prod_id: str, start_date: str, end_date: str
 ) -> go.Figure:
+    """
+
+    Args:
+        source:
+        prod_id:
+        start_date:
+        end_date:
+
+    Returns:
+        html element
+
+    """
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3296,6 +3355,18 @@ def display_prod_page_price_data(source: str, prod_id: str) -> Tuple[str, str, s
 def update_prod_page_reviews_distribution_figure(
     source: str, prod_id: str, start_date: str, end_date: str
 ) -> Tuple[go.Figure, go.Figure]:
+    """
+
+    Args:
+        source:
+        prod_id:
+        start_date:
+        end_date:
+
+    Returns:
+        html element
+
+    """
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3385,6 +3456,18 @@ def date_selection_text(start_date: str, end_date: str) -> str:
 def update_prod_page_review_timeseries_figure(
     source: str, prod_id: str, start_date: str, end_date: str
 ) -> Tuple[go.Figure, go.Figure]:
+    """
+
+    Args:
+        source:
+        prod_id:
+        start_date:
+        end_date:
+
+    Returns:
+        html element
+
+    """
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3422,6 +3505,18 @@ def update_prod_page_review_timeseries_figure(
 def update_prod_page_review_breakdown_figure(
     source: str, prod_id: str, start_date: str, end_date: str
 ) -> Tuple[go.Figure, go.Figure]:
+    """
+
+    Args:
+        source:
+        prod_id:
+        start_date:
+        end_date:
+
+    Returns:
+        html element
+
+    """
     from bte_product_page_data_and_plots import (
         create_prod_page_review_breakdown_figure,
         prod_page_review_sentiment_influence_df,
@@ -3457,6 +3552,16 @@ def update_prod_page_review_breakdown_figure(
     [Input("prod_page_source", "value"), Input("prod_page_product", "value")],
 )
 def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
+    """
+
+    Args:
+        source:
+        prod_id:
+
+    Returns:
+        html element
+
+    """
     from bte_product_page_data_and_plots import (
         create_prod_page_review_talking_points_figure,
         prod_page_review_talking_points_df,
@@ -3482,6 +3587,16 @@ def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
     ],
 )
 def display_product_page_category(source: str, prod_id: str):
+    """
+
+    Args:
+        source:
+        prod_id:
+
+    Returns:
+        html element
+
+    """
     if (
         len(
             prod_page_review_sum_df.pos_review_summary[
@@ -3516,6 +3631,16 @@ def display_product_page_category(source: str, prod_id: str):
     [Input("prod_page_source", "value"), Input("prod_page_product", "value")],
 )
 def update_prod_page_img_src(source: str, prod_id: str):
+    """
+
+    Args:
+        source:
+        prod_id:
+
+    Returns:
+        html element
+
+    """
     # commented by Arnold #
     # return image URL strictly from read_image_s3 #
     # prod_img_path = read_image_s3(prod_id=prod_id)
@@ -3542,6 +3667,18 @@ def update_prod_page_img_src(source: str, prod_id: str):
 def display_product_data_in_card(
     source: str, prod_id: str, start_date: str, end_date: str
 ):
+    """
+
+    Args:
+        source:
+        prod_id:
+        start_date:
+        end_date:
+
+    Returns:
+        html element
+
+    """
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
         start_date_string = start_date.strftime("%Y-%m-%d")
@@ -3591,6 +3728,16 @@ def display_product_data_in_card(
     [Input("prod_page_source", "value"), Input("prod_page_product", "value")],
 )
 def display_product_page_category(source: str, prod_id: str):
+    """
+
+    Args:
+        source:
+        prod_id:
+
+    Returns:
+        html element
+
+    """
     category = prod_page_metadetail_data_df.category[
         (prod_page_metadetail_data_df.source == source)
         & (prod_page_metadetail_data_df.prod_id == prod_id)
@@ -3606,6 +3753,15 @@ def display_product_page_category(source: str, prod_id: str):
     Output("prod_page_product", "options"), [Input("prod_page_source", "value")]
 )
 def set_product_page_product_options(source: str):
+    """
+
+    Args:
+        source:
+
+    Returns:
+        html element
+
+    """
     return sorted(
         [
             {"label": i[0], "value": i[1]}
@@ -3622,6 +3778,16 @@ def set_product_page_product_options(source: str):
     [Input("prod_page_source", "value"), Input("prod_page_product", "options")],
 )
 def set_product_page_product_value(source, available_options):
+    """
+
+    Args:
+        source:
+        available_options:
+
+    Returns:
+        html element
+
+    """
     return available_options[10]["value"]
 
 
@@ -3838,6 +4004,16 @@ def filter_product_packaging_data_table(
     [Input("cat_page_source", "value"), Input("cat_page_category", "value")],
 )
 def set_category_page_product_type_options(source: str, category: str):
+    """
+
+    Args:
+        source:
+        category:
+
+    Returns:
+        html element
+
+    """
     return [
         {"label": i, "value": i}
         for i in cat_page_pricing_analytics_df.product_type[
@@ -3856,6 +4032,17 @@ def set_category_page_product_type_options(source: str, category: str):
     ],
 )
 def set_category_page_product_type_value(source, category, available_options):
+    """
+
+    Args:
+        source:
+        category:
+        available_options:
+
+    Returns:
+        html element
+
+    """
     return available_options[0]["value"]
 
 
@@ -4598,6 +4785,16 @@ def update_product_type_new_ingredient_trend_figure(
     [State("navbar-collapse", "is_open")],
 )
 def toggle_navbar_collapse(n, is_open):
+    """
+
+    Args:
+        n:
+        is_open:
+
+    Returns:
+        html element
+
+    """
     if n:
         return not is_open
     return is_open
@@ -4609,6 +4806,16 @@ def toggle_navbar_collapse(n, is_open):
     [State("sidebar", "className")],
 )
 def toggle_classname(n, classname):
+    """
+
+    Args:
+        n:
+        classname:
+
+    Returns:
+        html element
+
+    """
     if n and classname == "":
         return "collapsed"
     return ""
@@ -4619,6 +4826,15 @@ def toggle_classname(n, classname):
     [Input("url", "pathname")],
 )
 def toggle_active_links(pathname):
+    """
+
+    Args:
+        pathname:
+
+    Returns:
+        html element
+
+    """
     if pathname == "/":
         # Treat page 1 as the homepage / index
         return True, False, False, False, False
@@ -4627,6 +4843,15 @@ def toggle_active_links(pathname):
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
+    """
+
+    Args:
+        pathname:
+
+    Returns:
+        html element
+
+    """
     if pathname in ["/", "/page-1"]:
         # html.P("This is the content of page 1!")
         return landing_page_layout()

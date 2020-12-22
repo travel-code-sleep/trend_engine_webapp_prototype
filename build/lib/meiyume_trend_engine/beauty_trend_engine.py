@@ -256,6 +256,12 @@ app.layout = html.Div(
 
 
 def landing_page_layout():
+    """
+
+    Returns:
+        html element
+
+    """
     return html.Div(
         className='row',
         style={'verticalAlign': 'middle',
@@ -541,6 +547,12 @@ def market_trend_page_layout():
 
 
 def category_page_layout():
+    """
+
+    Returns:
+        html element
+
+    """
     packaging_filtered_df = cat_page_item_package_oz_df[['item_size', 'product_count']][
         (cat_page_item_package_oz_df.source == 'us') &
         (cat_page_item_package_oz_df.category == 'travel-size-toiletries') &
@@ -1187,6 +1199,16 @@ def filter_product_packaging_data_table(source: str, category: str, product_type
     [Input('cat_page_source', 'value'),
      Input('cat_page_category', 'value')])
 def set_category_page_product_type_options(source: str, category: str):
+    """
+
+    Args:
+        source:
+        category:
+
+    Returns:
+        html element
+
+    """
     return [{'label': i, 'value': i}
             for i in cat_page_pricing_analytics_df.product_type[(cat_page_pricing_analytics_df.source == source) &
                                                                 (cat_page_pricing_analytics_df.category == category)].unique()]
@@ -1198,6 +1220,17 @@ def set_category_page_product_type_options(source: str, category: str):
      Input("cat_page_category", "value"),
      Input('cat_page_product_type', 'options')])
 def set_category_page_product_type_value(source, category, available_options):
+    """
+
+    Args:
+        source:
+        category:
+        available_options:
+
+    Returns:
+        html element
+
+    """
     return available_options[0]['value']
 
 
@@ -1809,6 +1842,16 @@ def update_product_type_new_ingredient_trend_figure(source: str, clickData, star
     [State("navbar-collapse", "is_open")],
 )
 def toggle_navbar_collapse(n, is_open):
+    """
+
+    Args:
+        n:
+        is_open:
+
+    Returns:
+        html element
+
+    """
     if n:
         return not is_open
     return is_open
@@ -1820,6 +1863,16 @@ def toggle_navbar_collapse(n, is_open):
     [State("sidebar", "className")],
 )
 def toggle_classname(n, classname):
+    """
+
+    Args:
+        n:
+        classname:
+
+    Returns:
+        html element
+
+    """
     if n and classname == "":
         return "collapsed"
     return ""
@@ -1830,6 +1883,15 @@ def toggle_classname(n, classname):
     [Input("url", "pathname")],
 )
 def toggle_active_links(pathname):
+    """
+
+    Args:
+        pathname:
+
+    Returns:
+        html element
+
+    """
     if pathname == "/":
         # Treat page 1 as the homepage / index
         return True, False, False, False
@@ -1839,6 +1901,15 @@ def toggle_active_links(pathname):
 @app.callback(Output("page-content", "children"),
               [Input("url", "pathname")])
 def render_page_content(pathname):
+    """
+
+    Args:
+        pathname:
+
+    Returns:
+        html element
+
+    """
     if pathname in ["/", "/page-1"]:
         # html.P("This is the content of page 1!")
         return landing_page_layout()
