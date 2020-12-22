@@ -51,7 +51,8 @@ prod_page_reviews_attribute_df = read_file_s3(
 # pd.read_feather(
 #     dash_data_path/'prod_page_reviews_attribute')
 # item data
-prod_page_item_df = read_file_s3(filename="prod_page_item_data", file_type="feather")
+prod_page_item_df = read_file_s3(
+    filename="prod_page_item_data", file_type="feather")
 # pd.read_feather(dash_data_path/'prod_page_item_data')
 prod_page_item_price_df = prod_page_item_df[
     ["prod_id", "item_size", "meta_date", "item_price"]
@@ -62,7 +63,8 @@ prod_page_item_price_df["source"] = prod_page_item_price_df.prod_id.apply(
 prod_page_item_price_df.reset_index(inplace=True, drop=True)
 
 # ingredient data
-prod_page_ing_df = read_file_s3(filename="prod_page_ing_data", file_type="feather")
+prod_page_ing_df = read_file_s3(
+    filename="prod_page_ing_data", file_type="feather")
 # pd.read_feather(dash_data_path/'prod_page_ing_data')
 
 """ create dropdown options """
@@ -190,7 +192,8 @@ def create_prod_page_review_breakdown_figure(
     Returns:
         go.Figure: [description]
     """
-    df = pd.DataFrame(data[col][data.prod_id == prod_id].value_counts()).reset_index()
+    df = pd.DataFrame(
+        data[col][data.prod_id == prod_id].value_counts()).reset_index()
     df.columns = [col, "review_count"]
     df.sort_values(by=[col], inplace=True, ascending=False)
 
@@ -248,7 +251,8 @@ def create_prod_page_review_timeseries_figure(
 
         if col == "sentiment":
             marker_color = ["green", "red"]
-            df.sort_values(by=[col, "review_date"], inplace=True, ascending=False)
+            df.sort_values(by=[col, "review_date"],
+                           inplace=True, ascending=False)
         else:
             marker_color = ["#c09891", "orange"]
 
