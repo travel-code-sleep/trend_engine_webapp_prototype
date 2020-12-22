@@ -51,25 +51,23 @@ prod_page_reviews_attribute_df = read_file_s3(
 # pd.read_feather(
 #     dash_data_path/'prod_page_reviews_attribute')
 # item data
-prod_page_item_df = read_file_s3(
-    filename="prod_page_item_data", file_type="feather")
+prod_page_item_df = read_file_s3(filename="prod_page_item_data", file_type="feather")
 # pd.read_feather(dash_data_path/'prod_page_item_data')
 prod_page_item_price_df = prod_page_item_df[
     ["prod_id", "item_size", "meta_date", "item_price"]
 ]
-prod_page_item_price_df['source'] = prod_page_item_price_df.prod_id.apply(
-    lambda x: 'us' if 'sph' in x else 'uk')
+prod_page_item_price_df["source"] = prod_page_item_price_df.prod_id.apply(
+    lambda x: "us" if "sph" in x else "uk"
+)
 prod_page_item_price_df.reset_index(inplace=True, drop=True)
 
 # ingredient data
-prod_page_ing_df = read_file_s3(
-    filename="prod_page_ing_data", file_type="feather")
+prod_page_ing_df = read_file_s3(filename="prod_page_ing_data", file_type="feather")
 # pd.read_feather(dash_data_path/'prod_page_ing_data')
 
 """ create dropdown options """
 product_page_source_options = [
-    {"label": i, "value": i}
-    for i in prod_page_metadetail_data_df.source.unique()
+    {"label": i, "value": i} for i in prod_page_metadetail_data_df.source.unique()
 ]
 # product_page_category_options = [{'label': i, 'value': i}
 #                                  for i in prod_page_metadetail_data_df.category.unique()]
@@ -88,9 +86,7 @@ product_page_product_name_options = sorted(
 prod_page_user_attribute_options = sorted(
     [
         {"label": i, "value": i}
-        for i in list(
-            prod_page_reviews_attribute_df.columns.difference(["prod_id"])
-        )
+        for i in list(prod_page_reviews_attribute_df.columns.difference(["prod_id"]))
     ],
     key=lambda k: k["label"],
 )
@@ -104,7 +100,8 @@ prod_page_user_attribute_options = sorted(
 
 
 def create_prod_page_review_talking_points_figure(
-        data: pd.DataFrame, prod_id: str, col: str) -> go.Figure:
+    data: pd.DataFrame, prod_id: str, col: str
+) -> go.Figure:
     """create_prod_page_review_talking_points_figure [summary]
 
     [extended_summary]
@@ -179,7 +176,8 @@ def create_prod_page_review_talking_points_figure(
 
 
 def create_prod_page_review_breakdown_figure(
-        data: pd.DataFrame, prod_id: str, col: str) -> go.Figure:
+    data: pd.DataFrame, prod_id: str, col: str
+) -> go.Figure:
     """create_prod_page_review_breakdown_figure [summary]
 
     [extended_summary]
@@ -192,8 +190,7 @@ def create_prod_page_review_breakdown_figure(
     Returns:
         go.Figure: [description]
     """
-    df = pd.DataFrame(
-        data[col][data.prod_id == prod_id].value_counts()).reset_index()
+    df = pd.DataFrame(data[col][data.prod_id == prod_id].value_counts()).reset_index()
     df.columns = [col, "review_count"]
     df.sort_values(by=[col], inplace=True, ascending=False)
 
@@ -224,7 +221,8 @@ def create_prod_page_review_breakdown_figure(
 
 
 def create_prod_page_review_timeseries_figure(
-        data: pd.DataFrame, prod_id: str, col: str) -> go.Figure:
+    data: pd.DataFrame, prod_id: str, col: str
+) -> go.Figure:
     """create_prod_page_review_timeseries_figure [summary]
 
     [extended_summary]
@@ -250,8 +248,7 @@ def create_prod_page_review_timeseries_figure(
 
         if col == "sentiment":
             marker_color = ["green", "red"]
-            df.sort_values(by=[col, "review_date"],
-                           inplace=True, ascending=False)
+            df.sort_values(by=[col, "review_date"], inplace=True, ascending=False)
         else:
             marker_color = ["#c09891", "orange"]
 
@@ -293,7 +290,8 @@ def create_prod_page_review_timeseries_figure(
 
 
 def create_prod_page_reviews_by_user_attribute_figure(
-        prod_id: str, user_attribute: str = "age") -> go.Figure:
+    prod_id: str, user_attribute: str = "age"
+) -> go.Figure:
     """create_prod_page_reviews_by_user_attribute_figure [summary]
 
     [extended_summary]
@@ -321,7 +319,7 @@ def create_prod_page_reviews_by_user_attribute_figure(
         orientation="h",
         height=400,
         # title=f"Reviews by {plot_title}",
-        text="review_count"
+        text="review_count",
     )
     fig.update_layout(
         font_family="GothamLight",
@@ -351,7 +349,8 @@ def create_prod_page_reviews_by_user_attribute_figure(
 
 
 def create_prod_page_reviews_distribution_figure(
-        data: pd.DataFrame, prod_id: str) -> go.Figure:
+    data: pd.DataFrame, prod_id: str
+) -> go.Figure:
     """create_prod_page_reviews_distribution_figure [summary]
 
     [extended_summary]
@@ -374,7 +373,7 @@ def create_prod_page_reviews_distribution_figure(
         orientation="h",
         height=400,
         # title=f"Reviews by Stars",
-        text="review_count"
+        text="review_count",
     )
     fig.update_layout(
         font_family="GothamLight",
@@ -410,6 +409,7 @@ def create_prod_page_item_price_figure(data: pd.DataFrame) -> go.Figure:
     Returns:
         go.Figure: [description]
     """
+    data = data.sort_values(by="meta_date")
     fig = px.line(
         data,
         x="meta_date",
