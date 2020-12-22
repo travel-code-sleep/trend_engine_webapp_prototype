@@ -1,8 +1,8 @@
 """utility classes and functions for trend engine web-app."""
 import base64
 import gc
-import sys
 import io
+import sys
 from datetime import datetime as dt
 from pathlib import Path
 

@@ -17,13 +17,12 @@ import dash_html_components as html
 import dash_table
 import pandas as pd
 import plotly.graph_objs as go
-from dash.dependencies import Input, Output, State
-
 from bte_category_page_data_and_plots import *
 from bte_ingredient_page_data_and_plots import *
 from bte_market_trend_page_data_and_plots import *
 from bte_product_page_data_and_plots import *
 from bte_utils import read_file_s3, read_image_s3
+from dash.dependencies import Input, Output, State
 from settings import *
 
 # assign default values
@@ -3078,9 +3077,8 @@ def update_ing_page_ingredient_type_figure(
     Returns:
         html figure element
     """
-    from bte_ingredient_page_data_and_plots import (
-        create_ing_page_ingredient_type_figure,
-    )
+    from bte_ingredient_page_data_and_plots import \
+        create_ing_page_ingredient_type_figure
 
     fig = create_ing_page_ingredient_type_figure(
         source, category, product_type)
@@ -3544,8 +3542,7 @@ def update_prod_page_review_breakdown_figure(
     """
     from bte_product_page_data_and_plots import (
         create_prod_page_review_breakdown_figure,
-        prod_page_review_sentiment_influence_df,
-    )
+        prod_page_review_sentiment_influence_df)
 
     if start_date is not None:
         start_date = dt.strptime(re.split("T| ", start_date)[0], "%Y-%m-%d")
@@ -3591,8 +3588,7 @@ def update_prod_page_review_talking_points_figure(source: str, prod_id: str):
     """
     from bte_product_page_data_and_plots import (
         create_prod_page_review_talking_points_figure,
-        prod_page_review_talking_points_df,
-    )
+        prod_page_review_talking_points_df)
 
     pos_fig = create_prod_page_review_talking_points_figure(
         prod_page_review_talking_points_df, prod_id, "pos_talking_points"

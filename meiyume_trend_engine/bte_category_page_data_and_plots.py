@@ -2,7 +2,6 @@
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
-
 from bte_utils import read_file_s3, set_default_start_and_end_dates
 
 BANNED = "Banned?"

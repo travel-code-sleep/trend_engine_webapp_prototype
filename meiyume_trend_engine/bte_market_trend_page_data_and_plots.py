@@ -6,9 +6,8 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objs as go
-from path import Path
-
 from bte_utils import read_file_s3, set_default_start_and_end_dates
+from path import Path
 
 default_start_date, default_end_date = set_default_start_and_end_dates()
 
