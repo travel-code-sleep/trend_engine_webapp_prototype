@@ -4696,18 +4696,16 @@ def display_click_data_ingredient_trend(clickData) -> str:
 def update_product_type_new_ingredient_trend_figure(
     source: str, clickData, start_date: str, end_date: str
 ) -> go.Figure:
-    """update_product_type_new_ingredient_trend_figure [summary]
-
-    [extended_summary]
+    """
 
     Args:
-        source (str): [description]
-        clickData ([type]): [description]
-        start_date (str): [description]
-        end_date (str): [description]
+        source (str)
+        clickData ([type]): click information on ingredient launch trend category element
+        start_date (str)
+        end_date (str)
 
     Returns:
-        go.Figure: [description]
+        go.Figure: html element
     """
 
     if start_date is not None:
