@@ -4029,7 +4029,7 @@ def set_category_page_product_type_value(available_options):
     """
 
     Args:
-        available_options:
+        available_options: product type options
 
     Returns:
         html element
@@ -4755,8 +4755,8 @@ def toggle_navbar_collapse(n, is_open):
     """
 
     Args:
-        n:
-        is_open:
+        n: the number of clicks on the navbar-toggler element
+        is_open: whether the navbar is open or not
 
     Returns:
         html element
@@ -4776,8 +4776,8 @@ def toggle_classname(n, classname):
     """
 
     Args:
-        n:
-        classname:
+        n: the number of clicks on sidebar-toggle element
+        classname: the className of the sidebar
 
     Returns:
         html element
@@ -4796,7 +4796,7 @@ def toggle_active_links(pathname):
     """
 
     Args:
-        pathname:
+        pathname: the pathname of the url
 
     Returns:
         html element
@@ -4813,7 +4813,7 @@ def render_page_content(pathname):
     """
 
     Args:
-        pathname:
+        pathname: the url of the current page
 
     Returns:
         html element
