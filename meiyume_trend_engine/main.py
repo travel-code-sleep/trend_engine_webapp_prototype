@@ -75,7 +75,8 @@ app = dash.Dash(
     external_stylesheets=external_stylesheets,
     # these meta_tags ensure content is scaled correctly on different devices
     # see: https://www.w3schools.com/css/css_rwd_viewport.asp for more
-    meta_tags=[{"name": "viewport", "content": "width=device-width, initial-scale=1"}],
+    meta_tags=[{"name": "viewport",
+                "content": "width=device-width, initial-scale=1"}],
 )
 
 auth = dash_auth.BasicAuth(app, USERNAME_PASSWORD_PAIRS)
@@ -217,9 +218,12 @@ sidebar = html.Div(
                     dbc.NavLink(
                         "Beauty Trend Engine", href="/page-1", id="page-1-link"
                     ),
-                    dbc.NavLink("Market Trend", href="/page-2", id="page-2-link"),
-                    dbc.NavLink("Category Insights", href="/page-3", id="page-3-link"),
-                    dbc.NavLink("Product Insights", href="/page-4", id="page-4-link"),
+                    dbc.NavLink("Market Trend", href="/page-2",
+                                id="page-2-link"),
+                    dbc.NavLink("Category Insights",
+                                href="/page-3", id="page-3-link"),
+                    dbc.NavLink("Product Insights",
+                                href="/page-4", id="page-4-link"),
                     dbc.NavLink(
                         "Ingredient Insights", href="/page-5", id="page-5-link"
                     ),
@@ -1049,7 +1053,8 @@ def category_page_layout():
                                                             "fontFamily": "GildaDisplay",
                                                         },
                                                     ),
-                                                    html.P("Product Variations"),
+                                                    html.P(
+                                                        "Product Variations"),
                                                 ],
                                                 id="product_variations",
                                                 className="mini_container",
@@ -1062,7 +1067,8 @@ def category_page_layout():
                                                             "fontFamily": "GildaDisplay",
                                                         },
                                                     ),
-                                                    html.P("New Products Launched"),
+                                                    html.P(
+                                                        "New Products Launched"),
                                                 ],
                                                 id="new_products",
                                                 className="mini_container",
@@ -1966,7 +1972,8 @@ def product_page_layout():
                                                             options=prod_page_user_attribute_options,
                                                             multi=False,
                                                             value="age",
-                                                            style={"fontSize": 14},
+                                                            style={
+                                                                "fontSize": 14},
                                                             placeholder="Select User Attribute",
                                                             clearable=False,
                                                         ),
@@ -1992,7 +1999,8 @@ def product_page_layout():
                                                 },
                                             ),
                                             html.Div(),
-                                            dcc.Graph(id="prod_page_reviews_by_stars"),
+                                            dcc.Graph(
+                                                id="prod_page_reviews_by_stars"),
                                         ],
                                         style={
                                             "display": "flex",
@@ -2146,7 +2154,8 @@ def product_page_layout():
                                     dbc.Col(
                                         [
                                             html.Div(
-                                                dcc.Graph("prod_page_price_variation"),
+                                                dcc.Graph(
+                                                    "prod_page_price_variation"),
                                                 style={"overflowY": "scroll"},
                                             )
                                         ]
@@ -2237,7 +2246,8 @@ def product_page_layout():
                                                     "height": "auto",
                                                 },
                                                 fixed_rows={"headers": True},
-                                                style_table={"overflow": "auto"},
+                                                style_table={
+                                                    "overflow": "auto"},
                                             ),
                                         ],
                                         width=12,
@@ -2419,13 +2429,17 @@ def ingredient_page_layout():
                     ),
                     dbc.Row(
                         [
-                            dbc.Col([dcc.Graph(id="ing_page_ing_cat_presence")]),
+                            dbc.Col(
+                                [dcc.Graph(id="ing_page_ing_cat_presence")]),
                             dbc.Col(
                                 [
-                                    dbc.Row([html.H5(id="ing_page_click_data_text")]),
+                                    dbc.Row(
+                                        [html.H5(id="ing_page_click_data_text")]),
                                     html.Div(
-                                        dcc.Graph(id="ing_page_ing_subcat_presence"),
-                                        style={"overflowX": "scroll", "width": 1000},
+                                        dcc.Graph(
+                                            id="ing_page_ing_subcat_presence"),
+                                        style={"overflowX": "scroll",
+                                               "width": 1000},
                                     ),
                                 ]
                             ),
@@ -2632,7 +2646,8 @@ def ingredient_page_layout():
                                                             "fontFamily": "GildaDisplay",
                                                         },
                                                     ),
-                                                    html.P("Distinct Ingredients"),
+                                                    html.P(
+                                                        "Distinct Ingredients"),
                                                 ],
                                                 id="distinct_ing",
                                                 className="mini_container",
@@ -2661,7 +2676,8 @@ def ingredient_page_layout():
                         ],
                         width=5,
                     ),
-                    dbc.Col([html.Div(dcc.Graph("ing_page_ing_type_fig"))], width=7),
+                    dbc.Col(
+                        [html.Div(dcc.Graph("ing_page_ing_type_fig"))], width=7),
                 ],
                 className="pretty_container",
             ),
@@ -2852,7 +2868,8 @@ def display_click_data_ing_page(clickData) -> str:
 
 @app.callback(
     Output("ing_page_ing_subcat_presence", "figure"),
-    [Input("ing_page_ing", "value"), Input("ing_page_ing_cat_presence", "clickData")],
+    [Input("ing_page_ing", "value"), Input(
+        "ing_page_ing_cat_presence", "clickData")],
 )
 def update_ing_page_category_count_figure(ingredient: str, clickData):
     """update_ing_page_category_count_figure [summary]
@@ -2889,7 +2906,8 @@ def update_ing_page_category_count_figure(ingredient: str, clickData):
 
 
 @app.callback(
-    Output("ing_page_ing_cat_presence", "figure"), [Input("ing_page_ing", "value")]
+    Output("ing_page_ing_cat_presence", "figure"), [
+        Input("ing_page_ing", "value")]
 )
 def update_ing_page_category_count_figure(ingredient: str):
     """update_ing_page_category_count_figure [summary]
@@ -2914,7 +2932,8 @@ def update_ing_page_category_count_figure(ingredient: str):
         data.columns = ["category", "product_count"]
         data.category = data.category.astype(str)
 
-        fig = create_ing_page_category_count_figure(data, "category", ingredient)
+        fig = create_ing_page_category_count_figure(
+            data, "category", ingredient)
 
         return fig
     return {}
@@ -2989,7 +3008,8 @@ def update_ing_page_banned_ing_table(
     ][["ingredient", "product_name"]].drop_duplicates()
     ban_ing.product_name = ban_ing.product_name.astype("str")
     ban_ing.reset_index(inplace=True, drop=True)
-    ban_ing = ban_ing.groupby("product_name").ingredient.apply(", ".join).reset_index()
+    ban_ing = ban_ing.groupby("product_name").ingredient.apply(
+        ", ".join).reset_index()
 
     return ban_ing.to_dict("records")
 
@@ -3034,7 +3054,8 @@ def update_ing_page_ingredient_type_figure(
         create_ing_page_ingredient_type_figure,
     )
 
-    fig = create_ing_page_ingredient_type_figure(source, category, product_type)
+    fig = create_ing_page_ingredient_type_figure(
+        source, category, product_type)
     return fig
 
 
@@ -3094,7 +3115,8 @@ def set_ing_page_product_type_options(source: str, category: str):
     return [
         {"label": i, "value": i}
         for i in ing_page_ing_df.product_type[
-            (ing_page_ing_df.source == source) & (ing_page_ing_df.category == category)
+            (ing_page_ing_df.source == source) & (
+                ing_page_ing_df.category == category)
         ]
         .unique()
         .tolist()
@@ -3313,7 +3335,8 @@ def update_prod_page_reviews_distribution_figure(
         & (prod_page_review_sentiment_influence_df.review_date <= end_date_string)
     ]
 
-    star_fig = create_prod_page_reviews_distribution_figure(data=data, prod_id=prod_id)
+    star_fig = create_prod_page_reviews_distribution_figure(
+        data=data, prod_id=prod_id)
     return star_fig
 
 
@@ -3402,8 +3425,10 @@ def update_prod_page_review_timeseries_figure(
         & (prod_page_review_sentiment_influence_df.review_date <= end_date_string)
     ]
 
-    sent_fig = create_prod_page_review_timeseries_figure(data, prod_id, "sentiment")
-    inf_fig = create_prod_page_review_timeseries_figure(data, prod_id, "is_influenced")
+    sent_fig = create_prod_page_review_timeseries_figure(
+        data, prod_id, "sentiment")
+    inf_fig = create_prod_page_review_timeseries_figure(
+        data, prod_id, "is_influenced")
     return sent_fig, inf_fig
 
 
@@ -3444,8 +3469,10 @@ def update_prod_page_review_breakdown_figure(
         & (prod_page_review_sentiment_influence_df.review_date <= end_date_string)
     ]
 
-    sent_fig = create_prod_page_review_breakdown_figure(data, prod_id, "sentiment")
-    inf_fig = create_prod_page_review_breakdown_figure(data, prod_id, "is_influenced")
+    sent_fig = create_prod_page_review_breakdown_figure(
+        data, prod_id, "sentiment")
+    inf_fig = create_prod_page_review_breakdown_figure(
+        data, prod_id, "is_influenced")
     return sent_fig, inf_fig
 
 
@@ -3603,7 +3630,8 @@ def display_product_page_category(source: str, prod_id: str):
 
 
 @app.callback(
-    Output("prod_page_product", "options"), [Input("prod_page_source", "value")]
+    Output("prod_page_product", "options"), [
+        Input("prod_page_source", "value")]
 )
 def set_product_page_product_options(source: str):
     return sorted(
@@ -3619,7 +3647,8 @@ def set_product_page_product_options(source: str):
 
 @app.callback(
     Output("prod_page_product", "value"),
-    [Input("prod_page_source", "value"), Input("prod_page_product", "options")],
+    [Input("prod_page_source", "value"), Input(
+        "prod_page_product", "options")],
 )
 def set_product_page_product_value(source, available_options):
     return available_options[10]["value"]
@@ -3792,7 +3821,8 @@ def filter_top_products_data_table(
         & (cat_page_top_products_df.product_type == product_type)
     ]
 
-    top_products_df.sort_values(by="adjusted_rating", inplace=True, ascending=False)
+    top_products_df.sort_values(
+        by="adjusted_rating", inplace=True, ascending=False)
 
     return top_products_df.to_dict("records")
 
@@ -3828,7 +3858,8 @@ def filter_product_packaging_data_table(
         & (cat_page_item_package_oz_df.product_type == product_type)
     ]
 
-    packaging_filtered_df.sort_values(by="product_count", inplace=True, ascending=False)
+    packaging_filtered_df.sort_values(
+        by="product_count", inplace=True, ascending=False)
 
     return packaging_filtered_df.to_dict("records")
 
@@ -4656,4 +4687,4 @@ def render_page_content(pathname):
 
 if __name__ == "__main__":
     app.run_server()
-    # app.run_server(debug=True,port=2000)
+    # app.run_server(debug=True, port=2000)
