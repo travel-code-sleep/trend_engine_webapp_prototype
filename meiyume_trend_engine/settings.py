@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-S3_BUCKET = "meiyume-datawarehouse-prod"
-S3_PREFIX = "Feeds/BeautyTrendEngine"
-S3_REGION = "ap-southeast-1"
+S3_BUCKET = 
+S3_PREFIX = 
+S3_REGION = 
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
